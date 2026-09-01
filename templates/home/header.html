@@ -1,0 +1,265 @@
+{% load static %}
+
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: 'DM Sans', sans-serif;
+        margin: 0;
+    }
+
+    .luxury-font {
+        font-family: 'Playfair Display', serif;
+    }
+
+    .header-scrolled {
+        box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+        background: rgba(255, 255, 255, 0.97) !important;
+    }
+
+    .mobile-menu {
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: max-height .4s ease, opacity .3s ease;
+    }
+
+    .mobile-menu.active {
+        max-height: 700px;
+        opacity: 1;
+    }
+
+    .menu-line {
+        transition: transform .3s ease, opacity .2s ease;
+    }
+
+    .menu-open .line-1 {
+        transform: translateY(7px) rotate(45deg);
+    }
+
+    .menu-open .line-2 {
+        opacity: 0;
+    }
+
+    .menu-open .line-3 {
+        transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .nav-link {
+        position: relative;
+    }
+
+    .nav-link::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -8px;
+        width: 0;
+        height: 1px;
+        background: #a8874b;
+        transition: width .3s ease;
+    }
+
+    .nav-link:hover::after {
+        width: 100%;
+    }
+</style>
+
+<header id="siteHeader"  class="fixed top-0 left-0 w-full z-[9999] bg-white/90 backdrop-blur-xl border-b border-black/[0.06] transition-all duration-300">
+
+    <div class="max-w-[1500px] mx-auto px-5 sm:px-7 lg:px-10">
+
+            <div class="h-[68px] lg:h-[76px] flex items-center justify-between gap-8">
+
+                <a href="/"  class="relative w-[80px] h-[76px] lg:w-[100px] lg:h-[84px] shrink-0 flex items-center justify-center overflow-visible">
+                 {% if settings_obj.logo  %}
+                    <img src="{{settings_obj.logo.url}}" alt="{{settings_obj.site_name}}" class="w-full h-full object-contain">
+                {% else %}
+                    <img src="" alt="{{settings_obj.site_name}}" class="w-full h-full object-contain">
+
+                {% endif %}
+
+                
+                
+                </a>
+
+            <nav class="hidden xl:flex items-center justify-center gap-8 2xl:gap-10 flex-1">
+
+                <a href="/" class="nav-link text-[13px] font-medium tracking-wide text-neutral-800">
+                    Home
+                </a>
+
+                <a href="{% url "about" %}" class="nav-link text-[13px] font-medium tracking-wide text-neutral-800">
+                    About
+                </a>
+
+                <a href="{% url "faqs" %}" class="nav-link text-[13px] font-medium tracking-wide text-neutral-800">
+                    FAQs
+                </a>
+
+                <a href="#project-details" class="nav-link text-[13px] font-medium tracking-wide text-neutral-800">
+                    Project Details
+                </a>
+
+                <a href="#amenities" class="nav-link text-[13px] font-medium tracking-wide text-neutral-800">
+                    Amenities
+                </a>
+
+                <a href="#location" class="nav-link text-[13px] font-medium tracking-wide text-neutral-800">
+                    Location
+                </a>
+
+                <a href="#gallery" class="nav-link text-[13px] font-medium tracking-wide text-neutral-800">
+                    Gallery
+                </a>
+
+                <a href="#floor-plans" class="nav-link text-[13px] font-medium tracking-wide text-neutral-800">
+                    Floor Plans
+                </a>
+
+                <a href="#contact" class="nav-link text-[13px] font-medium tracking-wide text-neutral-800">
+                    Contact
+                </a>
+
+            </nav>
+
+            <div class="hidden md:flex items-center gap-3 shrink-0">
+
+                <a href="tel:+91{{settings_obj.phone}}" class="hidden lg:flex items-center gap-2 px-5 py-3 text-[12px] font-medium tracking-wider uppercase text-neutral-800 border border-black/10 hover:border-[#a8874b] hover:text-[#9b793f] transition-all duration-300">
+
+                    <i class="fa-solid fa-phone text-[10px]"></i>
+
+                    <span>Call Us</span>
+                </a>
+
+                <a href="#contact"
+                   class="px-5 lg:px-6 py-3 bg-neutral-900 text-white text-[11px] font-medium tracking-[0.15em] uppercase hover:bg-[#a8874b] transition-all duration-300">
+                    Enquire Now
+                </a>
+
+            </div>
+
+            <button id="menuButton" type="button" aria-label="Open Menu" class="xl:hidden w-11 h-11 flex flex-col items-center justify-center gap-[5px] border border-black/10">
+
+                <span class="menu-line line-1 block w-5 h-[1px] bg-neutral-900"></span>
+                <span class="menu-line line-2 block w-5 h-[1px] bg-neutral-900"></span>
+                <span class="menu-line line-3 block w-5 h-[1px] bg-neutral-900"></span>
+
+            </button>
+
+        </div>
+
+        <div id="mobileMenu" class="mobile-menu xl:hidden border-t border-black/[0.06]">
+
+            <nav class="py-5">
+
+                <a href="/"
+                   class="mobile-link flex items-center justify-between py-3.5 text-sm font-medium border-b border-black/[0.06]">
+                    <span>Home</span>
+                    <span class="text-[#a8874b]">01</span>
+                </a>
+
+                <a href="#about"
+                   class="mobile-link flex items-center justify-between py-3.5 text-sm font-medium border-b border-black/[0.06]">
+                    <span>About</span>
+                    <span class="text-[#a8874b]">02</span>
+                </a>
+
+                <a href="#projects"
+                   class="mobile-link flex items-center justify-between py-3.5 text-sm font-medium border-b border-black/[0.06]">
+                    <span>Projects</span>
+                    <span class="text-[#a8874b]">03</span>
+                </a>
+
+                <a href="#project-details"
+                   class="mobile-link flex items-center justify-between py-3.5 text-sm font-medium border-b border-black/[0.06]">
+                    <span>Project Details</span>
+                    <span class="text-[#a8874b]">04</span>
+                </a>
+
+                <a href="#amenities"
+                   class="mobile-link flex items-center justify-between py-3.5 text-sm font-medium border-b border-black/[0.06]">
+                    <span>Amenities</span>
+                    <span class="text-[#a8874b]">05</span>
+                </a>
+
+                <a href="#location"
+                   class="mobile-link flex items-center justify-between py-3.5 text-sm font-medium border-b border-black/[0.06]">
+                    <span>Location</span>
+                    <span class="text-[#a8874b]">06</span>
+                </a>
+
+                <a href="#gallery"
+                   class="mobile-link flex items-center justify-between py-3.5 text-sm font-medium border-b border-black/[0.06]">
+                    <span>Gallery</span>
+                    <span class="text-[#a8874b]">07</span>
+                </a>
+
+                <a href="#floor-plans"
+                   class="mobile-link flex items-center justify-between py-3.5 text-sm font-medium border-b border-black/[0.06]">
+                    <span>Floor Plans</span>
+                    <span class="text-[#a8874b]">08</span>
+                </a>
+
+                <a href="#contact"
+                   class="mobile-link flex items-center justify-between py-3.5 text-sm font-medium">
+                    <span>Contact</span>
+                    <span class="text-[#a8874b]">09</span>
+                </a>
+
+                <div class="pt-5 grid grid-cols-2 gap-3">
+
+                    <a href="tel:+919999999999" class="flex items-center justify-center gap-2 border border-black/10 py-3.5 text-[11px] uppercase tracking-wider">
+                        <i class="fa-solid fa-phone text-[10px]"></i>
+                        Call Us
+                    </a>
+
+                    <a href="#contact" class="flex items-center justify-center bg-neutral-900 text-white py-3.5 text-[11px] uppercase tracking-wider">
+                        Enquire Now
+                    </a>
+
+                </div>
+
+            </nav>
+
+        </div>
+
+    </div>
+
+</header>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
+
+<script>
+    const header = document.getElementById("siteHeader");
+    const menuButton = document.getElementById("menuButton");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const mobileLinks = document.querySelectorAll(".mobile-link");
+
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 20) {
+            header.classList.add("header-scrolled");
+        } else {
+            header.classList.remove("header-scrolled");
+        }
+    });
+
+    menuButton.addEventListener("click", () => {
+        mobileMenu.classList.toggle("active");
+        menuButton.classList.toggle("menu-open");
+    });
+
+    mobileLinks.forEach(link => {
+        link.addEventListener("click", () => {
+            mobileMenu.classList.remove("active");
+            menuButton.classList.remove("menu-open");
+        });
+    });
+</script>
