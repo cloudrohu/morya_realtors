@@ -1,231 +1,204 @@
-{% load static %}
+
+<header class="sticky top-0 z-50 bg-[#faf9f6]/95 backdrop-blur-md">
+
+    <!-- Luxury Top Line -->
+    <div class="h-[2px] bg-[#b08d57]"></div>
+
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
+
+        <div class="h-[82px] flex items-center justify-between">
+
+            <a href="/" class="group flex items-center gap-3">
+
+                <div class="w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center shrink-0">
+
+                    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-[#b08d57]">
+
+                        <!-- Crown -->
+                        <path d="M35 25 C38 17 45 13 50 10 C55 13 62 17 65 25" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+
+                        <path d="M39 24 C43 20 47 19 50 18 C53 19 57 20 61 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+
+                        <!-- Left Ear -->
+                        <path d="M39 34 C28 27 18 30 17 40 C16 50 24 56 35 52" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+
+                        <!-- Right Ear -->
+                        <path d="M61 34 C72 27 82 30 83 40 C84 50 76 56 65 52" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+
+                        <!-- Head -->
+                        <path d="M38 34 C40 25 47 21 54 23 C63 25 66 33 64 43" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+
+                        <!-- Eye -->
+                        <path d="M42 37 C45 34 48 34 51 37 C48 39 45 39 42 37Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+
+                        <!-- Tilak -->
+                        <path d="M54 29 C52 33 52 36 54 39" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+
+                        <!-- Trunk -->
+                        <path d="M54 39 C57 48 62 51 61 60 C60 69 51 73 45 68 C40 64 43 57 48 56 C53 55 57 59 55 64" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+
+                        <!-- Left Arm -->
+                        <path d="M39 51 C32 56 30 64 34 70" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/>
+
+                        <!-- Right Arm -->
+                        <path d="M64 50 C70 55 72 62 69 68" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/>
+
+                        <!-- Modak -->
+                        <path d="M29 68 C27 64 30 61 34 62 C38 61 41 64 39 68 C37 72 31 72 29 68Z" stroke="currentColor" stroke-width="2"/>
+
+                        <!-- Belly -->
+                        <path d="M35 68 C34 78 41 84 50 84 C59 84 66 78 65 68" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+
+                        <!-- Lotus Base -->
+                        <path d="M27 82 C33 78 39 79 44 83 C47 85 50 87 50 87 C50 87 53 85 56 83 C61 79 67 78 73 82" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+
+                        <path d="M21 87 C31 84 40 88 50 91 C60 88 69 84 79 87" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+
+                    </svg>
+
+                </div>
+
+                <div class="leading-none">
+
+                    <h1 class="font-['Yatra_One'] text-[32px] sm:text-[36px] text-[#171717] tracking-wide">
+
+                        Morya
+
+                    </h1>
 
 
-<style>
-    * {
-        box-sizing: border-box;
-    }
+                    <div class="flex items-center gap-2 mt-1">
 
-    html {
-        scroll-behavior: smooth;
-    }
+                        <span class="w-5 h-px bg-[#b08d57]"></span>
 
-    body {
-        font-family: 'DM Sans', sans-serif;
-        margin: 0;
-    }
+                        <span class="text-[8px] sm:text-[9px] uppercase tracking-[0.32em] text-[#b08d57] font-medium">
 
-    .luxury-font {
-        font-family: 'Playfair Display', serif;
-    }
+                            Realtors
 
-    .header-scrolled {
-        box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
-        background: rgba(255, 255, 255, 0.97) !important;
-    }
+                        </span>
 
-    .mobile-menu {
-        max-height: 0;
-        opacity: 0;
-        overflow: hidden;
-        transition: max-height .4s ease, opacity .3s ease;
-    }
+                        <span class="w-5 h-px bg-[#b08d57]"></span>
 
-    .mobile-menu.active {
-        max-height: 700px;
-        opacity: 1;
-    }
+                    </div>
 
-    .menu-line {
-        transition: transform .3s ease, opacity .2s ease;
-    }
+                </div>
 
-    .menu-open .line-1 {
-        transform: translateY(7px) rotate(45deg);
-    }
+            </a>
 
-    .menu-open .line-2 {
-        opacity: 0;
-    }
 
-    .menu-open .line-3 {
-        transform: translateY(-7px) rotate(-45deg);
-    }
+            <nav class="hidden lg:flex items-center gap-9">
 
-    .nav-link {
-        position: relative;
-    }
+                <a href="/" class="relative text-[13px] font-medium text-[#b08d57] group">
 
-    .nav-link::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: -8px;
-        width: 0;
-        height: 1px;
-        background: #a8874b;
-        transition: width .3s ease;
-    }
-
-    .nav-link:hover::after {
-        width: 100%;
-    }
-</style>
-
-<header id="siteHeader"  class="fixed top-0 left-0 w-full z-[9999] bg-white/90 backdrop-blur-xl border-b border-black/[0.06] transition-all duration-300">
-
-    <div class="max-w-[1500px] mx-auto px-5 sm:px-7 lg:px-10">
-
-            <div class="h-[68px] lg:h-[76px] flex items-center justify-between gap-8">
-
-                <a href="/"  class="relative w-[80px] h-[76px] lg:w-[100px] lg:h-[84px] shrink-0 flex items-center justify-center overflow-visible">
-                 {% if settings_obj.logo  %}
-                    <img src="{{settings_obj.logo.url}}" alt="{{settings_obj.site_name}}" class="w-full h-full object-contain">
-                {% else %}
-                    <img src="" alt="{{settings_obj.site_name}}" class="w-full h-full object-contain">
-
-                {% endif %}
-
-                
-                
-                </a>
-
-            <nav class="hidden xl:flex items-center justify-center gap-8 2xl:gap-10 flex-1">
-
-                <a href="/" class="nav-link text-[13px] font-medium tracking-wide text-neutral-800">
                     Home
+
+                    <span class="absolute -bottom-2 left-0 w-full h-px bg-[#b08d57]"></span>
+
                 </a>
 
-                <a href="{% url "about" %}" class="nav-link text-[13px] font-medium tracking-wide text-neutral-800">
-                    About
+                <a href="/properties" class="text-[13px] font-medium text-[#444] hover:text-[#b08d57] transition-colors duration-300">
+                    Properties
                 </a>
 
-                <a href="{% url "faqs" %}" class="nav-link text-[13px] font-medium tracking-wide text-neutral-800">
-                    FAQs
+                <a href="/localities" class="text-[13px] font-medium text-[#444] hover:text-[#b08d57] transition-colors duration-300">
+                    Localities
                 </a>
 
-                <a href="#project-details" class="nav-link text-[13px] font-medium tracking-wide text-neutral-800">
-                    Project Details
+                <a href="/developers" class="text-[13px] font-medium text-[#444] hover:text-[#b08d57] transition-colors duration-300">
+                    Developers
                 </a>
 
-                <a href="#amenities" class="nav-link text-[13px] font-medium tracking-wide text-neutral-800">
-                    Amenities
+                <a href="/services" class="text-[13px] font-medium text-[#444] hover:text-[#b08d57] transition-colors duration-300">
+                    Services
                 </a>
 
-                <a href="#location" class="nav-link text-[13px] font-medium tracking-wide text-neutral-800">
-                    Location
+                <a href="/calculator" class="text-[13px] font-medium text-[#444] hover:text-[#b08d57] transition-colors duration-300">
+                    Calculator
                 </a>
 
-                <a href="#gallery" class="nav-link text-[13px] font-medium tracking-wide text-neutral-800">
-                    Gallery
-                </a>
-
-                <a href="#floor-plans" class="nav-link text-[13px] font-medium tracking-wide text-neutral-800">
-                    Floor Plans
-                </a>
-
-                <a href="#contact" class="nav-link text-[13px] font-medium tracking-wide text-neutral-800">
-                    Contact
+                <a href="/blog" class="text-[13px] font-medium text-[#444] hover:text-[#b08d57] transition-colors duration-300">
+                    Blog
                 </a>
 
             </nav>
 
-            <div class="hidden md:flex items-center gap-3 shrink-0">
 
-                <a href="tel:+91{{settings_obj.phone}}" class="hidden lg:flex items-center gap-2 px-5 py-3 text-[12px] font-medium tracking-wider uppercase text-neutral-800 border border-black/10 hover:border-[#a8874b] hover:text-[#9b793f] transition-all duration-300">
+            <div class="hidden lg:flex items-center gap-7">
 
-                    <i class="fa-solid fa-phone text-[10px]"></i>
+                <!-- Phone -->
+                <a href="tel:+919876543210" class="text-[12px] font-medium text-[#333] hover:text-[#b08d57] transition-colors">
 
-                    <span>Call Us</span>
+                    +91 98765 43210
+
                 </a>
 
-                <a href="#contact"
-                   class="px-5 lg:px-6 py-3 bg-neutral-900 text-white text-[11px] font-medium tracking-[0.15em] uppercase hover:bg-[#a8874b] transition-all duration-300">
-                    Enquire Now
+
+                <!-- Divider -->
+                <div class="h-5 w-px bg-[#d8d4cc]"></div>
+
+
+                <!-- Contact -->
+                <a href="/contact" class="group flex items-center gap-3 bg-[#171717] text-white px-5 py-3 text-[12px] font-medium tracking-wide hover:bg-[#b08d57] transition-all duration-300">
+
+                    <span>Contact Us</span>
+
+                    <i class="fa-solid fa-arrow-right text-[10px] transition-transform duration-300 group-hover:translate-x-1"></i>
+
                 </a>
 
             </div>
 
-            <button id="menuButton" type="button" aria-label="Open Menu" class="xl:hidden w-11 h-11 flex flex-col items-center justify-center gap-[5px] border border-black/10">
 
-                <span class="menu-line line-1 block w-5 h-[1px] bg-neutral-900"></span>
-                <span class="menu-line line-2 block w-5 h-[1px] bg-neutral-900"></span>
-                <span class="menu-line line-3 block w-5 h-[1px] bg-neutral-900"></span>
+
+            <button id="mobileMenuBtn" class="lg:hidden w-10 h-10 flex items-center justify-center text-[#171717]">
+
+                <i class="fa-solid fa-bars text-lg"></i>
 
             </button>
 
         </div>
 
-        <div id="mobileMenu" class="mobile-menu xl:hidden border-t border-black/[0.06]">
+        <div id="mobileMenu" class="hidden lg:hidden border-t border-[#e5e1da] py-5">
 
-            <nav class="py-5">
+            <nav class="flex flex-col">
 
-                <a href="/"
-                   class="mobile-link flex items-center justify-between py-3.5 text-sm font-medium border-b border-black/[0.06]">
-                    <span>Home</span>
-                    <span class="text-[#a8874b]">01</span>
+                <a href="/" class="py-3 text-sm text-[#b08d57] font-medium border-b border-[#eeeae3]">
+                    Home
                 </a>
 
-                <a href="#about"
-                   class="mobile-link flex items-center justify-between py-3.5 text-sm font-medium border-b border-black/[0.06]">
-                    <span>About</span>
-                    <span class="text-[#a8874b]">02</span>
+                <a href="/properties" class="py-3 text-sm text-[#333] hover:text-[#b08d57] border-b border-[#eeeae3]">
+                    Properties
                 </a>
 
-                <a href="#projects"
-                   class="mobile-link flex items-center justify-between py-3.5 text-sm font-medium border-b border-black/[0.06]">
-                    <span>Projects</span>
-                    <span class="text-[#a8874b]">03</span>
+                <a href="/localities" class="py-3 text-sm text-[#333] hover:text-[#b08d57] border-b border-[#eeeae3]">
+                    Localities
                 </a>
 
-                <a href="#project-details"
-                   class="mobile-link flex items-center justify-between py-3.5 text-sm font-medium border-b border-black/[0.06]">
-                    <span>Project Details</span>
-                    <span class="text-[#a8874b]">04</span>
+                <a href="/developers" class="py-3 text-sm text-[#333] hover:text-[#b08d57] border-b border-[#eeeae3]">
+                    Developers
                 </a>
 
-                <a href="#amenities"
-                   class="mobile-link flex items-center justify-between py-3.5 text-sm font-medium border-b border-black/[0.06]">
-                    <span>Amenities</span>
-                    <span class="text-[#a8874b]">05</span>
+                <a href="/services" class="py-3 text-sm text-[#333] hover:text-[#b08d57] border-b border-[#eeeae3]">
+                    Services
                 </a>
 
-                <a href="#location"
-                   class="mobile-link flex items-center justify-between py-3.5 text-sm font-medium border-b border-black/[0.06]">
-                    <span>Location</span>
-                    <span class="text-[#a8874b]">06</span>
+                <a href="/calculator" class="py-3 text-sm text-[#333] hover:text-[#b08d57] border-b border-[#eeeae3]">
+                    Calculator
                 </a>
 
-                <a href="#gallery"
-                   class="mobile-link flex items-center justify-between py-3.5 text-sm font-medium border-b border-black/[0.06]">
-                    <span>Gallery</span>
-                    <span class="text-[#a8874b]">07</span>
+                <a href="/blog" class="py-3 text-sm text-[#333] hover:text-[#b08d57]">
+                    Blog
                 </a>
 
-                <a href="#floor-plans"
-                   class="mobile-link flex items-center justify-between py-3.5 text-sm font-medium border-b border-black/[0.06]">
-                    <span>Floor Plans</span>
-                    <span class="text-[#a8874b]">08</span>
+
+                <!-- Mobile CTA -->
+                <a href="/contact" class="mt-5 flex items-center justify-center gap-3 py-3.5 bg-[#171717] text-white text-sm font-medium">
+
+                    Contact Us
+
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
+
                 </a>
-
-                <a href="#contact"
-                   class="mobile-link flex items-center justify-between py-3.5 text-sm font-medium">
-                    <span>Contact</span>
-                    <span class="text-[#a8874b]">09</span>
-                </a>
-
-                <div class="pt-5 grid grid-cols-2 gap-3">
-
-                    <a href="tel:+919999999999" class="flex items-center justify-center gap-2 border border-black/10 py-3.5 text-[11px] uppercase tracking-wider">
-                        <i class="fa-solid fa-phone text-[10px]"></i>
-                        Call Us
-                    </a>
-
-                    <a href="#contact" class="flex items-center justify-center bg-neutral-900 text-white py-3.5 text-[11px] uppercase tracking-wider">
-                        Enquire Now
-                    </a>
-
-                </div>
 
             </nav>
 
@@ -235,31 +208,31 @@
 
 </header>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
+
 
 <script>
-    const header = document.getElementById("siteHeader");
-    const menuButton = document.getElementById("menuButton");
+
+    const menuBtn = document.getElementById("mobileMenuBtn");
     const mobileMenu = document.getElementById("mobileMenu");
-    const mobileLinks = document.querySelectorAll(".mobile-link");
 
-    window.addEventListener("scroll", () => {
-        if (window.scrollY > 20) {
-            header.classList.add("header-scrolled");
+    menuBtn.addEventListener("click", () => {
+
+        mobileMenu.classList.toggle("hidden");
+
+        const icon = menuBtn.querySelector("i");
+
+        if (mobileMenu.classList.contains("hidden")) {
+
+            icon.classList.remove("fa-xmark");
+            icon.classList.add("fa-bars");
+
         } else {
-            header.classList.remove("header-scrolled");
+
+            icon.classList.remove("fa-bars");
+            icon.classList.add("fa-xmark");
+
         }
+
     });
 
-    menuButton.addEventListener("click", () => {
-        mobileMenu.classList.toggle("active");
-        menuButton.classList.toggle("menu-open");
-    });
-
-    mobileLinks.forEach(link => {
-        link.addEventListener("click", () => {
-            mobileMenu.classList.remove("active");
-            menuButton.classList.remove("menu-open");
-        });
-    });
 </script>
