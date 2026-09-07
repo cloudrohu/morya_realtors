@@ -1,0 +1,59 @@
+{% extends "home/base.html" %}
+
+{% block content %}
+
+<section class="relative flex min-h-[54vh] items-center overflow-hidden text-white">
+    <div class="absolute inset-0 bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=2000&q=90');"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-[#101722]/95 via-[#101722]/80 to-[#101722]/40"></div>
+    <div class="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-[#b89252]/20 blur-[110px]"></div>
+
+    <div class="relative z-10 mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12">
+        <div class="max-w-3xl" data-aos="fade-up">
+
+            <div class="mb-4 flex items-center gap-3">
+                <span class="h-px w-8 bg-[#d4af6a]"></span>
+                <span class="text-[9px] font-semibold uppercase tracking-[0.35em] text-[#d4af6a]">
+                    Smart Property Planning
+                </span>
+            </div>
+
+            <h1 class="font-serif text-4xl leading-[1.05] tracking-tight sm:text-5xl lg:text-7xl">
+                Plan Your
+                <span class="block italic text-[#d4af6a]">Property Investment.</span>
+            </h1>
+
+            <p class="mt-5 max-w-2xl text-sm leading-7 text-white/70 sm:text-base">
+                Calculate your EMI, estimate your home loan eligibility and
+                understand the financial commitment before making your next move.
+            </p>
+
+            <div class="mt-7 flex flex-wrap gap-3">
+                <a href="#calculator"
+                   class="group inline-flex items-center gap-3 rounded-lg bg-[#b89252] px-5 py-3 text-[9px] font-bold uppercase tracking-[0.18em] text-white transition-all duration-300 hover:bg-[#c9a765]">
+                    Start Calculating
+                    <i class="fa-solid fa-arrow-down text-[8px] transition-transform group-hover:translate-y-1"></i>
+                </a>
+
+                <a href="/contact/"
+                   class="inline-flex items-center gap-3 rounded-lg border border-white/25 bg-white/5 px-5 py-3 text-[9px] font-bold uppercase tracking-[0.18em] backdrop-blur-sm transition-all duration-300 hover:border-[#d4af6a] hover:text-[#d4af6a]">
+                    Talk to an Expert
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#f8f6f1] to-transparent"></div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

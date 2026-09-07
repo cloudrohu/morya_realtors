@@ -9,13 +9,21 @@ def about(request):
 
 def developers(request):
   
-    return render(request, 'home/developers.html',)    
+    return render(request, 'home/developers.html',)
 
 def localities(request):
   
-    return render(request, 'home/localities.html',)    
+    return render(request, 'home/localities.html',)
+
+def services(request):
+  
+    return render(request, 'home/services.html',)
 
 def FAQs(request):
   
     return render(request, 'home/faqs.html',)
+
+def Calculator(request):
+  
+    return render(request, 'home/calculator.html',)
 

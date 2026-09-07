@@ -1,0 +1,123 @@
+{% extends "home/base.html" %}
+
+{% block content %}
+
+<section class="relative flex min-h-[56vh] items-center overflow-hidden text-white">
+
+    <div class="absolute inset-0 bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=2000&q=90');"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-[#101722]/95 via-[#101722]/75 to-[#101722]/35"></div>
+    <div class="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-[#b89252]/20 blur-[110px]"></div>
+
+    <div class="relative z-10 mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12">
+        <div class="max-w-3xl" data-aos="fade-up">
+            <div class="mb-4 flex items-center gap-3">
+                <span class="h-px w-8 bg-[#d4af6a]"></span>
+                <span class="text-[9px] font-semibold uppercase tracking-[0.35em] text-[#d4af6a]">What We Offer</span>
+            </div>
+
+            <h1 class="font-serif text-4xl leading-[1.05] tracking-tight sm:text-5xl lg:text-7xl">
+                Real Estate
+                <span class="block italic text-[#d4af6a]">Made Simple.</span>
+            </h1>
+
+            <p class="mt-5 max-w-2xl text-sm leading-7 text-white/70 sm:text-base">
+                From buying and selling to investment and property management,
+                discover trusted real estate services designed around your goals.
+            </p>
+
+            <div class="mt-7 flex flex-wrap gap-3">
+                <a href="#services" class="group inline-flex items-center gap-3 rounded-lg bg-[#b89252] px-5 py-3 text-[9px] font-bold uppercase tracking-[0.18em] text-white transition-all duration-300 hover:bg-[#c9a765]">
+                    Explore Services
+                    <i class="fa-solid fa-arrow-down text-[8px] transition-transform group-hover:translate-y-1"></i>
+                </a>
+
+                <a href="/contact/" class="inline-flex items-center gap-3 rounded-lg border border-white/25 bg-white/5 px-5 py-3 text-[9px] font-bold uppercase tracking-[0.18em] backdrop-blur-sm transition-all duration-300 hover:border-[#d4af6a] hover:text-[#d4af6a]">
+                    Talk to an Expert
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#f8f6f1] to-transparent"></div>
+</section>
+
+
+<section id="services" class="bg-[#f8f6f1] py-10 sm:py-12">
+
+    <div class="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
+
+        <div class="mb-7 flex flex-col justify-between gap-4 md:flex-row md:items-end" data-aos="fade-up">
+
+            <div>
+                <div class="mb-2 flex items-center gap-3">
+                    <span class="h-px w-8 bg-[#b89252]"></span>
+
+                    <span class="text-[8px] font-semibold uppercase tracking-[0.32em] text-[#b89252]">
+                        What We Offer
+                    </span>
+                </div>
+
+                <h2 class="font-serif text-3xl leading-tight text-[#172033] sm:text-4xl">
+                    Complete
+                    <span class="italic text-[#b89252]">Real Estate Solutions.</span>
+                </h2>
+
+                <p class="mt-2 max-w-xl text-xs leading-relaxed text-[#172033]/55">
+                    From finding your dream property to making the right investment,
+                    we're with you at every step.
+                </p>
+            </div>
+
+            <a href="#" class="group flex w-fit items-center gap-3 border-b border-[#b89252]/40 pb-1 text-[8px] font-bold uppercase tracking-[0.2em] text-[#172033] hover:border-[#b89252] hover:text-[#b89252]">
+                Explore All Services
+                <i class="fa-solid fa-arrow-right text-[8px] transition-transform group-hover:translate-x-1"></i>
+            </a>
+
+        </div>
+
+
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+
+            <!-- Service -->
+            <div class="group rounded-2xl border border-[#dfdbd3] bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#b89252]/40 hover:shadow-xl" data-aos="fade-up">
+
+                <div class="flex items-start justify-between">
+
+                    <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-[#f8f6f1] text-[#b89252] transition-all duration-300 group-hover:bg-[#b89252] group-hover:text-white">
+
+                        <i class="fa-solid fa-house text-lg"></i>
+
+                    </div>
+
+                    <span class="font-serif text-3xl text-[#172033]/[0.06]">
+                        01
+                    </span>
+
+                </div>
+
+                <h3 class="mt-5 font-serif text-xl text-[#172033]">
+                    Property Buying
+                </h3>
+
+                <p class="mt-2 text-xs leading-relaxed text-[#172033]/55">
+                    Discover verified properties that match your lifestyle,
+                    preferences and investment goals.
+                </p>
+
+                <a href="#"
+                   class="mt-4 inline-flex items-center gap-2 text-[8px] font-bold
+                          uppercase tracking-[0.18em] text-[#172033]
+                          hover:text-[#b89252]">
+                    Learn More
+                    <i class="fa-solid fa-arrow-right text-[8px]"></i>
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}
