@@ -1,516 +1,292 @@
 {% extends "home/base.html" %}
 
 {% block content %}
-
-<!-- About Hero Section -->
-<section id="about-hero" class="bg-[#faf9f7] pt-24 sm:pt-28 lg:pt-30 pb-10 sm:pb-12">
-
-    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-
-        <div class="grid lg:grid-cols-[1.05fr_0.75fr] gap-8 lg:gap-14 items-center">
-
-            <!-- Left Content -->
-            <div>
-
-                <!-- Breadcrumb -->
-                <div class="flex items-center gap-2 text-[11px] sm:text-xs text-neutral-400">
-
-                    <a href="/" class="hover:text-neutral-900 transition-colors">
-                        Home
-                    </a>
-
-                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                        <path d="m9 18 6-6-6-6"/>
-                    </svg>
-
-                    <span class="text-neutral-700">
-                        About Us
-                    </span>
-
-                </div>
-
-
-                <!-- Label -->
-                <div class="mt-5 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#faf4eb] border border-[#eadbc8]">
-
-                    <span class="w-1.5 h-1.5 rounded-full bg-[#a27a4d]"></span>
-
-                    <span class="text-[9px] sm:text-[10px] font-semibold tracking-[0.16em] uppercase text-[#8f693f]">
-                        About Developer
-                    </span>
-
-                </div>
-
-
-                <!-- Heading -->
-                <h1 class="mt-4 text-3xl sm:text-4xl lg:text-5xl xl:text-[56px] font-semibold tracking-[-0.03em] text-neutral-900 leading-[1.05]">
-
-                    Creating Spaces
-
-                    <br>
-
-                    <span class="text-[#a27a4d]">
-                        With Purpose.
-                    </span>
-
-                </h1>
-
-
-                <!-- Description -->
-                <p class="mt-4 text-xs sm:text-sm lg:text-base leading-6 lg:leading-7 text-neutral-500 max-w-lg">
-
-                    At
-                    <span class="font-semibold text-neutral-800">
-                        Vinayak Group
-                    </span>,
-                    we create thoughtfully designed spaces that bring together
-                    quality, comfort, functionality and lasting value.
-
-                </p>
-
-
-                <!-- CTA -->
-                <div class="mt-6">
-
-                    <a
-                        href="#developer"
-                        class="inline-flex items-center gap-2.5 px-5 py-3 rounded-full bg-neutral-900 text-white text-xs sm:text-sm font-semibold hover:bg-[#a27a4d] transition-all duration-300"
-                    >
-
-                        Discover Our Story
-
-                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M5 12h14"/>
-                            <path d="m13 6 6 6-6 6"/>
-                        </svg>
-
-                    </a>
-
-                </div>
-
-
-                <!-- Stats -->
-                <div class="mt-7 pt-5 border-t border-neutral-200 flex items-center gap-6 sm:gap-8">
-
-                    <div>
-
-                        <p class="text-xl sm:text-2xl font-semibold text-neutral-900">
-                            15+
-                        </p>
-
-                        <p class="mt-0.5 text-[9px] sm:text-[10px] text-neutral-400 uppercase tracking-wider">
-                            Years Experience
-                        </p>
-
-                    </div>
-
-
-                    <div class="w-px h-8 bg-neutral-200"></div>
-
-
-                    <div>
-
-                        <p class="text-xl sm:text-2xl font-semibold text-neutral-900">
-                            25+
-                        </p>
-
-                        <p class="mt-0.5 text-[9px] sm:text-[10px] text-neutral-400 uppercase tracking-wider">
-                            Projects
-                        </p>
-
-                    </div>
-
-
-                    <div class="w-px h-8 bg-neutral-200"></div>
-
-
-                    <div>
-
-                        <p class="text-xl sm:text-2xl font-semibold text-neutral-900">
-                            10K+
-                        </p>
-
-                        <p class="mt-0.5 text-[9px] sm:text-[10px] text-neutral-400 uppercase tracking-wider">
-                            Families
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- Right Visual -->
-            <div class="relative max-w-[420px] lg:ml-auto">
-
-                <!-- Image -->
-                <div class="relative overflow-hidden rounded-[24px] sm:rounded-[28px] aspect-[4/4.2] bg-white border border-neutral-200 shadow-[0_20px_50px_rgba(0,0,0,0.07)]">
-
-                    <img
-                        src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1000&q=85"
-                        alt="Vinayak Group"
-                        class="w-full h-full object-cover"
-                    >
-
-                </div>
-
-
-                <!-- Developer Card -->
-                <div class="absolute left-3 sm:left-5 bottom-3 sm:bottom-5">
-
-                    <div class="flex items-center gap-3 p-3 sm:p-3.5 rounded-xl bg-white border border-neutral-200 shadow-[0_10px_30px_rgba(0,0,0,0.09)]">
-
-                        <div class="flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-[#faf9f7] border border-neutral-200 p-2">
-
-                            <img
-                                src="YOUR-DEVELOPER-LOGO.png"
-                                alt="Vinayak Group Logo"
-                                class="w-full h-full object-contain"
-                            >
-
-                        </div>
-
-                        <div>
-
-                            <p class="text-[8px] text-neutral-400 uppercase tracking-[0.14em]">
-                                Developer
-                            </p>
-
-                            <p class="mt-0.5 text-xs sm:text-sm font-semibold text-neutral-900">
-                                Vinayak Group
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Decorative Circle -->
-                <div class="absolute -top-4 -right-4 w-16 h-16 rounded-full border border-[#a27a4d]/15 pointer-events-none"></div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- About Vinayak Sapphire II -->
-<section id="about-project" class="bg-white py-12 sm:py-14 lg:py-16 mt-15">
-
-    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-
-        <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-center">
-
-            <!-- Image -->
-            <div class="relative">
-
-                <div class="relative overflow-hidden rounded-[24px] sm:rounded-[28px] aspect-[4/3] bg-[#faf9f7] border border-neutral-200">
-
-                    <img
-                        src="YOUR-PROJECT-IMAGE.jpg"
-                        alt="Vinayak Sapphire II"
-                        class="w-full h-full object-cover"
-                    >
-
-                </div>
-
-                <!-- Small Project Badge -->
-                <div class="absolute left-4 bottom-4">
-
-                    <div class="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/95 backdrop-blur-sm border border-white shadow-[0_10px_30px_rgba(0,0,0,0.10)]">
-
-                        <div class="w-2 h-2 rounded-full bg-[#a27a4d]"></div>
-
-                        <div>
-
-                            <p class="text-[9px] uppercase tracking-[0.14em] text-neutral-400">
-                                Project
-                            </p>
-
-                            <p class="mt-0.5 text-xs font-semibold text-neutral-900">
-                                Vinayak Sapphire II
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- Content -->
-            <div>
-
-                <!-- Label -->
-                <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#faf4eb] border border-[#eadbc8]">
-
-                    <span class="w-1.5 h-1.5 rounded-full bg-[#a27a4d]"></span>
-
-                    <span class="text-[9px] sm:text-[10px] font-semibold tracking-[0.16em] uppercase text-[#8f693f]">
-                        About The Project
-                    </span>
-
-                </span>
-
-
-                <!-- Heading -->
-                <h2 class="mt-4 text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-neutral-900 leading-[1.05]">
-
-                    Vinayak Sapphire II
-
-                </h2>
-
-
-                <p class="mt-2 text-xs sm:text-sm font-medium text-[#a27a4d]">
-                    Premium 3 BHK Residences · Kudasan, Gandhinagar
-                </p>
-
-
-                <!-- Divider -->
-                <div class="mt-6 w-12 h-px bg-[#a27a4d]"></div>
-
-
-                <!-- Description -->
-                <div class="mt-6 space-y-4">
-
-                    <p class="text-sm sm:text-base leading-7 text-neutral-600">
-                        Vinayak Sapphire II is thoughtfully envisioned as a premium
-                        residential destination for modern families. Located in the
-                        well-connected locality of Kudasan, Gandhinagar, the project
-                        brings together contemporary architecture, intelligently
-                        planned homes and a comfortable lifestyle.
-                    </p>
-
-                    <p class="text-sm sm:text-base leading-7 text-neutral-600">
-                        Designed with a focus on quality, functionality and everyday
-                        convenience, the project offers thoughtfully planned spaces
-                        complemented by lifestyle-oriented amenities. Every detail
-                        is intended to create a refined environment where residents
-                        can experience comfort, privacy and a better quality of life.
-                    </p>
-
-                </div>
-
-
-                <!-- Highlights -->
-                <div class="mt-7 grid grid-cols-2 sm:grid-cols-3 gap-3">
-
-                    <div class="px-4 py-3.5 rounded-xl bg-[#faf9f7] border border-neutral-200">
-
-                        <p class="text-[9px] uppercase tracking-wider text-neutral-400">
-                            Configuration
-                        </p>
-
-                        <p class="mt-1 text-sm font-semibold text-neutral-900">
-                            3 BHK
-                        </p>
-
-                    </div>
-
-
-                    <div class="px-4 py-3.5 rounded-xl bg-[#faf9f7] border border-neutral-200">
-
-                        <p class="text-[9px] uppercase tracking-wider text-neutral-400">
-                            Location
-                        </p>
-
-                        <p class="mt-1 text-sm font-semibold text-neutral-900">
-                            Kudasan
-                        </p>
-
-                    </div>
-
-
-                    <div class="px-4 py-3.5 rounded-xl bg-[#faf9f7] border border-neutral-200">
-
-                        <p class="text-[9px] uppercase tracking-wider text-neutral-400">
-                            Developer
-                        </p>
-
-                        <p class="mt-1 text-sm font-semibold text-neutral-900">
-                            Vinayak Group
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- Mission & Vision Section -->
-<section id="mission-vision" class="bg-[#faf9f7] py-12 sm:py-14 lg:py-16">
-
-    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-
-        <!-- Heading -->
-        <div class="max-w-2xl">
-
-            <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[#eadbc8]">
-
-                <span class="w-1.5 h-1.5 rounded-full bg-[#a27a4d]"></span>
-
-                <span class="text-[9px] sm:text-[10px] font-semibold tracking-[0.16em] uppercase text-[#8f693f]">
-                    Our Purpose
-                </span>
-
+<style>
+    @keyframes zoomHero {
+        0% {
+            transform: scale(1.05);
+        }
+        100% {
+            transform: scale(1.12);
+        }
+    }
+
+    .animate-zoomHero {
+        animation: zoomHero 18s ease-in-out infinite alternate;
+    }
+</style>
+
+<section class="relative min-h-[68vh] md:min-h-[72vh] flex items-center justify-center overflow-hidden text-white">
+   
+    <div class="absolute inset-0 bg-cover bg-center scale-105 animate-zoomHero" style="background-image:url('https://d1t2fddy6amcvs.cloudfront.net/projectgallery/2a66a349-2ada-40c9-9697-e75d29d99c2c.webp');"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-black/75 via-black/50 to-black/80"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-orange-950/30"></div>
+    <div class="absolute -top-32 -right-32 w-96 h-96 bg-orange-500/20 blur-[120px] rounded-full"></div>
+    <div class="absolute -bottom-40 -left-20 w-96 h-96 bg-amber-400/10 blur-[120px] rounded-full"></div>
+
+    <div class="relative z-10 w-full max-w-5xl px-5 sm:px-8 text-center" data-aos="fade-up">
+
+        <div class="inline-flex items-center gap-3 mb-6">
+            <span class="w-10 h-px bg-orange-400"></span>
+
+            <span class="text-orange-300 text-xs sm:text-sm font-semibold uppercase tracking-[0.35em]">
+                Established 2008
             </span>
 
-            <h2 class="mt-4 text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-neutral-900 leading-tight">
-                Driven By Vision.
-                <span class="text-[#a27a4d]">
-                    Guided By Purpose.
-                </span>
-            </h2>
+            <span class="w-10 h-px bg-orange-400"></span>
+        </div>
 
-            <p class="mt-3 text-sm sm:text-base leading-6 text-neutral-500 max-w-xl">
-                Our commitment goes beyond creating buildings. We strive to create
-                meaningful spaces and lasting value for every family we serve.
-            </p>
+        <!-- Heading -->
+        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05] mb-6 ">
+            About
+            <span class="block mt-2 bg-gradient-to-r from-orange-300 via-amber-200 to-orange-400 bg-clip-text text-transparent">
+                Morya Realtors
+            </span>
+
+        </h1>
+
+        <div class="flex items-center justify-center gap-3 mb-6">
+            <span class="w-16 h-px bg-white/20"></span>
+            <span class="w-2 h-2 rotate-45 border border-orange-400"></span>
+            <span class="w-16 h-px bg-white/20"></span>
+        </div>
+
+        <p class="max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-white/80 leading-relaxed font-light">
+            Delivering trust, growth and innovation through
+            <span class="text-orange-300 font-medium">exceptional real estate</span>
+            experiences.
+        </p>
+
+        <!-- Stats -->
+        <div class="mt-10 mx-auto max-w-2xl grid grid-cols-3 border border-white/15 bg-white/[0.07] backdrop-blur-md rounded-2xl overflow-hidden">
+
+            <div class="py-4 sm:py-5 border-r border-white/10">
+                <div class="text-xl sm:text-2xl font-bold text-orange-300">15+</div>
+                <div class="text-[10px] sm:text-xs text-white/60 uppercase tracking-wider mt-1">
+                    Years
+                </div>
+            </div>
+
+            <div class="py-4 sm:py-5 border-r border-white/10">
+                <div class="text-xl sm:text-2xl font-bold text-orange-300">500+</div>
+                <div class="text-[10px] sm:text-xs text-white/60 uppercase tracking-wider mt-1">
+                    Properties
+                </div>
+            </div>
+
+            <div class="py-4 sm:py-5">
+                <div class="text-xl sm:text-2xl font-bold text-orange-300">100%</div>
+                <div class="text-[10px] sm:text-xs text-white/60 uppercase tracking-wider mt-1">
+                    Trust
+                </div>
+            </div>
 
         </div>
 
+    </div>
 
-        <!-- Cards -->
-        <div class="mt-8 grid md:grid-cols-2 gap-5 lg:gap-6">
+    <div class="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-black/70 to-transparent"></div>
 
+</section>
 
-            <!-- Mission -->
-            <div class="group relative overflow-hidden rounded-[24px] bg-white border border-neutral-200 p-6 sm:p-8 hover:border-[#d8c1a3] hover:shadow-[0_15px_40px_rgba(0,0,0,0.05)] transition-all duration-300">
+<section class="relative bg-white py-12 sm:py-16 overflow-hidden">
 
-                <!-- Number -->
-                <span class="absolute top-5 right-6 text-5xl sm:text-6xl font-semibold text-neutral-100 select-none">
-                    01
-                </span>
+    <div class="absolute top-0 right-0 w-56 h-56 bg-orange-50 rounded-full blur-3xl"></div>
 
+    <div class="relative max-w-7xl mx-auto px-5 sm:px-8">
 
-                <!-- Icon -->
-                <div class="relative flex items-center justify-center w-12 h-12 rounded-xl bg-[#faf4eb] border border-[#eadbc8]">
+        <div class="grid lg:grid-cols-2 gap-8 lg:gap-14 items-center">
 
-                    <svg
-                        class="w-5 h-5 text-[#a27a4d]"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.7"
-                    >
-                        <path d="M3 11.5 12 4l9 7.5"/>
-                        <path d="M5.5 10.5V20h13v-9.5"/>
-                        <path d="M9 20v-5h6v5"/>
-                    </svg>
+            <!-- Image -->
+            <div class="relative" data-aos="fade-right">
 
+                <div class="rounded-2xl overflow-hidden shadow-xl">
+                    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1000&q=85" alt="Morya Realtors" class="w-full h-[300px] sm:h-[380px] object-cover">
                 </div>
 
+                <div class="absolute -bottom-4 right-4 bg-white rounded-xl shadow-lg border border-orange-100 px-4 py-3 flex items-center gap-3">
 
-                <p class="relative mt-6 text-[10px] font-semibold tracking-[0.18em] uppercase text-[#a27a4d]">
-                    Our Mission
-                </p>
+                    <div class="w-11 h-11 rounded-lg bg-orange-500 flex items-center justify-center">
+                        <i class="fa-solid fa-building text-white"></i>
+                    </div>
 
-
-                <h3 class="relative mt-2 text-xl sm:text-2xl font-semibold text-neutral-900">
-                    Creating Better Places To Live
-                </h3>
-
-
-                <p class="relative mt-4 text-sm leading-6 text-neutral-500 max-w-xl">
-                    Our mission is to deliver thoughtfully planned homes that combine
-                    quality construction, functional design and modern amenities.
-                    We aim to create comfortable living environments that add
-                    meaningful value to the everyday lives of our customers.
-                </p>
-
-
-                <!-- Bottom Line -->
-                <div class="relative mt-6 pt-4 border-t border-neutral-100">
-
-                    <div class="flex items-center gap-2">
-
-                        <span class="w-5 h-px bg-[#a27a4d]"></span>
-
-                        <span class="text-[10px] text-neutral-400">
-                            Quality · Trust · Commitment
-                        </span>
-
+                    <div>
+                        <div class="text-xl font-extrabold text-slate-900">15+</div>
+                        <div class="text-[10px] text-slate-500 uppercase tracking-wider">
+                            Years Experience
+                        </div>
                     </div>
 
                 </div>
 
             </div>
 
+            <!-- Content -->
+            <div data-aos="fade-left">
 
-            <!-- Vision -->
-            <div class="group relative overflow-hidden rounded-[24px] bg-neutral-900 p-6 sm:p-8 hover:shadow-[0_15px_40px_rgba(0,0,0,0.12)] transition-all duration-300">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="w-8 h-[2px] bg-orange-500"></span>
+                    <span class="text-orange-500 text-xs font-bold uppercase tracking-[0.2em]">
+                        About Us
+                    </span>
+                </div>
 
-                <!-- Number -->
-                <span class="absolute top-5 right-6 text-5xl sm:text-6xl font-semibold text-white/[0.05] select-none">
-                    02
-                </span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 leading-tight mb-4">
+                    Building More Than
+                    <span class="text-orange-500"> Properties.</span>
+                    <span class="block">Building Trust.</span>
+                </h2>
 
+                <p class="text-slate-600 leading-relaxed text-sm sm:text-base mb-3">
+                    At <strong class="text-slate-900">Morya Realtors</strong>, we believe
+                    finding the right property is about finding the right future.
+                </p>
 
-                <!-- Icon -->
-                <div class="relative flex items-center justify-center w-12 h-12 rounded-xl bg-white/10 border border-white/10">
+                <p class="text-slate-500 text-sm leading-relaxed mb-6">
+                    Since 2008, we've helped families, individuals and investors
+                    discover exceptional real estate opportunities with transparency,
+                    expertise and trust.
+                </p>
 
-                    <svg
-                        class="w-5 h-5 text-[#c5a47b]"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.7"
-                    >
-                        <circle cx="12" cy="12" r="8"/>
-                        <circle cx="12" cy="12" r="3"/>
-                        <path d="M12 4V2"/>
-                        <path d="M12 22v-2"/>
-                        <path d="m4.93 4.93-1.42-1.42"/>
-                        <path d="m20.49 20.49-1.42-1.42"/>
-                    </svg>
+                <div class="grid grid-cols-2 gap-4 mb-6">
+
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-lg bg-orange-50 text-orange-500 flex items-center justify-center">
+                            <i class="fa-solid fa-shield-halved text-sm"></i>
+                        </div>
+                        <span class="text-sm font-semibold text-slate-800">
+                            Trusted Guidance
+                        </span>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-lg bg-orange-50 text-orange-500 flex items-center justify-center">
+                            <i class="fa-solid fa-chart-line text-sm"></i>
+                        </div>
+                        <span class="text-sm font-semibold text-slate-800">
+                            Market Expertise
+                        </span>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-lg bg-orange-50 text-orange-500 flex items-center justify-center">
+                            <i class="fa-solid fa-handshake text-sm"></i>
+                        </div>
+                        <span class="text-sm font-semibold text-slate-800">
+                            Transparent Deals
+                        </span>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-lg bg-orange-50 text-orange-500
+                                    flex items-center justify-center">
+                            <i class="fa-solid fa-headset text-sm"></i>
+                        </div>
+                        <span class="text-sm font-semibold text-slate-800">
+                            Dedicated Support
+                        </span>
+                    </div>
 
                 </div>
 
+                <a href="/contact/"
+                   class="inline-flex items-center gap-2 bg-slate-900 hover:bg-orange-500
+                          text-white text-sm font-semibold px-5 py-3 rounded-lg
+                          transition-all duration-300">
+                    Let's Talk
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                </a>
 
-                <p class="relative mt-6 text-[10px] font-semibold tracking-[0.18em] uppercase text-[#c5a47b]">
-                    Our Vision
-                </p>
+            </div>
 
+        </div>
 
-                <h3 class="relative mt-2 text-xl sm:text-2xl font-semibold text-white">
-                    Shaping A Better Tomorrow
-                </h3>
+    </div>
 
-
-                <p class="relative mt-4 text-sm leading-6 text-white/55 max-w-xl">
-                    Our vision is to be recognised as a trusted name in real estate
-                    by creating thoughtfully designed communities, embracing
-                    innovation and setting higher standards of quality, transparency
-                    and customer satisfaction.
-                </p>
+</section>
 
 
-                <!-- Bottom Line -->
-                <div class="relative mt-6 pt-4 border-t border-white/10">
+<section class="bg-slate-50 py-12 sm:py-16">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
 
-                    <div class="flex items-center gap-2">
+        <div class="text-center mb-8" data-aos="fade-up">
+            <span class="text-orange-500 text-xs font-bold uppercase tracking-[0.2em]">
+                Our Purpose
+            </span>
 
-                        <span class="w-5 h-px bg-[#c5a47b]"></span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2">
+                Mission <span class="text-orange-500">&</span> Vision
+            </h2>
 
-                        <span class="text-[10px] text-white/35">
-                            Innovation · Excellence · Future
+            <p class="text-slate-500 text-sm mt-2 max-w-xl mx-auto">
+                Guided by trust, driven by excellence, and focused on creating lasting value.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-5">
+
+            <!-- Mission -->
+            <div class="group bg-white rounded-2xl p-6 sm:p-7 border border-slate-200
+                        hover:border-orange-200 hover:shadow-xl hover:-translate-y-1
+                        transition-all duration-300"
+                 data-aos="fade-right">
+
+                <div class="flex items-start gap-4">
+
+                    <div class="w-12 h-12 shrink-0 rounded-xl bg-orange-500
+                                flex items-center justify-center shadow-lg
+                                shadow-orange-500/20">
+                        <i class="fa-solid fa-bullseye text-white text-lg"></i>
+                    </div>
+
+                    <div>
+                        <span class="text-xs font-bold text-orange-500 uppercase tracking-wider">
+                            Our Mission
                         </span>
 
+                        <h3 class="text-xl font-bold text-slate-900 mt-1 mb-2">
+                            Creating Better Property Experiences
+                        </h3>
+
+                        <p class="text-sm text-slate-500 leading-relaxed">
+                            To simplify the real estate journey through honest advice,
+                            expert market knowledge and transparent services that help
+                            every client make confident property decisions.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Vision -->
+            <div class="group bg-slate-900 rounded-2xl p-6 sm:p-7 border border-slate-800
+                        hover:shadow-xl hover:-translate-y-1
+                        transition-all duration-300"
+                 data-aos="fade-left">
+
+                <div class="flex items-start gap-4">
+
+                    <div class="w-12 h-12 shrink-0 rounded-xl bg-orange-500
+                                flex items-center justify-center shadow-lg
+                                shadow-orange-500/20">
+                        <i class="fa-solid fa-eye text-white text-lg"></i>
+                    </div>
+
+                    <div>
+                        <span class="text-xs font-bold text-orange-400 uppercase tracking-wider">
+                            Our Vision
+                        </span>
+
+                        <h3 class="text-xl font-bold text-white mt-1 mb-2">
+                            Shaping the Future of Real Estate
+                        </h3>
+
+                        <p class="text-sm text-slate-400 leading-relaxed">
+                            To become a trusted name in real estate by delivering
+                            exceptional properties, innovative solutions and long-term
+                            value for our clients and communities.
+                        </p>
                     </div>
 
                 </div>
@@ -520,7 +296,102 @@
         </div>
 
     </div>
+</section>
 
+<section class="py-12 bg-white text-slate-800 border-y border-slate-100">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+
+    <!-- Compact Header + Inline Metrics Row -->
+    <div class="flex flex-col lg:flex-row lg:items-center justify-between pb-8 mb-8 border-b border-slate-100 gap-6">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-widest text-amber-600">Track Record</p>
+        <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight mt-0.5">Morya Realtors • Milestones</h2>
+        <p class="text-xs text-slate-500 mt-1">Delivering residential and commercial trust across Malad.</p>
+      </div>
+
+      <!-- Clean 4-Stat Strip -->
+      <div class="grid grid-cols-4 gap-4 sm:gap-8 bg-slate-50 px-5 py-3 rounded-lg border border-slate-200/80">
+        <div>
+          <div class="text-lg sm:text-xl font-extrabold text-slate-900">12+</div>
+          <div class="text-[11px] text-slate-500 font-medium">Years</div>
+        </div>
+        <div>
+          <div class="text-lg sm:text-xl font-extrabold text-slate-900">4.5L+</div>
+          <div class="text-[11px] text-slate-500 font-medium">Sq. Ft.</div>
+        </div>
+        <div>
+          <div class="text-lg sm:text-xl font-extrabold text-slate-900">850+</div>
+          <div class="text-[11px] text-slate-500 font-medium">Families</div>
+        </div>
+        <div>
+          <div class="text-lg sm:text-xl font-extrabold text-amber-600">100%</div>
+          <div class="text-[11px] text-slate-500 font-medium">RERA</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Connected Horizontal Timeline Steps -->
+    <div class="relative">
+      <!-- Continuous horizontal connecting line (Desktop only) -->
+      <div class="hidden md:block absolute top-4 left-4 right-4 h-0.5 bg-slate-200 -z-0"></div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 relative z-10">
+        
+        <!-- Step 1 -->
+        <div class="relative pl-7 md:pl-0">
+          <span class="md:hidden absolute left-2 top-2 bottom-0 w-0.5 bg-slate-200"></span>
+          <div class="w-8 h-8 rounded-full bg-white border-2 border-amber-600 flex items-center justify-center font-black text-[11px] text-amber-700 shadow-sm mb-3">
+            01
+          </div>
+          <span class="inline-block text-[11px] font-bold text-amber-600 uppercase tracking-wide">2014</span>
+          <h3 class="text-sm font-bold text-slate-900 mt-0.5">Founding in Malad</h3>
+          <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+            Started with boutique residential projects in Malad West, focusing on timely delivery.
+          </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="relative pl-7 md:pl-0">
+          <span class="md:hidden absolute left-2 top-2 bottom-0 w-0.5 bg-slate-200"></span>
+          <div class="w-8 h-8 rounded-full bg-white border-2 border-amber-600 flex items-center justify-center font-black text-[11px] text-amber-700 shadow-sm mb-3">
+            02
+          </div>
+          <span class="inline-block text-[11px] font-bold text-amber-600 uppercase tracking-wide">2017</span>
+          <h3 class="text-sm font-bold text-slate-900 mt-0.5">First Major Handover</h3>
+          <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+            Delivered residential tower off Link Road ahead of target timeline with full OC.
+          </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="relative pl-7 md:pl-0">
+          <span class="md:hidden absolute left-2 top-2 bottom-0 w-0.5 bg-slate-200"></span>
+          <div class="w-8 h-8 rounded-full bg-white border-2 border-amber-600 flex items-center justify-center font-black text-[11px] text-amber-700 shadow-sm mb-3">
+            03
+          </div>
+          <span class="inline-block text-[11px] font-bold text-amber-600 uppercase tracking-wide">2021</span>
+          <h3 class="text-sm font-bold text-slate-900 mt-0.5">Commercial Expansion</h3>
+          <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+            Ventured into boutique corporate and retail premises close to Mindspace hub.
+          </p>
+        </div>
+
+        <!-- Step 4 (Current) -->
+        <div class="relative pl-7 md:pl-0">
+          <div class="w-8 h-8 rounded-full bg-amber-600 text-white flex items-center justify-center font-black text-[11px] shadow-sm mb-3">
+            04
+          </div>
+          <span class="inline-block text-[11px] font-bold text-amber-600 uppercase tracking-wide">Present</span>
+          <h3 class="text-sm font-bold text-slate-900 mt-0.5">Smart Living Ventures</h3>
+          <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+            Ongoing redevelopment & smart gated high-rises across Western Express Highway belt.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
 </section>
 
 {% endblock content %}
