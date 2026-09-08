@@ -33,6 +33,10 @@ urlpatterns = [
         include("apps.core.urls"),
     ),
 
+    path(
+        "",
+        include("apps.blog.urls"),
+    ),
     
 
     path(

@@ -1,0 +1,231 @@
+{% extends "home/base.html" %}
+
+
+{% block content %}
+```html
+{% load static %}
+
+<section class="bg-[#f8f6f1]">
+    <div class="relative overflow-hidden bg-[#172033] py-16 sm:py-20">
+        <div class="absolute -right-24 -top-24 h-72 w-72 rounded-full border border-[#d4af6a]/10"></div>
+        <div class="absolute -bottom-32 -left-20 h-72 w-72 rounded-full border border-white/5"></div>
+
+        <div class="relative mx-auto max-w-6xl px-5 sm:px-8">
+            <div class="max-w-2xl" data-aos="fade-up">
+                <div class="mb-4 flex items-center gap-3">
+                    <span class="h-px w-9 bg-[#d4af6a]"></span>
+                    <span class="text-[9px] font-semibold uppercase tracking-[0.35em] text-[#d4af6a]">Morya Insights</span>
+                </div>
+                <h1 class="font-serif text-4xl leading-tight text-white sm:text-5xl lg:text-6xl">
+                    Ideas, Insights &
+                    <span class="italic text-[#d4af6a]">Real Estate Stories.</span>
+                </h1>
+                <p class="mt-5 max-w-xl text-sm leading-7 text-white/55 sm:text-base">
+                    Explore property trends, investment insights, locality guides and expert advice to make smarter real-estate decisions.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
+        <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between" data-aos="fade-up">
+            <div>
+                <div class="mb-2 flex items-center gap-2">
+                    <span class="h-px w-6 bg-[#b89252]"></span>
+                    <span class="text-[9px] font-bold uppercase tracking-[0.3em] text-[#b89252]">Our Journal</span>
+                </div>
+                <h2 class="font-serif text-3xl text-[#172033] sm:text-4xl">
+                    Latest <span class="italic text-[#b89252]">Insights</span>
+                </h2>
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+                <button class="rounded-full bg-[#172033] px-4 py-2 text-[9px] font-bold uppercase tracking-[0.12em] text-white">All</button>
+                <button class="rounded-full border border-[#ded8ce] bg-white px-4 py-2 text-[9px] font-bold uppercase tracking-[0.12em] text-[#172033]/55 transition hover:border-[#b89252] hover:text-[#172033]">Investment</button>
+                <button class="rounded-full border border-[#ded8ce] bg-white px-4 py-2 text-[9px] font-bold uppercase tracking-[0.12em] text-[#172033]/55 transition hover:border-[#b89252] hover:text-[#172033]">Market</button>
+                <button class="rounded-full border border-[#ded8ce] bg-white px-4 py-2 text-[9px] font-bold uppercase tracking-[0.12em] text-[#172033]/55 transition hover:border-[#b89252] hover:text-[#172033]">Lifestyle</button>
+            </div>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <article class="group overflow-hidden rounded-[20px] border border-[#ded8ce] bg-white shadow-[0_10px_35px_rgba(23,32,51,0.05)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(23,32,51,0.1)]" data-aos="fade-up">
+                <a href="#" class="block">
+                    <div class="relative aspect-[16/10] overflow-hidden">
+                        <img src="{% static 'images/blog/blog-1.jpg' %}" alt="Mumbai real estate market"
+                            class="h-full w-full object-cover transition duration-700 group-hover:scale-105">
+                        <span class="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.15em] text-[#172033] shadow-sm">Market</span>
+                    </div>
+                    <div class="p-5 sm:p-6">
+                        <div class="mb-3 flex items-center gap-2 text-[9px] font-medium uppercase tracking-[0.15em] text-[#172033]/40">
+                            <span>08 Sep 2026</span>
+                            <span class="h-1 w-1 rounded-full bg-[#b89252]"></span>
+                            <span>6 Min Read</span>
+                        </div>
+                        <h3 class="line-clamp-2 font-serif text-xl leading-snug text-[#172033] transition group-hover:text-[#b89252]">
+                            Mumbai Real Estate Market: Trends Every Buyer Should Know
+                        </h3>
+                        <p class="mt-3 line-clamp-2 text-xs leading-6 text-[#172033]/50">
+                            Discover the latest property trends, demand patterns and emerging opportunities across Mumbai.
+                        </p>
+                        <div class="mt-5 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.15em] text-[#172033]">
+                            Read Article
+                            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-[#f8f6f1] text-[#b89252] transition group-hover:bg-[#172033]">
+                                <i class="fa-solid fa-arrow-right text-[9px] transition group-hover:text-white"></i>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </article>
+
+            <article class="group overflow-hidden rounded-[20px] border border-[#ded8ce] bg-white shadow-[0_10px_35px_rgba(23,32,51,0.05)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(23,32,51,0.1)]" data-aos="fade-up" data-aos-delay="100">
+                <a href="#" class="block">
+                    <div class="relative aspect-[16/10] overflow-hidden">
+                        <img src="{% static 'images/blog/blog-2.jpg' %}" alt="Property investment guide"
+                            class="h-full w-full object-cover transition duration-700 group-hover:scale-105">
+                        <span class="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.15em] text-[#172033] shadow-sm">Investment</span>
+                    </div>
+                    <div class="p-5 sm:p-6">
+                        <div class="mb-3 flex items-center gap-2 text-[9px] font-medium uppercase tracking-[0.15em] text-[#172033]/40">
+                            <span>05 Sep 2026</span>
+                            <span class="h-1 w-1 rounded-full bg-[#b89252]"></span>
+                            <span>5 Min Read</span>
+                        </div>
+                        <h3 class="line-clamp-2 font-serif text-xl leading-snug text-[#172033] transition group-hover:text-[#b89252]">
+                            How to Choose the Right Property for Long-Term Investment
+                        </h3>
+                        <p class="mt-3 line-clamp-2 text-xs leading-6 text-[#172033]/50">
+                            A practical guide to evaluating location, appreciation potential, rental demand and future growth.
+                        </p>
+                        <div class="mt-5 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.15em] text-[#172033]">
+                            Read Article
+                            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-[#f8f6f1] text-[#b89252] transition group-hover:bg-[#172033]">
+                                <i class="fa-solid fa-arrow-right text-[9px] transition group-hover:text-white"></i>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </article>
+
+            <article class="group overflow-hidden rounded-[20px] border border-[#ded8ce] bg-white shadow-[0_10px_35px_rgba(23,32,51,0.05)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(23,32,51,0.1)]" data-aos="fade-up" data-aos-delay="200">
+                <a href="#" class="block">
+                    <div class="relative aspect-[16/10] overflow-hidden">
+                        <img src="{% static 'images/blog/blog-3.jpg' %}" alt="Best Mumbai localities"
+                            class="h-full w-full object-cover transition duration-700 group-hover:scale-105">
+                        <span class="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.15em] text-[#172033] shadow-sm">Localities</span>
+                    </div>
+                    <div class="p-5 sm:p-6">
+                        <div class="mb-3 flex items-center gap-2 text-[9px] font-medium uppercase tracking-[0.15em] text-[#172033]/40">
+                            <span>02 Sep 2026</span>
+                            <span class="h-1 w-1 rounded-full bg-[#b89252]"></span>
+                            <span>7 Min Read</span>
+                        </div>
+                        <h3 class="line-clamp-2 font-serif text-xl leading-snug text-[#172033] transition group-hover:text-[#b89252]">
+                            7 Best Localities in Mumbai for Buying Your Dream Home
+                        </h3>
+                        <p class="mt-3 line-clamp-2 text-xs leading-6 text-[#172033]/50">
+                            Compare connectivity, lifestyle, infrastructure and property opportunities across Mumbai's top neighbourhoods.
+                        </p>
+                        <div class="mt-5 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.15em] text-[#172033]">
+                            Read Article
+                            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-[#f8f6f1] text-[#b89252] transition group-hover:bg-[#172033]">
+                                <i class="fa-solid fa-arrow-right text-[9px] transition group-hover:text-white"></i>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </article>
+
+            <article class="group overflow-hidden rounded-[20px] border border-[#ded8ce] bg-white shadow-[0_10px_35px_rgba(23,32,51,0.05)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(23,32,51,0.1)]" data-aos="fade-up">
+                <a href="#" class="block">
+                    <div class="relative aspect-[16/10] overflow-hidden">
+                        <img src="{% static 'images/blog/blog-4.jpg' %}" alt="Home buying guide"
+                            class="h-full w-full object-cover transition duration-700 group-hover:scale-105">
+                        <span class="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.15em] text-[#172033] shadow-sm">Guides</span>
+                    </div>
+                    <div class="p-5 sm:p-6">
+                        <div class="mb-3 flex items-center gap-2 text-[9px] font-medium uppercase tracking-[0.15em] text-[#172033]/40">
+                            <span>29 Aug 2026</span>
+                            <span class="h-1 w-1 rounded-full bg-[#b89252]"></span>
+                            <span>6 Min Read</span>
+                        </div>
+                        <h3 class="line-clamp-2 font-serif text-xl leading-snug text-[#172033] transition group-hover:text-[#b89252]">
+                            First-Time Home Buying: A Complete Property Guide
+                        </h3>
+                        <p class="mt-3 line-clamp-2 text-xs leading-6 text-[#172033]/50">
+                            Everything you should consider before taking the first step towards owning your dream home.
+                        </p>
+                        <div class="mt-5 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.15em] text-[#172033]">
+                            Read Article
+                            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-[#f8f6f1] text-[#b89252] transition group-hover:bg-[#172033]">
+                                <i class="fa-solid fa-arrow-right text-[9px] transition group-hover:text-white"></i>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </article>
+
+            <article class="group overflow-hidden rounded-[20px] border border-[#ded8ce] bg-white shadow-[0_10px_35px_rgba(23,32,51,0.05)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(23,32,51,0.1)]" data-aos="fade-up" data-aos-delay="100">
+                <a href="#" class="block">
+                    <div class="relative aspect-[16/10] overflow-hidden">
+                        <img src="{% static 'images/blog/blog-5.jpg' %}" alt="Luxury property investment"
+                            class="h-full w-full object-cover transition duration-700 group-hover:scale-105">
+                        <span class="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.15em] text-[#172033] shadow-sm">Luxury</span>
+                    </div>
+                    <div class="p-5 sm:p-6">
+                        <div class="mb-3 flex items-center gap-2 text-[9px] font-medium uppercase tracking-[0.15em] text-[#172033]/40">
+                            <span>25 Aug 2026</span>
+                            <span class="h-1 w-1 rounded-full bg-[#b89252]"></span>
+                            <span>5 Min Read</span>
+                        </div>
+                        <h3 class="line-clamp-2 font-serif text-xl leading-snug text-[#172033] transition group-hover:text-[#b89252]">
+                            Why Luxury Real Estate Continues to Attract Smart Investors
+                        </h3>
+                        <p class="mt-3 line-clamp-2 text-xs leading-6 text-[#172033]/50">
+                            Understand the factors driving premium residential real estate and high-value property demand.
+                        </p>
+                        <div class="mt-5 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.15em] text-[#172033]">
+                            Read Article
+                            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-[#f8f6f1] text-[#b89252] transition group-hover:bg-[#172033]">
+                                <i class="fa-solid fa-arrow-right text-[9px] transition group-hover:text-white"></i>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </article>
+
+            <article class="group overflow-hidden rounded-[20px] border border-[#ded8ce] bg-white shadow-[0_10px_35px_rgba(23,32,51,0.05)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(23,32,51,0.1)]" data-aos="fade-up" data-aos-delay="200">
+                <a href="#" class="block">
+                    <div class="relative aspect-[16/10] overflow-hidden">
+                        <img src="{% static 'images/blog/blog-6.jpg' %}" alt="Real estate home loan"
+                            class="h-full w-full object-cover transition duration-700 group-hover:scale-105">
+                        <span class="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.15em] text-[#172033] shadow-sm">Finance</span>
+                    </div>
+                    <div class="p-5 sm:p-6">
+                        <div class="mb-3 flex items-center gap-2 text-[9px] font-medium uppercase tracking-[0.15em] text-[#172033]/40">
+                            <span>21 Aug 2026</span>
+                            <span class="h-1 w-1 rounded-full bg-[#b89252]"></span>
+                            <span>4 Min Read</span>
+                        </div>
+                        <h3 class="line-clamp-2 font-serif text-xl leading-snug text-[#172033] transition group-hover:text-[#b89252]">
+                            Home Loan Basics: Understanding EMI, Interest & Tenure
+                        </h3>
+                        <p class="mt-3 line-clamp-2 text-xs leading-6 text-[#172033]/50">
+                            Learn the fundamentals of home financing and how loan tenure can impact your overall property cost.
+                        </p>
+                        <div class="mt-5 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.15em] text-[#172033]">
+                            Read Article
+                            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-[#f8f6f1] text-[#b89252] transition group-hover:bg-[#172033]">
+                                <i class="fa-solid fa-arrow-right text-[9px] transition group-hover:text-white"></i>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </article>
+        </div>
+    </div>
+</section>
+```
+
+
+
+{% endblock content %}
