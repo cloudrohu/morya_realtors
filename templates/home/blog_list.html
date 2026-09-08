@@ -2,230 +2,429 @@
 
 
 {% block content %}
-```html
-{% load static %}
 
-<section class="bg-[#f8f6f1]">
-    <div class="relative overflow-hidden bg-[#172033] py-16 sm:py-20">
-        <div class="absolute -right-24 -top-24 h-72 w-72 rounded-full border border-[#d4af6a]/10"></div>
-        <div class="absolute -bottom-32 -left-20 h-72 w-72 rounded-full border border-white/5"></div>
 
-        <div class="relative mx-auto max-w-6xl px-5 sm:px-8">
-            <div class="max-w-2xl" data-aos="fade-up">
-                <div class="mb-4 flex items-center gap-3">
-                    <span class="h-px w-9 bg-[#d4af6a]"></span>
-                    <span class="text-[9px] font-semibold uppercase tracking-[0.35em] text-[#d4af6a]">Morya Insights</span>
-                </div>
-                <h1 class="font-serif text-4xl leading-tight text-white sm:text-5xl lg:text-6xl">
-                    Ideas, Insights &
-                    <span class="italic text-[#d4af6a]">Real Estate Stories.</span>
-                </h1>
-                <p class="mt-5 max-w-xl text-sm leading-7 text-white/55 sm:text-base">
-                    Explore property trends, investment insights, locality guides and expert advice to make smarter real-estate decisions.
-                </p>
-            </div>
+
+<div class="bg-slate-50 text-slate-900 antialiased py-6 sm:py-10">
+
+  <!-- ================= HERO SECTION ================= -->
+  <section class="relative bg-gradient-to-b from-amber-50/60 via-white to-slate-50 py-16 sm:py-24 border-b border-slate-200/70 overflow-hidden">
+    <!-- Subtle architectural background pattern & glow -->
+    <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-[650px] h-[320px] bg-amber-200/25 blur-3xl rounded-full pointer-events-none"></div>
+
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-amber-100 text-amber-900 mb-4 border border-amber-200/70">
+        <svg class="w-3.5 h-3.5 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+        </svg>
+        Realty Insights & Market Trends
+      </span>
+
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-tight">
+        Navigate Properties, <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-700 via-amber-600 to-amber-800">Investments</span> & Local Living
+      </h1>
+
+      <p class="mt-4 text-base sm:text-lg text-slate-600 max-w-2xl mx-auto">
+        Expert analysis on property appreciation, RERA regulations, neighborhood hotspots, and smart home investment guides.
+      </p>
+
+      <!-- ================= SEARCH BAR ================= -->
+      <div class="mt-8 max-w-xl mx-auto">
+        <div class="relative flex items-center shadow-lg shadow-slate-200/60 rounded-2xl">
+          <span class="absolute left-4 text-slate-400 pointer-events-none">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+          </span>
+          <input 
+            id="propertySearchInput" 
+            type="text" 
+            placeholder="Search projects, localities, legal guides, or ROI tips..." 
+            class="w-full pl-12 pr-10 py-3.5 bg-white rounded-2xl border border-slate-200 text-slate-900 placeholder-slate-400 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 transition-all"
+          >
+          <button 
+            id="clearSearchBtn" 
+            class="hidden absolute right-3.5 p-1 rounded-md text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-all"
+            aria-label="Clear search"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LISTING & TABS SECTION ================= -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    
+    <!-- Category Tabs -->
+    <div class="flex items-center justify-between border-b border-slate-200 pb-4 mb-8 flex-wrap gap-4">
+      <div class="flex items-center gap-2 overflow-x-auto pb-1 max-w-full" id="propertyTabs">
+        <button class="realty-tab active-realty-tab px-4 py-2 text-sm font-semibold rounded-lg transition-all" data-category="all">
+          All Guides
+        </button>
+        <button class="realty-tab px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 rounded-lg transition-all" data-category="buying-guide">
+          Buying & Selling
+        </button>
+        <button class="realty-tab px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 rounded-lg transition-all" data-category="market-trends">
+          Market Trends & ROI
+        </button>
+        <button class="realty-tab px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 rounded-lg transition-all" data-category="legal-rera">
+          Legal & RERA
+        </button>
+        <button class="realty-tab px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 rounded-lg transition-all" data-category="luxury-living">
+          Luxury Living
+        </button>
+      </div>
+
+      <div class="text-xs font-semibold text-slate-500 tracking-wide uppercase">
+        Showing <span id="propertyPostCount" class="text-amber-700 font-bold">6</span> articles
+      </div>
     </div>
 
-    <div class="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
-        <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between" data-aos="fade-up">
-            <div>
-                <div class="mb-2 flex items-center gap-2">
-                    <span class="h-px w-6 bg-[#b89252]"></span>
-                    <span class="text-[9px] font-bold uppercase tracking-[0.3em] text-[#b89252]">Our Journal</span>
-                </div>
-                <h2 class="font-serif text-3xl text-[#172033] sm:text-4xl">
-                    Latest <span class="italic text-[#b89252]">Insights</span>
-                </h2>
-            </div>
-
-            <div class="flex flex-wrap gap-2">
-                <button class="rounded-full bg-[#172033] px-4 py-2 text-[9px] font-bold uppercase tracking-[0.12em] text-white">All</button>
-                <button class="rounded-full border border-[#ded8ce] bg-white px-4 py-2 text-[9px] font-bold uppercase tracking-[0.12em] text-[#172033]/55 transition hover:border-[#b89252] hover:text-[#172033]">Investment</button>
-                <button class="rounded-full border border-[#ded8ce] bg-white px-4 py-2 text-[9px] font-bold uppercase tracking-[0.12em] text-[#172033]/55 transition hover:border-[#b89252] hover:text-[#172033]">Market</button>
-                <button class="rounded-full border border-[#ded8ce] bg-white px-4 py-2 text-[9px] font-bold uppercase tracking-[0.12em] text-[#172033]/55 transition hover:border-[#b89252] hover:text-[#172033]">Lifestyle</button>
-            </div>
+    <!-- Real Estate Articles Grid -->
+    <div id="propertyGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      
+      <!-- Card 1 -->
+      <article class="realty-card group flex flex-col bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md hover:border-amber-200 transition-all duration-300 overflow-hidden" data-category="market-trends">
+        <div class="relative aspect-[16/9] w-full overflow-hidden bg-slate-100">
+          <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80" alt="High-rise apartments" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+          <span class="absolute top-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1 rounded-md text-xs font-semibold text-amber-800 shadow-sm border border-slate-100">
+            Market Trends & ROI
+          </span>
         </div>
-
-        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <article class="group overflow-hidden rounded-[20px] border border-[#ded8ce] bg-white shadow-[0_10px_35px_rgba(23,32,51,0.05)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(23,32,51,0.1)]" data-aos="fade-up">
-                <a href="#" class="block">
-                    <div class="relative aspect-[16/10] overflow-hidden">
-                        <img src="{% static 'images/blog/blog-1.jpg' %}" alt="Mumbai real estate market"
-                            class="h-full w-full object-cover transition duration-700 group-hover:scale-105">
-                        <span class="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.15em] text-[#172033] shadow-sm">Market</span>
-                    </div>
-                    <div class="p-5 sm:p-6">
-                        <div class="mb-3 flex items-center gap-2 text-[9px] font-medium uppercase tracking-[0.15em] text-[#172033]/40">
-                            <span>08 Sep 2026</span>
-                            <span class="h-1 w-1 rounded-full bg-[#b89252]"></span>
-                            <span>6 Min Read</span>
-                        </div>
-                        <h3 class="line-clamp-2 font-serif text-xl leading-snug text-[#172033] transition group-hover:text-[#b89252]">
-                            Mumbai Real Estate Market: Trends Every Buyer Should Know
-                        </h3>
-                        <p class="mt-3 line-clamp-2 text-xs leading-6 text-[#172033]/50">
-                            Discover the latest property trends, demand patterns and emerging opportunities across Mumbai.
-                        </p>
-                        <div class="mt-5 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.15em] text-[#172033]">
-                            Read Article
-                            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-[#f8f6f1] text-[#b89252] transition group-hover:bg-[#172033]">
-                                <i class="fa-solid fa-arrow-right text-[9px] transition group-hover:text-white"></i>
-                            </span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-
-            <article class="group overflow-hidden rounded-[20px] border border-[#ded8ce] bg-white shadow-[0_10px_35px_rgba(23,32,51,0.05)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(23,32,51,0.1)]" data-aos="fade-up" data-aos-delay="100">
-                <a href="#" class="block">
-                    <div class="relative aspect-[16/10] overflow-hidden">
-                        <img src="{% static 'images/blog/blog-2.jpg' %}" alt="Property investment guide"
-                            class="h-full w-full object-cover transition duration-700 group-hover:scale-105">
-                        <span class="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.15em] text-[#172033] shadow-sm">Investment</span>
-                    </div>
-                    <div class="p-5 sm:p-6">
-                        <div class="mb-3 flex items-center gap-2 text-[9px] font-medium uppercase tracking-[0.15em] text-[#172033]/40">
-                            <span>05 Sep 2026</span>
-                            <span class="h-1 w-1 rounded-full bg-[#b89252]"></span>
-                            <span>5 Min Read</span>
-                        </div>
-                        <h3 class="line-clamp-2 font-serif text-xl leading-snug text-[#172033] transition group-hover:text-[#b89252]">
-                            How to Choose the Right Property for Long-Term Investment
-                        </h3>
-                        <p class="mt-3 line-clamp-2 text-xs leading-6 text-[#172033]/50">
-                            A practical guide to evaluating location, appreciation potential, rental demand and future growth.
-                        </p>
-                        <div class="mt-5 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.15em] text-[#172033]">
-                            Read Article
-                            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-[#f8f6f1] text-[#b89252] transition group-hover:bg-[#172033]">
-                                <i class="fa-solid fa-arrow-right text-[9px] transition group-hover:text-white"></i>
-                            </span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-
-            <article class="group overflow-hidden rounded-[20px] border border-[#ded8ce] bg-white shadow-[0_10px_35px_rgba(23,32,51,0.05)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(23,32,51,0.1)]" data-aos="fade-up" data-aos-delay="200">
-                <a href="#" class="block">
-                    <div class="relative aspect-[16/10] overflow-hidden">
-                        <img src="{% static 'images/blog/blog-3.jpg' %}" alt="Best Mumbai localities"
-                            class="h-full w-full object-cover transition duration-700 group-hover:scale-105">
-                        <span class="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.15em] text-[#172033] shadow-sm">Localities</span>
-                    </div>
-                    <div class="p-5 sm:p-6">
-                        <div class="mb-3 flex items-center gap-2 text-[9px] font-medium uppercase tracking-[0.15em] text-[#172033]/40">
-                            <span>02 Sep 2026</span>
-                            <span class="h-1 w-1 rounded-full bg-[#b89252]"></span>
-                            <span>7 Min Read</span>
-                        </div>
-                        <h3 class="line-clamp-2 font-serif text-xl leading-snug text-[#172033] transition group-hover:text-[#b89252]">
-                            7 Best Localities in Mumbai for Buying Your Dream Home
-                        </h3>
-                        <p class="mt-3 line-clamp-2 text-xs leading-6 text-[#172033]/50">
-                            Compare connectivity, lifestyle, infrastructure and property opportunities across Mumbai's top neighbourhoods.
-                        </p>
-                        <div class="mt-5 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.15em] text-[#172033]">
-                            Read Article
-                            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-[#f8f6f1] text-[#b89252] transition group-hover:bg-[#172033]">
-                                <i class="fa-solid fa-arrow-right text-[9px] transition group-hover:text-white"></i>
-                            </span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-
-            <article class="group overflow-hidden rounded-[20px] border border-[#ded8ce] bg-white shadow-[0_10px_35px_rgba(23,32,51,0.05)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(23,32,51,0.1)]" data-aos="fade-up">
-                <a href="#" class="block">
-                    <div class="relative aspect-[16/10] overflow-hidden">
-                        <img src="{% static 'images/blog/blog-4.jpg' %}" alt="Home buying guide"
-                            class="h-full w-full object-cover transition duration-700 group-hover:scale-105">
-                        <span class="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.15em] text-[#172033] shadow-sm">Guides</span>
-                    </div>
-                    <div class="p-5 sm:p-6">
-                        <div class="mb-3 flex items-center gap-2 text-[9px] font-medium uppercase tracking-[0.15em] text-[#172033]/40">
-                            <span>29 Aug 2026</span>
-                            <span class="h-1 w-1 rounded-full bg-[#b89252]"></span>
-                            <span>6 Min Read</span>
-                        </div>
-                        <h3 class="line-clamp-2 font-serif text-xl leading-snug text-[#172033] transition group-hover:text-[#b89252]">
-                            First-Time Home Buying: A Complete Property Guide
-                        </h3>
-                        <p class="mt-3 line-clamp-2 text-xs leading-6 text-[#172033]/50">
-                            Everything you should consider before taking the first step towards owning your dream home.
-                        </p>
-                        <div class="mt-5 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.15em] text-[#172033]">
-                            Read Article
-                            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-[#f8f6f1] text-[#b89252] transition group-hover:bg-[#172033]">
-                                <i class="fa-solid fa-arrow-right text-[9px] transition group-hover:text-white"></i>
-                            </span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-
-            <article class="group overflow-hidden rounded-[20px] border border-[#ded8ce] bg-white shadow-[0_10px_35px_rgba(23,32,51,0.05)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(23,32,51,0.1)]" data-aos="fade-up" data-aos-delay="100">
-                <a href="#" class="block">
-                    <div class="relative aspect-[16/10] overflow-hidden">
-                        <img src="{% static 'images/blog/blog-5.jpg' %}" alt="Luxury property investment"
-                            class="h-full w-full object-cover transition duration-700 group-hover:scale-105">
-                        <span class="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.15em] text-[#172033] shadow-sm">Luxury</span>
-                    </div>
-                    <div class="p-5 sm:p-6">
-                        <div class="mb-3 flex items-center gap-2 text-[9px] font-medium uppercase tracking-[0.15em] text-[#172033]/40">
-                            <span>25 Aug 2026</span>
-                            <span class="h-1 w-1 rounded-full bg-[#b89252]"></span>
-                            <span>5 Min Read</span>
-                        </div>
-                        <h3 class="line-clamp-2 font-serif text-xl leading-snug text-[#172033] transition group-hover:text-[#b89252]">
-                            Why Luxury Real Estate Continues to Attract Smart Investors
-                        </h3>
-                        <p class="mt-3 line-clamp-2 text-xs leading-6 text-[#172033]/50">
-                            Understand the factors driving premium residential real estate and high-value property demand.
-                        </p>
-                        <div class="mt-5 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.15em] text-[#172033]">
-                            Read Article
-                            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-[#f8f6f1] text-[#b89252] transition group-hover:bg-[#172033]">
-                                <i class="fa-solid fa-arrow-right text-[9px] transition group-hover:text-white"></i>
-                            </span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-
-            <article class="group overflow-hidden rounded-[20px] border border-[#ded8ce] bg-white shadow-[0_10px_35px_rgba(23,32,51,0.05)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(23,32,51,0.1)]" data-aos="fade-up" data-aos-delay="200">
-                <a href="#" class="block">
-                    <div class="relative aspect-[16/10] overflow-hidden">
-                        <img src="{% static 'images/blog/blog-6.jpg' %}" alt="Real estate home loan"
-                            class="h-full w-full object-cover transition duration-700 group-hover:scale-105">
-                        <span class="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.15em] text-[#172033] shadow-sm">Finance</span>
-                    </div>
-                    <div class="p-5 sm:p-6">
-                        <div class="mb-3 flex items-center gap-2 text-[9px] font-medium uppercase tracking-[0.15em] text-[#172033]/40">
-                            <span>21 Aug 2026</span>
-                            <span class="h-1 w-1 rounded-full bg-[#b89252]"></span>
-                            <span>4 Min Read</span>
-                        </div>
-                        <h3 class="line-clamp-2 font-serif text-xl leading-snug text-[#172033] transition group-hover:text-[#b89252]">
-                            Home Loan Basics: Understanding EMI, Interest & Tenure
-                        </h3>
-                        <p class="mt-3 line-clamp-2 text-xs leading-6 text-[#172033]/50">
-                            Learn the fundamentals of home financing and how loan tenure can impact your overall property cost.
-                        </p>
-                        <div class="mt-5 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.15em] text-[#172033]">
-                            Read Article
-                            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-[#f8f6f1] text-[#b89252] transition group-hover:bg-[#172033]">
-                                <i class="fa-solid fa-arrow-right text-[9px] transition group-hover:text-white"></i>
-                            </span>
-                        </div>
-                    </div>
-                </a>
-            </article>
+        <div class="p-6 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-3 text-xs text-slate-500 mb-2">
+              <span>Aug 24, 2026</span>
+              <span>•</span>
+              <span>6 min read</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 group-hover:text-amber-700 transition-colors leading-snug">
+              Western Suburbs vs MMR Extended: Where is Rental Yield Peaking?
+            </h3>
+            <p class="mt-2.5 text-sm text-slate-600 line-clamp-2">
+              An in-depth analysis of metro connectivity, rental capital appreciation, and infrastructure developments driving commercial sprawl.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 rounded-full bg-amber-100 text-amber-800 font-bold flex items-center justify-center text-xs">PR</div>
+              <span class="text-xs font-semibold text-slate-700">Property Research Desk</span>
+            </div>
+            <a href="#" class="text-xs font-semibold text-amber-700 hover:text-amber-800 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+              Read Guide
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
+          </div>
         </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="realty-card group flex flex-col bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md hover:border-amber-200 transition-all duration-300 overflow-hidden" data-category="buying-guide">
+        <div class="relative aspect-[16/9] w-full overflow-hidden bg-slate-100">
+          <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80" alt="Keys and house model" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+          <span class="absolute top-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1 rounded-md text-xs font-semibold text-amber-800 shadow-sm border border-slate-100">
+            Buying & Selling
+          </span>
+        </div>
+        <div class="p-6 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-3 text-xs text-slate-500 mb-2">
+              <span>Aug 19, 2026</span>
+              <span>•</span>
+              <span>5 min read</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 group-hover:text-amber-700 transition-colors leading-snug">
+              Carpet Area vs Super Built-up: Crucial Formulas Every Homebuyer Must Know
+            </h3>
+            <p class="mt-2.5 text-sm text-slate-600 line-clamp-2">
+              Decode loading percentages, common space distributions, and usable square footage before finalizing your token amount.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 rounded-full bg-slate-100 text-slate-800 font-bold flex items-center justify-center text-xs">AM</div>
+              <span class="text-xs font-semibold text-slate-700">Anil Mehta</span>
+            </div>
+            <a href="#" class="text-xs font-semibold text-amber-700 hover:text-amber-800 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+              Read Guide
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="realty-card group flex flex-col bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md hover:border-amber-200 transition-all duration-300 overflow-hidden" data-category="legal-rera">
+        <div class="relative aspect-[16/9] w-full overflow-hidden bg-slate-100">
+          <img src="https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=800&q=80" alt="Legal documents" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+          <span class="absolute top-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1 rounded-md text-xs font-semibold text-amber-800 shadow-sm border border-slate-100">
+            Legal & RERA
+          </span>
+        </div>
+        <div class="p-6 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-3 text-xs text-slate-500 mb-2">
+              <span>Aug 12, 2026</span>
+              <span>•</span>
+              <span>8 min read</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 group-hover:text-amber-700 transition-colors leading-snug">
+              Complete Checklist: Verifying Title Deeds, OC & CC Certificates
+            </h3>
+            <p class="mt-2.5 text-sm text-slate-600 line-clamp-2">
+              Prevent ownership disputes and municipal penalties with our step-by-step verification protocol for under-construction and resale flats.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 rounded-full bg-amber-100 text-amber-800 font-bold flex items-center justify-center text-xs">LC</div>
+              <span class="text-xs font-semibold text-slate-700">Legal Counsel</span>
+            </div>
+            <a href="#" class="text-xs font-semibold text-amber-700 hover:text-amber-800 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+              Read Guide
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 4 -->
+      <article class="realty-card group flex flex-col bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md hover:border-amber-200 transition-all duration-300 overflow-hidden" data-category="luxury-living">
+        <div class="relative aspect-[16/9] w-full overflow-hidden bg-slate-100">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" alt="Modern luxury villa" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+          <span class="absolute top-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1 rounded-md text-xs font-semibold text-amber-800 shadow-sm border border-slate-100">
+            Luxury Living
+          </span>
+        </div>
+        <div class="p-6 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-3 text-xs text-slate-500 mb-2">
+              <span>Jul 28, 2026</span>
+              <span>•</span>
+              <span>4 min read</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 group-hover:text-amber-700 transition-colors leading-snug">
+              The Evolution of Gated Communities: Sky Decks and Smart Home Integration
+            </h3>
+            <p class="mt-2.5 text-sm text-slate-600 line-clamp-2">
+              How high-net-worth buyers are prioritizing air purification systems, EV charging bays, and infinity deck layouts in modern high-rises.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 rounded-full bg-slate-100 text-slate-800 font-bold flex items-center justify-center text-xs">SK</div>
+              <span class="text-xs font-semibold text-slate-700">Sonia Kapoor</span>
+            </div>
+            <a href="#" class="text-xs font-semibold text-amber-700 hover:text-amber-800 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+              Read Guide
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 5 -->
+      <article class="realty-card group flex flex-col bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md hover:border-amber-200 transition-all duration-300 overflow-hidden" data-category="buying-guide">
+        <div class="relative aspect-[16/9] w-full overflow-hidden bg-slate-100">
+          <img src="https://images.unsplash.com/photo-1582407947304-fd86f028f716?auto=format&fit=crop&w=800&q=80" alt="Apartment buildings" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+          <span class="absolute top-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1 rounded-md text-xs font-semibold text-amber-800 shadow-sm border border-slate-100">
+            Buying & Selling
+          </span>
+        </div>
+        <div class="p-6 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-3 text-xs text-slate-500 mb-2">
+              <span>Jul 15, 2026</span>
+              <span>•</span>
+              <span>7 min read</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 group-hover:text-amber-700 transition-colors leading-snug">
+              Home Loan Pre-approvals: How to Lock Low Interest Rates and Faster Sanctions
+            </h3>
+            <p class="mt-2.5 text-sm text-slate-600 line-clamp-2">
+              Understand CIBIL benchmarks, down-payment ratios, and processing fee exemptions before applying to top private and PSU banks.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 rounded-full bg-amber-100 text-amber-800 font-bold flex items-center justify-center text-xs">RK</div>
+              <span class="text-xs font-semibold text-slate-700">Ravi Kumar</span>
+            </div>
+            <a href="#" class="text-xs font-semibold text-amber-700 hover:text-amber-800 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+              Read Guide
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 6 -->
+      <article class="realty-card group flex flex-col bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md hover:border-amber-200 transition-all duration-300 overflow-hidden" data-category="market-trends">
+        <div class="relative aspect-[16/9] w-full overflow-hidden bg-slate-100">
+          <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80" alt="Modern corporate skyscraper" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+          <span class="absolute top-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1 rounded-md text-xs font-semibold text-amber-800 shadow-sm border border-slate-100">
+            Market Trends & ROI
+          </span>
+        </div>
+        <div class="p-6 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-3 text-xs text-slate-500 mb-2">
+              <span>Jun 30, 2026</span>
+              <span>•</span>
+              <span>5 min read</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 group-hover:text-amber-700 transition-colors leading-snug">
+              Commercial Fractional Ownership vs Residential Plots: A 5-Year ROI Study
+            </h3>
+            <p class="mt-2.5 text-sm text-slate-600 line-clamp-2">
+              Evaluating risk-adjusted returns, tax implications under capital gains, and liquidity timeframes for retail investors.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 rounded-full bg-slate-100 text-slate-800 font-bold flex items-center justify-center text-xs">PR</div>
+              <span class="text-xs font-semibold text-slate-700">Property Research Desk</span>
+            </div>
+            <a href="#" class="text-xs font-semibold text-amber-700 hover:text-amber-800 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+              Read Guide
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+
     </div>
-</section>
-```
 
+    <!-- Empty State -->
+    <div id="noPropertyResults" class="hidden text-center py-16">
+      <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-amber-50 text-amber-700 mb-4 border border-amber-200">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+        </svg>
+      </div>
+      <h4 class="text-lg font-bold text-slate-800">No matching property articles found</h4>
+      <p class="text-sm text-slate-500 mt-1 max-w-sm mx-auto">
+        Try adjusting your keywords, searching by location or terminology, or switching categories.
+      </p>
+      <button id="resetPropertyFilters" class="mt-5 px-4 py-2 bg-amber-700 text-white text-xs font-semibold rounded-lg hover:bg-amber-800 shadow-sm transition-all">
+        Reset Search & Filters
+      </button>
+    </div>
+
+  </section>
+
+</div>
+
+
+
+<script>
+(function() {
+    const searchInput = document.getElementById('propertySearchInput');
+    const clearSearchBtn = document.getElementById('clearSearchBtn');
+    const tabButtons = document.querySelectorAll('.realty-tab');
+    const postCards = document.querySelectorAll('.realty-card');
+    const noResults = document.getElementById('noPropertyResults');
+    const resetBtn = document.getElementById('resetPropertyFilters');
+    const postCount = document.getElementById('propertyPostCount');
+
+    let currentCategory = 'all';
+    let searchQuery = '';
+
+    const activeClass = 'bg-amber-700 text-white shadow-sm shadow-amber-700/20';
+    const inactiveClass = 'text-slate-600 hover:text-slate-900 hover:bg-slate-100';
+
+    function initTabs() {
+    tabButtons.forEach(btn => {
+        if (btn.classList.contains('active-realty-tab')) {
+        btn.className = `realty-tab px-4 py-2 text-sm font-semibold rounded-lg transition-all ${activeClass}`;
+        } else {
+        btn.className = `realty-tab px-4 py-2 text-sm font-medium rounded-lg transition-all ${inactiveClass}`;
+        }
+    });
+    }
+    initTabs();
+
+    function filterPosts() {
+    let count = 0;
+
+    postCards.forEach(card => {
+        const title = card.querySelector('h3').textContent.toLowerCase();
+        const desc = card.querySelector('p').textContent.toLowerCase();
+        const category = card.getAttribute('data-category');
+
+        const matchesCategory = (currentCategory === 'all' || category === currentCategory);
+        const matchesSearch = title.includes(searchQuery) || desc.includes(searchQuery);
+
+        if (matchesCategory && matchesSearch) {
+        card.classList.remove('hidden');
+        count++;
+        } else {
+        card.classList.add('hidden');
+        }
+    });
+
+    if (postCount) postCount.textContent = count;
+    if (noResults) {
+        if (count === 0) {
+        noResults.classList.remove('hidden');
+        } else {
+        noResults.classList.add('hidden');
+        }
+    }
+    }
+
+    tabButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        tabButtons.forEach(b => {
+        b.className = `realty-tab px-4 py-2 text-sm font-medium rounded-lg transition-all ${inactiveClass}`;
+        });
+        btn.className = `realty-tab px-4 py-2 text-sm font-semibold rounded-lg transition-all ${activeClass}`;
+        currentCategory = btn.getAttribute('data-category');
+        filterPosts();
+    });
+    });
+
+    if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value.toLowerCase().trim();
+        if (clearSearchBtn) {
+        clearSearchBtn.classList.toggle('hidden', searchQuery.length === 0);
+        }
+        filterPosts();
+    });
+    }
+
+    if (clearSearchBtn) {
+    clearSearchBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        searchQuery = '';
+        clearSearchBtn.classList.add('hidden');
+        searchInput.focus();
+        filterPosts();
+    });
+    }
+
+    if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+        if (searchInput) searchInput.value = '';
+        searchQuery = '';
+        if (clearSearchBtn) clearSearchBtn.classList.add('hidden');
+        currentCategory = 'all';
+
+        tabButtons.forEach(b => {
+        const isAll = b.getAttribute('data-category') === 'all';
+        b.className = `realty-tab px-4 py-2 text-sm font-${isAll ? 'semibold' : 'medium'} rounded-lg transition-all ${isAll ? activeClass : inactiveClass}`;
+        });
+
+        filterPosts();
+    });
+    }
+})();
+</script>
 
 
 {% endblock content %}
