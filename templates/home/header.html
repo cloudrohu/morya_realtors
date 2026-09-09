@@ -11,80 +11,10 @@
             <a href="/" class="group flex items-center gap-3">
 
                 <div class="w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center shrink-0">
-
-                    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-[#b08d57]">
-
-                        <!-- Crown -->
-                        <path d="M35 25 C38 17 45 13 50 10 C55 13 62 17 65 25" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-
-                        <path d="M39 24 C43 20 47 19 50 18 C53 19 57 20 61 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-
-                        <!-- Left Ear -->
-                        <path d="M39 34 C28 27 18 30 17 40 C16 50 24 56 35 52" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-
-                        <!-- Right Ear -->
-                        <path d="M61 34 C72 27 82 30 83 40 C84 50 76 56 65 52" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-
-                        <!-- Head -->
-                        <path d="M38 34 C40 25 47 21 54 23 C63 25 66 33 64 43" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-
-                        <!-- Eye -->
-                        <path d="M42 37 C45 34 48 34 51 37 C48 39 45 39 42 37Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-
-                        <!-- Tilak -->
-                        <path d="M54 29 C52 33 52 36 54 39" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-
-                        <!-- Trunk -->
-                        <path d="M54 39 C57 48 62 51 61 60 C60 69 51 73 45 68 C40 64 43 57 48 56 C53 55 57 59 55 64" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
-
-                        <!-- Left Arm -->
-                        <path d="M39 51 C32 56 30 64 34 70" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/>
-
-                        <!-- Right Arm -->
-                        <path d="M64 50 C70 55 72 62 69 68" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/>
-
-                        <!-- Modak -->
-                        <path d="M29 68 C27 64 30 61 34 62 C38 61 41 64 39 68 C37 72 31 72 29 68Z" stroke="currentColor" stroke-width="2"/>
-
-                        <!-- Belly -->
-                        <path d="M35 68 C34 78 41 84 50 84 C59 84 66 78 65 68" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-
-                        <!-- Lotus Base -->
-                        <path d="M27 82 C33 78 39 79 44 83 C47 85 50 87 50 87 C50 87 53 85 56 83 C61 79 67 78 73 82" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-
-                        <path d="M21 87 C31 84 40 88 50 91 C60 88 69 84 79 87" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-
-                    </svg>
-
-                </div>
-
-                <div class="leading-none">
-
-                    <h1 class="font-['Yatra_One'] text-[32px] sm:text-[36px] text-[#171717] tracking-wide">
-
-                        Morya
-
-                    </h1>
-
-
-                    <div class="flex items-center gap-2 mt-1">
-
-                        <span class="w-5 h-px bg-[#b08d57]"></span>
-
-                        <span class="text-[8px] sm:text-[9px] uppercase tracking-[0.32em] text-[#b08d57] font-medium">
-
-                            Realtors
-
-                        </span>
-
-                        <span class="w-5 h-px bg-[#b08d57]"></span>
-
-                    </div>
-
+                    <img src="{{settings_obj.logo.url}}" alt="Morya Realtors" class="w-full h-full object-contain">
                 </div>
 
             </a>
-
 
             <nav class="hidden lg:flex items-center gap-9">
 
@@ -96,31 +26,31 @@
 
                 </a>
 
-                <a href="/about" class="text-[13px] font-medium text-[#444] hover:text-[#b08d57] transition-colors duration-300">
+                <a href="{% url "about" %}" class="text-[13px] font-medium text-[#444] hover:text-[#b08d57] transition-colors duration-300">
                     About Us
                 </a>
 
-                <a href="/properties" class="text-[13px] font-medium text-[#444] hover:text-[#b08d57] transition-colors duration-300">
+                <a href=""     class="text-[13px] font-medium text-[#444] hover:text-[#b08d57] transition-colors duration-300">
                     Properties
                 </a>
 
-                <a href="/localities" class="text-[13px] font-medium text-[#444] hover:text-[#b08d57] transition-colors duration-300">
+                <a href="{% url "localities" %}" class="text-[13px] font-medium text-[#444] hover:text-[#b08d57] transition-colors duration-300">
                     Localities
                 </a>
 
-                <a href="/developers" class="text-[13px] font-medium text-[#444] hover:text-[#b08d57] transition-colors duration-300">
+                <a href="{% url "developers" %}" class="text-[13px] font-medium text-[#444] hover:text-[#b08d57] transition-colors duration-300">
                     Developers
                 </a>
 
-                <a href="/services" class="text-[13px] font-medium text-[#444] hover:text-[#b08d57] transition-colors duration-300">
+                <a href="{% url "services" %}" class="text-[13px] font-medium text-[#444] hover:text-[#b08d57] transition-colors duration-300">
                     Services
                 </a>
 
-                <a href="/calculator" class="text-[13px] font-medium text-[#444] hover:text-[#b08d57] transition-colors duration-300">
+                <a href="{% url "calculator" %}" class="text-[13px] font-medium text-[#444] hover:text-[#b08d57] transition-colors duration-300">
                     Calculator
                 </a>
 
-                <a href="/blog" class="text-[13px] font-medium text-[#444] hover:text-[#b08d57] transition-colors duration-300">
+                <a href="{% url "blog:blog_list" %}" class="text-[13px] font-medium text-[#444] hover:text-[#b08d57] transition-colors duration-300">
                     Blog
                 </a>
 
@@ -130,9 +60,9 @@
             <div class="hidden lg:flex items-center gap-7">
 
                 <!-- Phone -->
-                <a href="tel:+919876543210" class="text-[12px] font-medium text-[#333] hover:text-[#b08d57] transition-colors">
+                <a href="tel:+91{{settings_obj.phone}}" class="text-[12px] font-medium text-[#333] hover:text-[#b08d57] transition-colors">
 
-                    +91 98765 43210
+                    +91 {{settings_obj.phone}}
 
                 </a>
 
@@ -142,7 +72,7 @@
 
 
                 <!-- Contact -->
-                <a href="/contact" class="group flex items-center gap-3 bg-[#171717] text-white px-5 py-3 text-[12px] font-medium tracking-wide hover:bg-[#b08d57] transition-all duration-300">
+                <a href="{% url "contact" %}" class="group flex items-center gap-3 bg-[#171717] text-white px-5 py-3 text-[12px] font-medium tracking-wide hover:bg-[#b08d57] transition-all duration-300">
 
                     <span>Contact Us</span>
 

@@ -11,42 +11,29 @@
                 <a href="/" class="inline-block mb-7">
                     <div class="flex items-center gap-1 text-white">
                         <span class="text-[28px] sm:text-[30px] font-light tracking-[0.18em]">
-                            SIGM
-                        </span>
-                        <span class="relative text-[28px] sm:text-[30px] font-light tracking-[0.08em]">
-                            A
-                            <span class="absolute left-1/2 -translate-x-1/2 top-[2px] w-[2px] h-5 bg-[#d99a28] rotate-[28deg]"></span>
-                        </span>
-                        <span class="ml-1 text-[28px] sm:text-[30px] font-light tracking-[0.18em]">
-                            HOMES
+                           {{settings_obj.site_name}}
                         </span>
                     </div>
                 </a>
 
                 <p class="max-w-[285px] text-sm leading-[1.65] text-slate-300">
-                    Mumbai's zero-brokerage way to buy RERA-verified apartments —
-                    real-time listings, genuine availability, and honest guidance.
+                    {{settings_obj.footer_text}}
                 </p>
 
                 <!-- Social -->
                 <div class="flex items-center gap-3 mt-6">
 
-                    <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-full border border-[#d99a28] flex items-center justify-center text-white hover:bg-[#d99a28] hover:text-[#0b1b36] transition-all duration-300">
+                    <a href="{{settings_obj.instagram}}" aria-label="Instagram" class="w-9 h-9 rounded-full border border-[#d99a28] flex items-center justify-center text-white hover:bg-[#d99a28] hover:text-[#0b1b36] transition-all duration-300">
                         <i class="fa-brands fa-instagram text-sm"></i>
                     </a>
 
-                    <a href="#" aria-label="Facebook" class="w-9 h-9 rounded-full border border-[#d99a28] flex items-center justify-center text-white hover:bg-[#d99a28] hover:text-[#0b1b36] transition-all duration-300">
+                    <a href="{{settings_obj.facebook}}" aria-label="Facebook" class="w-9 h-9 rounded-full border border-[#d99a28] flex items-center justify-center text-white hover:bg-[#d99a28] hover:text-[#0b1b36] transition-all duration-300">
                         <i class="fa-brands fa-facebook-f text-sm"></i>
                     </a>
 
-                    <a href="#" aria-label="WhatsApp" class="w-9 h-9 rounded-full border border-[#d99a28] flex items-center justify-center text-white hover:bg-[#d99a28] hover:text-[#0b1b36] transition-all duration-300">
+                    <a href="{{settings_obj.whatsapp}}" aria-label="WhatsApp" class="w-9 h-9 rounded-full border border-[#d99a28] flex items-center justify-center text-white hover:bg-[#d99a28] hover:text-[#0b1b36] transition-all duration-300">
                         <i class="fa-brands fa-whatsapp text-sm"></i>
                     </a>
-
-                    <a href="#" aria-label="Location" class="w-9 h-9 rounded-full border border-[#d99a28] flex items-center justify-center text-white hover:bg-[#d99a28] hover:text-[#0b1b36] transition-all duration-300">
-                        <i class="fa-solid fa-location-dot text-sm"></i>
-                    </a>
-
                 </div>
             </div>
 
@@ -63,32 +50,27 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/localities/" class="hover:text-[#d99a28] transition-colors">
+                        <a href="{% url "localities" %}" class="hover:text-[#d99a28] transition-colors">
                             Localities
                         </a>
                     </li>
                     <li>
-                        <a href="/developers/" class="hover:text-[#d99a28] transition-colors">
+                        <a href="{% url "developers" %}" class="hover:text-[#d99a28] transition-colors">
                             Developers
                         </a>
                     </li>
                     <li>
-                        <a href="/services/" class="hover:text-[#d99a28] transition-colors">
+                        <a href="{% url "services" %}" class="hover:text-[#d99a28] transition-colors">
                             Services
                         </a>
                     </li>
                     <li>
-                        <a href="/about/" class="hover:text-[#d99a28] transition-colors">
+                        <a href="{% url "about" %}" class="hover:text-[#d99a28] transition-colors">
                             About Us
                         </a>
                     </li>
                     <li>
-                        <a href="/blog/" class="hover:text-[#d99a28] transition-colors">
-                            Journal
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/contact/" class="hover:text-[#d99a28] transition-colors">
+                        <a href="{% url "contact" %}" class="hover:text-[#d99a28] transition-colors">
                             Contact
                         </a>
                     </li>
@@ -137,26 +119,24 @@
                     <div class="flex items-start gap-3">
                         <i class="fa-solid fa-location-dot text-[#d99a28] mt-1 w-4"></i>
                         <p class="leading-5">
-                            Sigma Homes, Magic Square,<br>
-                            Poddar Road, Malad East, Mumbai-<br>
-                            400097
+                            {{settings_obj.address}}
                         </p>
                     </div>
 
                     <!-- Phone -->
                     <div class="flex items-center gap-3">
                         <i class="fa-solid fa-phone text-[#d99a28] w-4"></i>
-                        <a href="tel:+919769171800" class="hover:text-[#d99a28] transition-colors">
-                            +91 97691 71800
+                        <a href="tel:{{settings_obj.phone}}" class="hover:text-[#d99a28] transition-colors">
+                            {{settings_obj.phone}}
                         </a>
                     </div>
 
                     <!-- Email -->
                     <div class="flex items-center gap-3">
                         <i class="fa-regular fa-envelope text-[#d99a28] w-4"></i>
-                        <a href="mailto:sales@sigmahomes.co.in"
+                        <a href="mailto:{{settings_obj.email}}"
                            class="hover:text-[#d99a28] transition-colors">
-                            sales@sigmahomes.co.in
+                            {{settings_obj.email}}
                         </a>
                     </div>
 
@@ -164,7 +144,7 @@
                     <div class="flex items-center gap-3">
                         <i class="fa-solid fa-shield-halved text-[#d99a28] w-4"></i>
                         <span class="text-xs text-slate-400">
-                            RERA Reg. No: A51800045961
+                            RERA Reg. No: {{settings_obj.rera_number}}
                         </span>
                     </div>
 
@@ -180,7 +160,7 @@
         <div class="max-w-6xl mx-auto px-5 sm:px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
 
             <p class="text-xs text-slate-400">
-                © 2026 Sigma Homes. All rights reserved.
+                © {{settings_obj.copy_right}} All rights reserved.
             </p>
 
             <p class="text-xs text-slate-400">
