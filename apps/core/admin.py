@@ -13,6 +13,7 @@ from .models.website import (
     FAQ,
     ImpactMetric,
     Gallery,
+    PropertyEnquiry,
 )
 
 
@@ -633,3 +634,16 @@ class SettingAdmin(admin.ModelAdmin):
         return "No Logo"
 
     logo_preview.short_description = "Logo"
+
+
+
+
+@admin.register(PropertyEnquiry)
+class PropertyEnquiryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'phone', 'email', 'schedule_visit', 'status', 'created_at')
+    list_filter = ('status', 'schedule_visit', 'created_at')
+    search_fields = ('name', 'phone', 'email', 'message')
+    list_editable = ('status',)
+    date_hierarchy = 'created_at'
+    list_per_page = 25
+    

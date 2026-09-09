@@ -39,11 +39,6 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
 
-
-# =========================================================
-# WEBSITE SETTINGS
-# =========================================================
-
 class Setting(BaseModel):
 
     STATUS = (
@@ -272,11 +267,6 @@ class Setting(BaseModel):
         return "No Logo"
 
     logo_tag.short_description = "Logo"
-
-
-# =========================================================
-# SLIDER
-# =========================================================
 
 class Slider(BaseModel):
 
@@ -857,3 +847,32 @@ class Enquiry(BaseModel):
 
     def __str__(self):
         return f"{self.name or 'Unknown'} - {self.phone or 'No Phone'}"
+
+
+
+class PropertyEnquiry(BaseModel):
+
+    STATUS_CHOICES = (
+        ('new', 'New Lead'),
+        ('contacted', 'Contacted'),
+        ('visit_scheduled', 'Site Visit Scheduled'),
+        ('closed', 'Closed / Booked'),
+        ('lost', 'Lost / Not Interested'),
+    )
+
+    name = models.CharField(max_length=150, verbose_name="Full Name")
+    phone = models.CharField(max_length=20, verbose_name="Phone Number")
+    email = models.EmailField(max_length=255, verbose_name="Email Address")
+    message = models.TextField(verbose_name="Message / Requirement")
+    schedule_visit = models.DateField(blank=True, null=True, verbose_name="Schedule Visit Date")
+
+    status = models.CharField(max_length=30, choices=STATUS_CHOICES, default='new', verbose_name="Status",null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Received At")
+
+    class Meta:
+        verbose_name = "Property Enquiry"
+        verbose_name_plural = "Property Enquiries"
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.name} - {self.phone}"

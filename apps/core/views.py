@@ -38,7 +38,7 @@ def disclaimer(request):
     return render(request, 'home/disclaimer.html', {'settings_obj': get_settings()})
 
 def thank_you(request):
-    return render(request, 'home/thank_you.html', {'settings_obj': get_settings()})
+    return render(request, 'home/disclaimer.html', {'settings_obj': get_settings()})
 
 
 

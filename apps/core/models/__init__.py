@@ -15,6 +15,8 @@ from .website import (
     ImpactMetric,
     Gallery,
     Enquiry,
+    PropertyEnquiry,
+
 )
 __all__ = [
     "BaseModel",
@@ -28,6 +30,7 @@ __all__ = [
     'Why_Choose',
     'FAQ',
     'ImpactMetric',
+    'PropertyEnquiry',
     'Gallery',
     'Enquiry',
 ]
