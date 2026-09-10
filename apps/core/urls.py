@@ -15,7 +15,7 @@ urlpatterns = [
     path('terms-of-service/', views.terms_of_service, name='terms_of_service'),
     path('disclaimer/', views.disclaimer, name='disclaimer'),
     path('thank-you/', views.thank_you, name='thank_you'),
-
+    path('portfolio/', views.portfolio, name='portfolio'),
 
 
 ]

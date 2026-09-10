@@ -14,6 +14,7 @@ from .models.website import (
     ImpactMetric,
     Gallery,
     PropertyEnquiry,
+    Milestone,
 )
 
 
@@ -82,61 +83,28 @@ class AboutInline(BaseSettingInline):
     model = About
 
     fields = (
-        # Home Content
         "title",
         "subtitle",
         "content",
-        "read_legacy",
         "image",
         "image_preview",
 
-        # About Content
-        "about_title",
-        "about_subtitle",
-        "about_content",
-
-        # Mission / Vision
         "mission_title",
         "mission_content",
+
         "vision_title",
         "vision_content",
 
-        # Hero
-        "hero_title",
-        "hero_highlight",
-        "hero_subtitle",
-        "hero_description",
-        "hero_background",
-        "hero_background_preview",
-
-        "button_one_text",
-        "button_one_link",
-
-        "button_two_text",
-        "button_two_link",
-
-        # SEO
-        "seo_title",
-        "seo_description",
-
-        # Images
-        "right_image1",
-        "right_image1_preview",
-        "right_image2",
-        "right_image2_preview",
-
-        # Stats
         "years_of_experience",
         "happy_families",
+        "square_feet",
+        "rera",
 
         "is_active",
     )
 
     readonly_fields = (
         "image_preview",
-        "hero_background_preview",
-        "right_image1_preview",
-        "right_image2_preview",
     )
 
     extra = 1
@@ -152,39 +120,17 @@ class AboutInline(BaseSettingInline):
 
     image_preview.short_description = "Main Image Preview"
 
-    def hero_background_preview(self, obj):
-        if obj and obj.hero_background:
-            return format_html(
-                '<img src="{}" style="max-height:120px; max-width:250px; '
-                'object-fit:cover; border:1px solid #ddd; padding:5px;" />',
-                obj.hero_background.url,
-            )
-        return "No Image"
+class MilestoneInline(BaseSettingInline):
+    model = Milestone
 
-    hero_background_preview.short_description = "Hero Background Preview"
+    fields = (
+        "year",
+        "title",
+        "content",
+        "is_active",
+    )
 
-    def right_image1_preview(self, obj):
-        if obj and obj.right_image1:
-            return format_html(
-                '<img src="{}" style="max-height:120px; max-width:250px; '
-                'object-fit:contain; border:1px solid #ddd; padding:5px;" />',
-                obj.right_image1.url,
-            )
-        return "No Image"
-
-    right_image1_preview.short_description = "Right Image 1 Preview"
-
-    def right_image2_preview(self, obj):
-        if obj and obj.right_image2:
-            return format_html(
-                '<img src="{}" style="max-height:120px; max-width:250px; '
-                'object-fit:contain; border:1px solid #ddd; padding:5px;" />',
-                obj.right_image2.url,
-            )
-        return "No Image"
-
-    right_image2_preview.short_description = "Right Image 2 Preview"
-
+    extra = 1
 
 # ============================================================
 # CONTACT PAGE INLINE
@@ -617,6 +563,7 @@ class SettingAdmin(admin.ModelAdmin):
         ImpactMetricInline,
         GalleryInline,
         EnquiryInline,
+        MilestoneInline,
     ]
 
     # ========================================================

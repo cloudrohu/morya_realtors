@@ -829,28 +829,31 @@ class Project(MPTTModel, BaseModel):
     balcony = models.BooleanField(default=False)
     image = models.ImageField(upload_to="projects/",blank=True,null=True,)
     google_map_iframe = models.TextField(blank=True,null=True,)
-    id = models.CharField(primary_key=True,max_length=20,editable=False,)
+    id = models.CharField(
+        primary_key=True,
+        max_length=20,
+        editable=False,
+    )
     slug = models.SlugField(unique=True, null=True, blank=True,max_length=555,)
 
-    def get_bhk_display(self):
+    @property
+    def bhk_display(self):
         if not self.bhk_type:
             return ""
 
         bhks = self.bhk_type
 
         if isinstance(bhks, str):
-            bhks = [
-                x.strip()
-                for x in bhks.split(",")
-                if x.strip()
-            ]
+            bhks = [x.strip() for x in bhks.split(",") if x.strip()]
 
-        numbers = [
-            bhk.replace(" BHK", "").strip()
-            for bhk in bhks
-        ]
+        numbers = []
 
-        return f"{', '.join(numbers)} BHK"
+        for bhk in bhks:
+            bhk = str(bhk).strip()
+            bhk = bhk.replace(" BHK", "")
+            numbers.append(bhk)
+
+        return ", ".join(numbers) + " BHK"
 
     # --- Overridden Methods ---
     def __str__(self):
@@ -1073,6 +1076,8 @@ class WelcomeTo(BaseModel):
 
     def __str__(self):
         return self.description
+
+
 class WebSlider(BaseModel):
     Project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="sliders")
     image = models.ImageField(upload_to='web_slider/')

@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 
-from apps.core.models.website import Setting
+from apps.core.models.website import Setting , About
 
 def get_settings():
     """Helper function to fetch settings object safely"""
@@ -8,7 +8,19 @@ def get_settings():
 
 
 def about(request):
-    return render(request, 'home/about.html', {'settings_obj': get_settings()})
+    settings_obj = get_settings()
+    about_obj = About.objects.filter(
+        setting=settings_obj
+    ).first()
+
+    return render(
+        request,
+        'home/about.html',
+        {
+            'settings_obj': settings_obj,
+            'about': about_obj,
+        }
+    )
 
 def developers(request):
     return render(request, 'home/developers.html', {'settings_obj': get_settings()})
@@ -40,5 +52,8 @@ def disclaimer(request):
 def thank_you(request):
     return render(request, 'home/disclaimer.html', {'settings_obj': get_settings()})
 
+
+def portfolio(request):
+    return render(request, 'home/portfolio.html', {'settings_obj': get_settings()})
 
 

@@ -337,11 +337,6 @@ class Slider(BaseModel):
     def __str__(self):
         return self.title1
 
-
-# =========================================================
-# ABOUT
-# =========================================================
-
 class About(BaseModel):
 
     setting = models.ForeignKey(
@@ -352,6 +347,8 @@ class About(BaseModel):
 
     title = models.CharField(
         max_length=200,
+        blank=True,
+        null=True,
     )
 
     subtitle = models.CharField(
@@ -365,30 +362,8 @@ class About(BaseModel):
         null=True,
     )
 
-    read_legacy = CKEditor5Field(
-        blank=True,
-        null=True,
-    )
-
     image = models.ImageField(
         upload_to="about/",
-        blank=True,
-        null=True,
-    )
-
-    about_title = models.CharField(
-        max_length=200,
-        blank=True,
-        null=True,
-    )
-
-    about_subtitle = models.CharField(
-        max_length=300,
-        blank=True,
-        null=True,
-    )
-
-    about_content = CKEditor5Field(
         blank=True,
         null=True,
     )
@@ -415,92 +390,26 @@ class About(BaseModel):
         null=True,
     )
 
-    hero_title = models.CharField(
-        max_length=250,
-        blank=True,
-        null=True,
-    )
-
-    hero_highlight = models.CharField(
-        max_length=150,
-        blank=True,
-        null=True,
-    )
-
-    hero_subtitle = models.CharField(
-        max_length=200,
-        blank=True,
-        null=True,
-    )
-
-    hero_description = CKEditor5Field(
-        blank=True,
-        null=True,
-    )
-
-    hero_background = models.ImageField(
-        upload_to="about/hero/",
-        blank=True,
-        null=True,
-    )
-
-    button_one_text = models.CharField(
-        max_length=50,
-        default="Explore Legacy",
-        blank=True,
-        null=True,
-    )
-
-    button_one_link = models.CharField(
-        max_length=255,
-        blank=True,
-        null=True,
-    )
-
-    button_two_text = models.CharField(
-        max_length=50,
-        default="View Projects",
-        blank=True,
-        null=True,
-    )
-
-    button_two_link = models.CharField(
-        max_length=255,
-        blank=True,
-        null=True,
-    )
-
-    seo_title = models.CharField(
-        max_length=200,
-        blank=True,
-        null=True,
-    )
-
-    seo_description = models.TextField(
-        blank=True,
-        null=True,
-    )
-
-    right_image1 = models.ImageField(
-        upload_to="about/",
-        blank=True,
-        null=True,
-    )
-
-    right_image2 = models.ImageField(
-        upload_to="about/",
-        blank=True,
-        null=True,
-    )
-
     years_of_experience = models.CharField(
-        max_length=100,
+        max_length=50,
         blank=True,
         null=True,
     )
 
     happy_families = models.CharField(
-        max_length=100,
+        max_length=50,
+        blank=True,
+        null=True,
+    )
+
+    square_feet = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+    )
+
+    rera = models.CharField(
+        max_length=50,
         blank=True,
         null=True,
     )
@@ -511,12 +420,37 @@ class About(BaseModel):
         ordering = ["-created_at"]
 
     def __str__(self):
-        return self.title
+        return self.title or "About"
 
+class Milestone(BaseModel):
 
-# =========================================================
-# CONTACT PAGE
-# =========================================================
+    setting = models.ForeignKey(
+        Setting,
+        on_delete=models.CASCADE,
+        related_name="milestones",
+    )
+
+    year = models.CharField(
+        max_length=50,
+    )
+
+    title = models.CharField(
+        max_length=200,
+    )
+
+    content = models.TextField(
+        blank=True,
+        null=True,
+    )
+
+    class Meta:
+        verbose_name = "Milestone"
+        verbose_name_plural = "3. Milestones"
+        ordering = ["year"]
+
+    def __str__(self):
+        return f"{self.year} - {self.title}"
+
 
 class Contact_Page(BaseModel):
 
@@ -556,11 +490,6 @@ class Contact_Page(BaseModel):
     def __str__(self):
         return self.heading
 
-
-# =========================================================
-# OUR TEAM
-# =========================================================
-
 class Our_Team(BaseModel):
 
     setting = models.ForeignKey(
@@ -594,11 +523,6 @@ class Our_Team(BaseModel):
 
     def __str__(self):
         return self.name
-
-
-# =========================================================
-# TESTIMONIAL
-# =========================================================
 
 class Testimonial(BaseModel):
 
@@ -636,11 +560,6 @@ class Testimonial(BaseModel):
 
     def __str__(self):
         return f"{self.name} ({self.rating}⭐)"
-
-
-# =========================================================
-# WHY CHOOSE
-# =========================================================
 
 class Why_Choose(BaseModel):
 
@@ -680,9 +599,6 @@ class Why_Choose(BaseModel):
         return self.title
 
 
-# =========================================================
-# FAQ
-# =========================================================
 
 class FAQ(BaseModel):
 
@@ -704,11 +620,6 @@ class FAQ(BaseModel):
 
     def __str__(self):
         return self.question
-
-
-# =========================================================
-# IMPACT METRIC
-# =========================================================
 
 class ImpactMetric(BaseModel):
 
@@ -743,11 +654,6 @@ class ImpactMetric(BaseModel):
 
     def __str__(self):
         return f"{self.title}: {self.value}"
-
-
-# =========================================================
-# GALLERY
-# =========================================================
 
 class Gallery(BaseModel):
 
@@ -803,11 +709,6 @@ class Gallery(BaseModel):
     def __str__(self):
         return self.title
 
-
-# =========================================================
-# ENQUIRY
-# =========================================================
-
 class Enquiry(BaseModel):
 
     setting = models.ForeignKey(
@@ -848,8 +749,6 @@ class Enquiry(BaseModel):
     def __str__(self):
         return f"{self.name or 'Unknown'} - {self.phone or 'No Phone'}"
 
-
-
 class PropertyEnquiry(BaseModel):
 
     STATUS_CHOICES = (
@@ -876,3 +775,5 @@ class PropertyEnquiry(BaseModel):
 
     def __str__(self):
         return f"{self.name} - {self.phone}"
+
+

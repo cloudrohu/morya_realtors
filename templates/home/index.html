@@ -1,11 +1,10 @@
 {% extends "home/base.html" %}
 
 {% block title %}
-    Home | Your Brand
+    {{settings_obj.site_name}}
 {% endblock %}
 
 {% block content %}
-
 
 
 <section class="relative min-h-[580px] flex items-center justify-center py-16 px-4 bg-slate-900 overflow-hidden">
@@ -20,9 +19,6 @@
     </div>
 
     <div class="relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center text-center">
-      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-600/30 text-blue-300 border border-blue-500/30 mb-4 backdrop-blur-sm">
-        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> India's #1 Property Network
-      </span>
       <h1 class="text-3xl md:text-5xl font-extrabold text-white tracking-tight leading-tight">
         Find a Home You'll <span class="text-amber-400">Love</span>
       </h1>
@@ -168,7 +164,7 @@
           {{rs.city.name}}, {{rs.locality.name}}
         </p>
         <div class="text-[#7a5927] text-lg font-bold mt-2.5 tracking-tight">
-          3.29* Crore Onwards
+         {{ rs.pricing }}* Onwards 
         </div>
 
         <div class="w-full h-px bg-slate-200 my-4"></div>
@@ -187,7 +183,7 @@
             <div>
               <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Bedrooms</span>
               <span class="text-sm font-bold text-slate-800 mt-1 block whitespace-nowrap">
-                  {{ project.get_bhk_display }}
+                  {{ rs.bhk_display }}
               </span>
             </div>
           </div>
@@ -196,15 +192,15 @@
             <div class="text-slate-400 pt-0.5"><i data-lucide="maximize" class="w-5 h-5 stroke-[1.5]"></i></div>
             <div>
               <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Development Size</span>
-              <span class="text-sm font-bold text-slate-800 mt-1 block">6.5 Acres</span>
+              <span class="text-sm font-bold text-slate-800 mt-1 block">{{ rs.land_parcel }}</span>
             </div>
           </div>
 
           <div class="flex items-start gap-2.5">
             <div class="text-slate-400 pt-0.5"><i data-lucide="grid" class="w-5 h-5 stroke-[1.5]"></i></div>
             <div>
-              <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Total Units</span>
-              <span class="text-sm font-bold text-slate-800 mt-1 block">630</span>
+              <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Total Floor</span>
+              <span class="text-sm font-bold text-slate-800 mt-1 block">{{rs.floor}}</span>
             </div>
           </div>
         </div>
@@ -212,19 +208,25 @@
 
       <div class="p-4 pt-0 mt-auto border-t border-slate-100 bg-white">
         <div class="flex items-center gap-2 pt-3">
-          <button class="flex-1 py-2.5 px-2 bg-[#faebd7] hover:bg-[#f3dcbe] border border-[#d8be98] text-[#7a5927] text-xs font-semibold rounded flex items-center justify-center gap-1.5 transition">
-            <i data-lucide="send" class="w-3.5 h-3.5"></i>
-            <span>Enquire Now</span>
-          </button>
-          <button class="flex-1 py-2.5 px-2 bg-[#faebd7] hover:bg-[#f3dcbe] border border-[#d8be98] text-[#7a5927] text-xs font-semibold rounded flex items-center justify-center gap-1.5 transition">
-            <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
-            <span>Book Site Visit</span>
-          </button>
-          <a href="tel:+910000000000" class="w-10 h-10 bg-[#7a5927] hover:bg-[#63481f] text-white rounded flex items-center justify-center shrink-0 transition shadow-sm">
-            <i data-lucide="phone" class="w-4 h-4"></i>
-          </a>
+
+            <a href="{{ project.get_absolute_url }}"
+              class="flex-1 py-2.5 px-2 bg-[#7a5927] hover:bg-[#63481f] border border-[#7a5927] text-white text-xs font-semibold rounded flex items-center justify-center gap-1.5 transition">
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                <span>See Details</span>
+            </a>
+
+            <button class="flex-1 py-2.5 px-2 bg-[#faebd7] hover:bg-[#f3dcbe] border border-[#d8be98] text-[#7a5927] text-xs font-semibold rounded flex items-center justify-center gap-1.5 transition">
+                <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                <span>Enquire Now</span>
+            </button>
+
+            <a href="tel:+91{{settings_obj.phone}}"
+              class="w-10 h-10 bg-[#7a5927] hover:bg-[#63481f] text-white rounded flex items-center justify-center shrink-0 transition shadow-sm">
+                <i data-lucide="phone" class="w-4 h-4"></i>
+            </a>
+
         </div>
-      </div>
+    </div>
 
     </div>
     {% endfor %}
@@ -261,226 +263,12 @@
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
+    {% for rs in new_launch_projects %}
     <div class="bg-white rounded border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden w-full group">
       
       <div class="relative w-full h-64 bg-slate-100 overflow-hidden">
-        <span class="absolute top-0 right-0 bg-[#a37a2c] text-white text-[10px] font-bold tracking-widest px-3.5 py-1 uppercase z-10 shadow-sm">
-          Phase 1 Launch
-        </span>
 
-        <span class="absolute top-3 left-3 bg-emerald-600/95 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded shadow-sm z-10 flex items-center gap-1">
-          <i data-lucide="sparkles" class="w-3 h-3"></i> Inaugural Offer ₹5 Lakh Off
-        </span>
-
-        <img 
-          src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80" 
-          alt="Godrej Horizon" 
-          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-        />
-
-        <div class="absolute bottom-3 left-3 bg-white p-2.5 shadow-md border border-slate-100 flex flex-col items-center justify-center w-20 h-20">
-          <div class="text-[#a37a2c]">
-            <i data-lucide="compass" class="w-6 h-6"></i>
-          </div>
-          <span class="text-[8px] font-extrabold tracking-tight text-slate-800 uppercase mt-1 text-center leading-tight">
-            Horizon
-          </span>
-          <span class="text-[6px] text-slate-400 uppercase tracking-tighter">Godrej Properties</span>
-        </div>
-      </div>
-
-      <div class="p-5 pb-5">
-        <div class="flex items-center justify-between">
-          <h3 class="font-serif text-2xl text-[#8d6d39] font-normal tracking-wide">
-            Godrej Horizon
-          </h3>
-          <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded">
-            RERA Approved
-          </span>
-        </div>
-        <p class="text-slate-600 text-sm mt-0.5 font-normal">
-          Wadala West, South Central Mumbai
-        </p>
-        
-        <div class="flex items-baseline gap-2 mt-2.5">
-          <div class="text-[#7a5927] text-lg font-bold tracking-tight">
-            2.15* Cr Onwards
-          </div>
-          <span class="text-xs text-slate-400 line-through">₹2.30 Cr</span>
-        </div>
-
-        <div class="w-full h-px bg-slate-200 my-4"></div>
-
-        <div class="grid grid-cols-2 gap-y-4 gap-x-2 text-left">
-          <div class="flex items-start gap-2.5">
-            <div class="text-slate-400 pt-0.5"><i data-lucide="building" class="w-5 h-5 stroke-[1.5]"></i></div>
-            <div>
-              <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Project Type</span>
-              <span class="text-sm font-bold text-slate-800 mt-1 block">Luxury Highrise</span>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-2.5">
-            <div class="text-slate-400 pt-0.5"><i data-lucide="layout-grid" class="w-5 h-5 stroke-[1.5]"></i></div>
-            <div>
-              <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Bedrooms</span>
-              <span class="text-sm font-bold text-slate-800 mt-1 block">2 & 3 BHK</span>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-2.5">
-            <div class="text-slate-400 pt-0.5"><i data-lucide="maximize" class="w-5 h-5 stroke-[1.5]"></i></div>
-            <div>
-              <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Land Parcel</span>
-              <span class="text-sm font-bold text-slate-800 mt-1 block">5.0 Acres</span>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-2.5">
-            <div class="text-slate-400 pt-0.5"><i data-lucide="calendar" class="w-5 h-5 stroke-[1.5]"></i></div>
-            <div>
-              <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Possession</span>
-              <span class="text-sm font-bold text-slate-800 mt-1 block">Dec 2028</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="p-4 pt-0 mt-auto border-t border-slate-100 bg-white">
-        <div class="flex items-center gap-2 pt-3">
-          <button class="flex-1 py-2.5 px-2 bg-[#faebd7] hover:bg-[#f3dcbe] border border-[#d8be98] text-[#7a5927] text-xs font-semibold rounded flex items-center justify-center gap-1.5 transition">
-            <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
-            <span>Get Brochure</span>
-          </button>
-          <button class="flex-1 py-2.5 px-2 bg-[#faebd7] hover:bg-[#f3dcbe] border border-[#d8be98] text-[#7a5927] text-xs font-semibold rounded flex items-center justify-center gap-1.5 transition">
-            <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
-            <span>Book Site Visit</span>
-          </button>
-          <a href="tel:+910000000000" class="w-10 h-10 bg-[#7a5927] hover:bg-[#63481f] text-white rounded flex items-center justify-center shrink-0 transition shadow-sm">
-            <i data-lucide="phone" class="w-4 h-4"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <div class="bg-white rounded border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden w-full group">
-      
-      <div class="relative w-full h-64 bg-slate-100 overflow-hidden">
-        <span class="absolute top-0 right-0 bg-[#a37a2c] text-white text-[10px] font-bold tracking-widest px-3.5 py-1 uppercase z-10 shadow-sm">
-          Just Launched
-        </span>
-
-        <span class="absolute top-3 left-3 bg-blue-600/95 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded shadow-sm z-10 flex items-center gap-1">
-          <i data-lucide="percent" class="w-3 h-3"></i> 20:80 Payment Plan
-        </span>
-
-        <img 
-          src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80" 
-          alt="Lodha Crown Gateway" 
-          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-        />
-
-        <div class="absolute bottom-3 left-3 bg-white p-2.5 shadow-md border border-slate-100 flex flex-col items-center justify-center w-20 h-20">
-          <div class="text-[#a37a2c]">
-            <i data-lucide="crown" class="w-6 h-6"></i>
-          </div>
-          <span class="text-[8px] font-extrabold tracking-tight text-slate-800 uppercase mt-1 text-center leading-tight">
-            Crown
-          </span>
-          <span class="text-[6px] text-slate-400 uppercase tracking-tighter">Lodha Group</span>
-        </div>
-      </div>
-
-      <div class="p-5 pb-5">
-        <div class="flex items-center justify-between">
-          <h3 class="font-serif text-2xl text-[#8d6d39] font-normal tracking-wide">
-            Lodha Crown
-          </h3>
-          <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded">
-            Pre-Booking
-          </span>
-        </div>
-        <p class="text-slate-600 text-sm mt-0.5 font-normal">
-          Thane West, MMR Mumbai
-        </p>
-
-        <div class="flex items-baseline gap-2 mt-2.5">
-          <div class="text-[#7a5927] text-lg font-bold tracking-tight">
-            59.9* Lac Onwards
-          </div>
-          <span class="text-xs text-slate-400">All-Inclusive</span>
-        </div>
-
-        <div class="w-full h-px bg-slate-200 my-4"></div>
-
-        <div class="grid grid-cols-2 gap-y-4 gap-x-2 text-left">
-          <div class="flex items-start gap-2.5">
-            <div class="text-slate-400 pt-0.5"><i data-lucide="building" class="w-5 h-5 stroke-[1.5]"></i></div>
-            <div>
-              <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Project Type</span>
-              <span class="text-sm font-bold text-slate-800 mt-1 block">Apartment</span>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-2.5">
-            <div class="text-slate-400 pt-0.5"><i data-lucide="layout-grid" class="w-5 h-5 stroke-[1.5]"></i></div>
-            <div>
-              <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Bedrooms</span>
-              <span class="text-sm font-bold text-slate-800 mt-1 block">1 & 2 BHK</span>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-2.5">
-            <div class="text-slate-400 pt-0.5"><i data-lucide="maximize" class="w-5 h-5 stroke-[1.5]"></i></div>
-            <div>
-              <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Land Parcel</span>
-              <span class="text-sm font-bold text-slate-800 mt-1 block">10 Acres</span>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-2.5">
-            <div class="text-slate-400 pt-0.5"><i data-lucide="calendar" class="w-5 h-5 stroke-[1.5]"></i></div>
-            <div>
-              <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Possession</span>
-              <span class="text-sm font-bold text-slate-800 mt-1 block">Mid 2027</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="p-4 pt-0 mt-auto border-t border-slate-100 bg-white">
-        <div class="flex items-center gap-2 pt-3">
-          <button class="flex-1 py-2.5 px-2 bg-[#faebd7] hover:bg-[#f3dcbe] border border-[#d8be98] text-[#7a5927] text-xs font-semibold rounded flex items-center justify-center gap-1.5 transition">
-            <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
-            <span>Get Brochure</span>
-          </button>
-          <button class="flex-1 py-2.5 px-2 bg-[#faebd7] hover:bg-[#f3dcbe] border border-[#d8be98] text-[#7a5927] text-xs font-semibold rounded flex items-center justify-center gap-1.5 transition">
-            <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
-            <span>Book Site Visit</span>
-          </button>
-          <a href="tel:+910000000000" class="w-10 h-10 bg-[#7a5927] hover:bg-[#63481f] text-white rounded flex items-center justify-center shrink-0 transition shadow-sm">
-            <i data-lucide="phone" class="w-4 h-4"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <div class="bg-white rounded border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden w-full group">
-      
-      <div class="relative w-full h-64 bg-slate-100 overflow-hidden">
-        <span class="absolute top-0 right-0 bg-[#a37a2c] text-white text-[10px] font-bold tracking-widest px-3.5 py-1 uppercase z-10 shadow-sm">
-          New Tower Open
-        </span>
-
-        <span class="absolute top-3 left-3 bg-amber-600/95 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded shadow-sm z-10 flex items-center gap-1">
-          <i data-lucide="tag" class="w-3 h-3"></i> Pre-Launch Pricing
-        </span>
-
-        <img 
-          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" 
-          alt="Oberoi Elysian" 
-          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-        />
+        <img src="{{rs.image.url}}"  alt="Oberoi Elysian"  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
 
         <div class="absolute bottom-3 left-3 bg-white p-2.5 shadow-md border border-slate-100 flex flex-col items-center justify-center w-20 h-20">
           <div class="text-[#a37a2c]">
@@ -496,7 +284,7 @@
       <div class="p-5 pb-5">
         <div class="flex items-center justify-between">
           <h3 class="font-serif text-2xl text-[#8d6d39] font-normal tracking-wide">
-            Oberoi Elysian
+            {{rs.project_name}}
           </h3>
           <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded">
             Tower C Live
@@ -508,7 +296,7 @@
 
         <div class="flex items-baseline gap-2 mt-2.5">
           <div class="text-[#7a5927] text-lg font-bold tracking-tight">
-            4.80* Cr Onwards
+            {{rs.pricing}}* Onwards
           </div>
           <span class="text-xs text-slate-400">Exclusive Inventory</span>
         </div>
@@ -714,6 +502,7 @@
         </div>
       </div>
     </div>
+    {% endfor %}
 
   </div>
 </section>
@@ -739,134 +528,139 @@
       <span>1,200+ Verified Projects Active</span>
     </div>
   </div>
-
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-    <a href="#" class="group relative h-[380px] rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl border border-slate-200/80 transition-all duration-500 flex flex-col justify-between p-6">
-      <img 
-        src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" 
-        alt="New Launch Projects" 
-        class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-      />
-      <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/20 group-hover:from-slate-950/95 transition-all duration-300"></div>
+      <!-- NEW LAUNCH -->
+      <a href="#"
+        class="group relative h-[380px] rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl border border-slate-200/80 transition-all duration-500 flex flex-col justify-between p-6">
 
-      <div class="relative z-10 flex items-center justify-between">
-        <span class="inline-flex items-center gap-1.5 bg-[#a37a2c]/90 backdrop-blur-md text-white text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
-          <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
-          New Launch
-        </span>
-        <span class="w-8 h-8 rounded-full bg-white/10 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-2 transition-all duration-300">
-          <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-        </span>
-      </div>
+          <img
+              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
+              alt="New Launch Projects"
+              class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+          />
 
-      <div class="relative z-10">
-        <span class="text-amber-400 text-xs font-bold tracking-wider uppercase">Inaugural Benefits</span>
-        <h3 class="text-2xl font-serif text-white font-normal mt-0.5 group-hover:text-amber-200 transition-colors">
-          Pre-Launch & New Phases
-        </h3>
-        <p class="text-slate-300 text-xs mt-1.5 line-clamp-2 leading-relaxed font-light">
-          Lowest launch-stage pricing, zero brokerage, flexible 20:80 payment structures.
-        </p>
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-slate-950/10"></div>
 
-        <div class="mt-4 pt-3 border-t border-white/15 flex items-center justify-between">
-          <div>
-            <span class="block text-[10px] uppercase tracking-wider text-slate-400 font-bold">Available Now</span>
-            <span class="text-sm font-bold text-white">340+ Projects</span>
+          <div class="relative z-10 flex items-center justify-between">
+              <span class="inline-flex items-center gap-1.5 bg-[#a37a2c]/90 backdrop-blur-md text-white text-[11px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">
+                  <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                  New Launch
+              </span>
+
+              <span class="w-9 h-9 rounded-full bg-white/10 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-2 transition-all duration-300">
+                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+              </span>
           </div>
-          <div>
-            <span class="block text-[10px] uppercase tracking-wider text-slate-400 font-bold text-right">Avg. Possession</span>
-            <span class="text-xs font-semibold text-emerald-400">2028 – 2030</span>
+
+          <div class="relative z-10">
+              <h3 class="text-3xl font-serif text-white font-normal">
+                  New Launch
+              </h3>
+
+              <p class="text-slate-300 text-sm mt-2 leading-relaxed font-light max-w-sm">
+                  Explore the latest property launches with attractive prices,
+                  premium locations and exciting launch offers.
+              </p>
+
+              <div class="mt-5 flex items-center gap-2 text-amber-300 text-xs font-bold uppercase tracking-wider">
+                  Explore Properties
+                  <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+              </div>
           </div>
-        </div>
-      </div>
-    </a>
 
-    <a href="#" class="group relative h-[380px] rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl border border-slate-200/80 transition-all duration-500 flex flex-col justify-between p-6">
-      <img 
-        src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80" 
-        alt="Under Construction Projects" 
-        class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-      />
-      <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/20 group-hover:from-slate-950/95 transition-all duration-300"></div>
+      </a>
 
-      <div class="relative z-10 flex items-center justify-between">
-        <span class="inline-flex items-center gap-1.5 bg-blue-600/90 backdrop-blur-md text-white text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
-          <i data-lucide="hard-hat" class="w-3.5 h-3.5"></i>
-          Under Construction
-        </span>
-        <span class="w-8 h-8 rounded-full bg-white/10 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-2 transition-all duration-300">
-          <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-        </span>
-      </div>
 
-      <div class="relative z-10">
-        <span class="text-blue-300 text-xs font-bold tracking-wider uppercase">Mid-Stage Progress</span>
-        <h3 class="text-2xl font-serif text-white font-normal mt-0.5 group-hover:text-blue-200 transition-colors">
-          In 1 to 3 Years
-        </h3>
-        <p class="text-slate-300 text-xs mt-1.5 line-clamp-2 leading-relaxed font-light">
-          RERA milestone tracking with construction-linked payment installments.
-        </p>
+      <!-- UNDER CONSTRUCTION -->
+      <a href="#"
+        class="group relative h-[380px] rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl border border-slate-200/80 transition-all duration-500 flex flex-col justify-between p-6">
 
-        <div class="mt-4 pt-3 border-t border-white/15 flex items-center justify-between">
-          <div>
-            <span class="block text-[10px] uppercase tracking-wider text-slate-400 font-bold">Active Sites</span>
-            <span class="text-sm font-bold text-white">520+ Projects</span>
+          <img
+              src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80"
+              alt="Under Construction Projects"
+              class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+          />
+
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-slate-950/10"></div>
+
+          <div class="relative z-10 flex items-center justify-between">
+              <span class="inline-flex items-center gap-1.5 bg-blue-600/90 backdrop-blur-md text-white text-[11px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">
+                  <i data-lucide="hard-hat" class="w-3.5 h-3.5"></i>
+                  Under Construction
+              </span>
+
+              <span class="w-9 h-9 rounded-full bg-white/10 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-2 transition-all duration-300">
+                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+              </span>
           </div>
-          <div>
-            <span class="block text-[10px] uppercase tracking-wider text-slate-400 font-bold text-right">Avg. Possession</span>
-            <span class="text-xs font-semibold text-blue-400">2026 – 2028</span>
+
+          <div class="relative z-10">
+              <h3 class="text-3xl font-serif text-white font-normal">
+                  Under Construction
+              </h3>
+
+              <p class="text-slate-300 text-sm mt-2 leading-relaxed font-light max-w-sm">
+                  Discover ongoing projects with excellent investment
+                  opportunities and planned possession timelines.
+              </p>
+
+              <div class="mt-5 flex items-center gap-2 text-blue-300 text-xs font-bold uppercase tracking-wider">
+                  Explore Properties
+                  <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+              </div>
           </div>
-        </div>
-      </div>
-    </a>
 
-    <a href="#" class="group relative h-[380px] rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl border border-slate-200/80 transition-all duration-500 flex flex-col justify-between p-6">
-      <img 
-        src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80" 
-        alt="Ready To Move Projects" 
-        class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-      />
-      <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/20 group-hover:from-slate-950/95 transition-all duration-300"></div>
+      </a>
 
-      <div class="relative z-10 flex items-center justify-between">
-        <span class="inline-flex items-center gap-1.5 bg-emerald-600/90 backdrop-blur-md text-white text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
-          <i data-lucide="key-round" class="w-3.5 h-3.5"></i>
-          Ready To Move
-        </span>
-        <span class="w-8 h-8 rounded-full bg-white/10 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-2 transition-all duration-300">
-          <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-        </span>
-      </div>
 
-      <div class="relative z-10">
-        <span class="text-emerald-400 text-xs font-bold tracking-wider uppercase">Zero Waiting Period</span>
-        <h3 class="text-2xl font-serif text-white font-normal mt-0.5 group-hover:text-emerald-200 transition-colors">
-          Immediate Handover
-        </h3>
-        <p class="text-slate-300 text-xs mt-1.5 line-clamp-2 leading-relaxed font-light">
-          Zero GST applicable, complete Occupancy Certificate (OC) received. Pay and move in.
-        </p>
+      <!-- READY TO MOVE -->
+      <a href="#"
+        class="group relative h-[380px] rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl border border-slate-200/80 transition-all duration-500 flex flex-col justify-between p-6">
 
-        <div class="mt-4 pt-3 border-t border-white/15 flex items-center justify-between">
-          <div>
-            <span class="block text-[10px] uppercase tracking-wider text-slate-400 font-bold">Ready Inventory</span>
-            <span class="text-sm font-bold text-white">410+ Projects</span>
+          <img
+              src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"
+              alt="Ready To Move Projects"
+              class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+          />
+
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-slate-950/10"></div>
+
+          <div class="relative z-10 flex items-center justify-between">
+              <span class="inline-flex items-center gap-1.5 bg-emerald-600/90 backdrop-blur-md text-white text-[11px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">
+                  <i data-lucide="key-round" class="w-3.5 h-3.5"></i>
+                  Ready To Move
+              </span>
+
+              <span class="w-9 h-9 rounded-full bg-white/10 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-2 transition-all duration-300">
+                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+              </span>
           </div>
-          <div>
-            <span class="block text-[10px] uppercase tracking-wider text-slate-400 font-bold text-right">Avg. Possession</span>
-            <span class="text-xs font-semibold text-emerald-400">Immediate</span>
+
+          <div class="relative z-10">
+              <h3 class="text-3xl font-serif text-white font-normal">
+                  Ready To Move
+              </h3>
+
+              <p class="text-slate-300 text-sm mt-2 leading-relaxed font-light max-w-sm">
+                  Move into your dream home without waiting. Browse completed
+                  projects available for immediate possession.
+              </p>
+
+              <div class="mt-5 flex items-center gap-2 text-emerald-300 text-xs font-bold uppercase tracking-wider">
+                  Explore Properties
+                  <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+              </div>
           </div>
-        </div>
-      </div>
-    </a>
+
+      </a>
 
   </div>
 </section>
 
 
 <!-- COMPACT WHY CHOOSE US / TRUST SECTION -->
+{% if why_choose %}
 <section class="py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto font-sans">
   
   <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 rounded-2xl p-5 sm:p-7 border border-slate-800 shadow-xl text-white">
@@ -881,62 +675,151 @@
     </div>
 
     <!-- 4-Pillar Grid -->
+
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
       
       <!-- Feature 1: Zero Brokerage -->
-      <div class="bg-white/[0.03] hover:bg-white/[0.06] border border-white/5 hover:border-[#d8be98]/40 rounded-xl p-3.5 transition group">
-        <div class="w-8 h-8 rounded-lg bg-[#faebd7]/10 text-[#d8be98] flex items-center justify-center group-hover:scale-105 transition-transform">
-          <i data-lucide="badge-percent" class="w-4 h-4"></i>
-        </div>
-        <h4 class="text-xs sm:text-sm font-bold text-white mt-2.5">0% Brokerage</h4>
-        <p class="text-[11px] text-slate-400 mt-0.5 leading-snug">Buy directly at builder rates with zero hidden charges.</p>
-      </div>
+        {% for rs in why_choose %}
+            <div class="bg-white/[0.03] hover:bg-white/[0.06] border border-white/5 hover:border-[#d8be98]/40 rounded-xl p-3.5 transition group">
 
-      <!-- Feature 2: 100% RERA Verified -->
-      <div class="bg-white/[0.03] hover:bg-white/[0.06] border border-white/5 hover:border-[#d8be98]/40 rounded-xl p-3.5 transition group">
-        <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center group-hover:scale-105 transition-transform">
-          <i data-lucide="shield-check" class="w-4 h-4"></i>
-        </div>
-        <h4 class="text-xs sm:text-sm font-bold text-white mt-2.5">100% RERA Verified</h4>
-        <p class="text-[11px] text-slate-400 mt-0.5 leading-snug">Clear titles, verified approvals, and authentic carpet areas.</p>
-      </div>
+                <div class="w-8 h-8 rounded-lg bg-[#faebd7]/10 text-[#d8be98] flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <i class="{{ rs.icons }} text-sm"></i>
+                </div>
 
-      <!-- Feature 3: Best Price Guarantee -->
-      <div class="bg-white/[0.03] hover:bg-white/[0.06] border border-white/5 hover:border-[#d8be98]/40 rounded-xl p-3.5 transition group">
-        <div class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center group-hover:scale-105 transition-transform">
-          <i data-lucide="sparkles" class="w-4 h-4"></i>
-        </div>
-        <h4 class="text-xs sm:text-sm font-bold text-white mt-2.5">Best Price Promise</h4>
-        <p class="text-[11px] text-slate-400 mt-0.5 leading-snug">Pre-launch discounts, cashbacks & exclusive inventory locks.</p>
-      </div>
+                <h4 class="text-xs sm:text-sm font-bold text-white mt-2.5">
+                    {{ rs.title }}
+                </h4>
 
-      <!-- Feature 4: Free Site Visits -->
-      <div class="bg-white/[0.03] hover:bg-white/[0.06] border border-white/5 hover:border-[#d8be98]/40 rounded-xl p-3.5 transition group">
-        <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center group-hover:scale-105 transition-transform">
-          <i data-lucide="car" class="w-4 h-4"></i>
-        </div>
-        <h4 class="text-xs sm:text-sm font-bold text-white mt-2.5">Free Pick & Drop</h4>
-        <p class="text-[11px] text-slate-400 mt-0.5 leading-snug">Dedicated site visits with expert property relationship managers.</p>
-      </div>
+                {% if rs.subtitle %}
+                    <p class="text-[11px] text-slate-400 mt-0.5 leading-snug">
+                        {{ rs.subtitle }}
+                    </p>
+                {% endif %}
 
-    </div>
-
-    <!-- Quick Stat Strip -->
-    <div class="mt-4 pt-3 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-400">
-      <div class="flex items-center gap-1.5">
-        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-        <span>Trusted by <strong class="text-slate-200">15,000+</strong> happy homebuyers</span>
-      </div>
-      <div class="flex items-center gap-4">
-        <span>★ 4.9/5 Rating</span>
-        <span>•</span>
-        <span>500+ Top Builder Tie-ups</span>
-      </div>
+            </div>
+        {% endfor %}
+     
     </div>
 
   </div>
 
 </section>
+{% else %}
+  <section class="relative overflow-hidden bg-slate-950 py-16 lg:py-20">
+
+      <div class="absolute inset-0 pointer-events-none">
+          <div class="absolute top-0 left-1/4 w-72 h-72 bg-[#d8be98]/5 rounded-full blur-3xl"></div>
+          <div class="absolute bottom-0 right-1/4 w-72 h-72 bg-[#d8be98]/5 rounded-full blur-3xl"></div>
+      </div>
+
+      <div class="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+
+          <!-- Section Heading -->
+          <div class="text-center max-w-2xl mx-auto mb-10">
+
+              <span class="inline-flex items-center gap-2 text-[#d8be98] text-[11px] font-bold uppercase tracking-[0.2em]">
+                  <span class="w-8 h-px bg-[#d8be98]"></span>
+                  Why Choose Us
+                  <span class="w-8 h-px bg-[#d8be98]"></span>
+              </span>
+
+              <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif font-normal text-white mt-3">
+                  Your Property Journey,
+                  <span class="text-[#d8be98]">Made Simple</span>
+              </h2>
+
+              <p class="text-sm text-slate-400 mt-3 leading-relaxed">
+                  Experience a transparent and hassle-free way to discover,
+                  evaluate and purchase your dream property.
+              </p>
+
+          </div>
+
+
+          <!-- Features -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+
+              <!-- Card 1 -->
+              <div class="group bg-white/[0.03] border border-white/10 hover:border-[#d8be98]/40 rounded-2xl p-6 transition-all duration-300 hover:bg-white/[0.06]">
+
+                  <div class="w-11 h-11 rounded-xl bg-[#faebd7]/10 text-[#d8be98] flex items-center justify-center group-hover:scale-105 transition-transform">
+                      <i data-lucide="badge-percent" class="w-5 h-5"></i>
+                  </div>
+
+                  <h3 class="text-base font-bold text-white mt-5">
+                      0% Brokerage
+                  </h3>
+
+                  <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                      Buy directly at builder rates with zero hidden brokerage
+                      and transparent pricing.
+                  </p>
+
+              </div>
+
+
+              <!-- Card 2 -->
+              <div class="group bg-white/[0.03] border border-white/10 hover:border-[#d8be98]/40 rounded-2xl p-6 transition-all duration-300 hover:bg-white/[0.06]">
+
+                  <div class="w-11 h-11 rounded-xl bg-[#faebd7]/10 text-[#d8be98] flex items-center justify-center group-hover:scale-105 transition-transform">
+                      <i data-lucide="shield-check" class="w-5 h-5"></i>
+                  </div>
+
+                  <h3 class="text-base font-bold text-white mt-5">
+                      Verified Properties
+                  </h3>
+
+                  <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                      Explore carefully verified properties from trusted
+                      developers and reliable projects.
+                  </p>
+
+              </div>
+
+
+              <!-- Card 3 -->
+              <div class="group bg-white/[0.03] border border-white/10 hover:border-[#d8be98]/40 rounded-2xl p-6 transition-all duration-300 hover:bg-white/[0.06]">
+
+                  <div class="w-11 h-11 rounded-xl bg-[#faebd7]/10 text-[#d8be98] flex items-center justify-center group-hover:scale-105 transition-transform">
+                      <i data-lucide="handshake" class="w-5 h-5"></i>
+                  </div>
+
+                  <h3 class="text-base font-bold text-white mt-5">
+                      Expert Guidance
+                  </h3>
+
+                  <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                      Get professional assistance from property selection
+                      to negotiation and final possession.
+                  </p>
+
+              </div>
+
+
+              <!-- Card 4 -->
+              <div class="group bg-white/[0.03] border border-white/10 hover:border-[#d8be98]/40 rounded-2xl p-6 transition-all duration-300 hover:bg-white/[0.06]">
+
+                  <div class="w-11 h-11 rounded-xl bg-[#faebd7]/10 text-[#d8be98] flex items-center justify-center group-hover:scale-105 transition-transform">
+                      <i data-lucide="headphones" class="w-5 h-5"></i>
+                  </div>
+
+                  <h3 class="text-base font-bold text-white mt-5">
+                      Dedicated Support
+                  </h3>
+
+                  <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                      Our team stays with you throughout your complete
+                      property buying journey.
+                  </p>
+
+              </div>
+
+          </div>
+
+      </div>
+
+  </section>
+{% endif %}
 
 <!-- ===================== TOP LOCALITIES ===================== -->
 <section class="relative py-12 lg:py-16 bg-[#f7f8fa] overflow-hidden">
@@ -1120,147 +1003,6 @@
     </div>
 </section>
 
-<section class="bg-[#faf9f6] py-14 sm:py-16">
-    <div class="max-w-6xl mx-auto px-5 sm:px-6">
-
-        <div class="mb-8 sm:mb-10">
-            <div class="flex items-center gap-3 text-[#c9942f] text-[11px] font-semibold uppercase tracking-[0.22em]">
-                <span class="w-3 h-px bg-[#c9942f]"></span>
-                Explore Mumbai
-            </div>
-
-            <h2 class="mt-4 text-3xl sm:text-4xl lg:text-[42px] leading-tight text-[#071d3b] font-['Georgia'] font-normal">
-                Top Localities in Mumbai
-            </h2>
-
-            <p class="mt-3 max-w-2xl text-sm sm:text-[15px] leading-6 text-[#5f6470]">
-                Explore the most sought-after neighbourhoods for premium homes,
-                investment opportunities and modern urban living.
-            </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-
-            <a href="#" class="group flex items-center gap-5 min-h-[125px] bg-white border border-[#e4e0d8] rounded-2xl px-5 py-5 shadow-[0_8px_25px_rgba(0,0,0,0.04)] hover:-translate-y-1 hover:shadow-[0_14px_30px_rgba(0,0,0,0.07)] transition-all duration-300">
-
-                <div class="w-12 h-12 shrink-0 rounded-full bg-[#fbf2df] flex items-center justify-center text-[#d59a28] group-hover:bg-[#d59a28] group-hover:text-white transition-all duration-300">
-                  <i class="fa-solid fa-house"></i>
-                </div>
-
-                <div class="flex-1">
-                    <h3 class="text-lg text-[#071d3b] font-['Georgia']">
-                        Bandra West
-                    </h3>
-                    <p class="mt-1 text-xs leading-5 text-[#6b7078]">
-                        Luxury homes & premium living
-                    </p>
-                </div>
-
-                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-[#c9942f] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"></i>
-            </a>
-
-            <a href="#" class="group flex items-center gap-5 min-h-[125px] bg-white border border-[#e4e0d8] rounded-2xl px-5 py-5 shadow-[0_8px_25px_rgba(0,0,0,0.04)] hover:-translate-y-1 hover:shadow-[0_14px_30px_rgba(0,0,0,0.07)] transition-all duration-300">
-
-                <div class="w-12 h-12 shrink-0 rounded-full bg-[#fbf2df] flex items-center justify-center text-[#d59a28] group-hover:bg-[#d59a28] group-hover:text-white transition-all duration-300">
-                  <i class="fa-solid fa-arrow-trend-up text-sm"></i>
-                </div>
-
-                <div class="flex-1">
-                    <h3 class="text-lg text-[#071d3b] font-['Georgia']">
-                        Andheri West
-                    </h3>
-                    <p class="mt-1 text-xs leading-5 text-[#6b7078]">
-                        Well-connected residential hub
-                    </p>
-                </div>
-
-                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-[#c9942f] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"></i>
-            </a>
-
-            <a href="#" class="group flex items-center gap-5 min-h-[125px] bg-white border border-[#e4e0d8] rounded-2xl px-5 py-5 shadow-[0_8px_25px_rgba(0,0,0,0.04)] hover:-translate-y-1 hover:shadow-[0_14px_30px_rgba(0,0,0,0.07)] transition-all duration-300">
-
-                <div class="w-12 h-12 shrink-0 rounded-full bg-[#fbf2df] flex items-center justify-center text-[#d59a28] group-hover:bg-[#d59a28] group-hover:text-white transition-all duration-300">
-                    <i class="fa-solid fa-building text-sm"></i>
-                </div>
-
-                <div class="flex-1">
-                    <h3 class="text-lg text-[#071d3b] font-['Georgia']">
-                        Powai
-                    </h3>
-                    <p class="mt-1 text-xs leading-5 text-[#6b7078]">
-                        Modern homes & business district
-                    </p>
-                </div>
-
-                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-[#c9942f] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"></i>
-            </a>
-
-            <a href="#" class="group flex items-center gap-5 min-h-[125px] bg-white border border-[#e4e0d8] rounded-2xl px-5 py-5 shadow-[0_8px_25px_rgba(0,0,0,0.04)] hover:-translate-y-1 hover:shadow-[0_14px_30px_rgba(0,0,0,0.07)] transition-all duration-300">
-
-                <div class="w-12 h-12 shrink-0 rounded-full bg-[#fbf2df] flex items-center justify-center text-[#d59a28] group-hover:bg-[#d59a28] group-hover:text-white transition-all duration-300">
-                    <i class="fa-solid fa-tree-city text-sm"></i>
-                </div>
-
-                <div class="flex-1">
-                    <h3 class="text-lg text-[#071d3b] font-['Georgia']">
-                        Goregaon
-                    </h3>
-                    <p class="mt-1 text-xs leading-5 text-[#6b7078]">
-                        Growing residential destination
-                    </p>
-                </div>
-
-                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-[#c9942f] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"></i>
-            </a>
-
-            <a href="#" class="group flex items-center gap-5 min-h-[125px] bg-white border border-[#e4e0d8] rounded-2xl px-5 py-5 shadow-[0_8px_25px_rgba(0,0,0,0.04)] hover:-translate-y-1 hover:shadow-[0_14px_30px_rgba(0,0,0,0.07)] transition-all duration-300">
-
-                <div class="w-12 h-12 shrink-0 rounded-full bg-[#fbf2df] flex items-center justify-center text-[#d59a28] group-hover:bg-[#d59a28] group-hover:text-white transition-all duration-300">
-                    <i class="fa-solid fa-house-chimney text-sm"></i>
-                </div>
-
-                <div class="flex-1">
-                    <h3 class="text-lg text-[#071d3b] font-['Georgia']">
-                        Borivali West
-                    </h3>
-                    <p class="mt-1 text-xs leading-5 text-[#6b7078]">
-                        Family-friendly neighbourhood
-                    </p>
-                </div>
-
-                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-[#c9942f] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"></i>
-            </a>
-
-            <a href="#" class="group flex items-center gap-5 min-h-[125px] bg-white border border-[#e4e0d8] rounded-2xl px-5 py-5 shadow-[0_8px_25px_rgba(0,0,0,0.04)] hover:-translate-y-1 hover:shadow-[0_14px_30px_rgba(0,0,0,0.07)] transition-all duration-300">
-
-                <div class="w-12 h-12 shrink-0 rounded-full bg-[#fbf2df] flex items-center justify-center text-[#d59a28] group-hover:bg-[#d59a28] group-hover:text-white transition-all duration-300">
-                    <i class="fa-solid fa-water text-sm"></i>
-                </div>
-
-                <div class="flex-1">
-                    <h3 class="text-lg text-[#071d3b] font-['Georgia']">
-                        Worli
-                    </h3>
-                    <p class="mt-1 text-xs leading-5 text-[#6b7078]">
-                        Luxury & waterfront living
-                    </p>
-                </div>
-
-                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-[#c9942f] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"></i>
-            </a>
-
-        </div>
-
-        <div class="mt-7 text-center">
-            <a href="/localities/" class="inline-flex items-center gap-2 text-sm font-semibold text-[#071d3b] hover:text-[#c9942f] transition-colors">
-                View All Localities
-                <i class="fa-solid fa-arrow-right text-xs"></i>
-            </a>
-        </div>
-
-    </div>
-</section>
-
 <!-- Home Loan Partners -->
 <section class="bg-[#fcfbf8] py-16 sm:py-20">
     <div class="max-w-6xl mx-auto px-5 sm:px-6">
@@ -1286,197 +1028,15 @@
         <!-- Banks Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
-            <!-- HDFC -->
-            <div class="bg-white border border-[#dedbd5] rounded-2xl px-6 py-5 flex items-center justify-between min-h-[87px] shadow-[0_8px_22px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.08)] transition-all duration-300">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 flex items-center justify-center">
-                        <img src="" alt="HDFC Bank" class="max-w-9 max-h-9 object-contain">
-                    </div>
-                    <div>
-                        <h3 class="font-['Cormorant_Garamond'] text-xl text-[#071d3b] leading-none">
-                            HDFC
-                        </h3>
-                        <p class="text-xs text-[#34506f] mt-1">HDFC Bank</p>
-                    </div>
-                </div>
 
-                <div class="text-right">
-                    <span class="block text-[9px] tracking-[0.2em] text-[#34506f] uppercase">
-                        From
-                    </span>
-                    <span class="font-['Cormorant_Garamond'] text-lg text-[#d99a28]">
-                        7.30
-                    </span>
-                </div>
-            </div>
+          {% for rs in banks %}
+          <div class="bg-white border border-[#dedbd5] rounded-2xl p-4 sm:p-5 min-h-[150px] flex items-center justify-center shadow-[0_8px_22px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.48)] transition-all duration-300">
+              <div class="w-full h-[105px] bg-white rounded-xl border border-slate-200 flex items-center justify-center px-5 py-3">
+                  <img src="{{ rs.image.url }}" alt="{{ rs.title }}" class="max-w-full max-h-[65px] w-auto h-auto object-contain" >
+              </div>
+          </div>
+          {% endfor %}  
 
-            <!-- ICICI -->
-            <div class="bg-white border border-[#dedbd5] rounded-2xl px-6 py-5 flex items-center justify-between min-h-[87px] shadow-[0_8px_22px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.08)] transition-all duration-300">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 flex items-center justify-center">
-                        <img src="https://logo.clearbit.com/icici.bank.in" alt="ICICI Bank" class="max-w-9 max-h-9 object-contain">
-                    </div>
-                    <div>
-                        <h3 class="font-['Cormorant_Garamond'] text-xl text-[#071d3b] leading-none">
-                            ICICI
-                        </h3>
-                        <p class="text-xs text-[#34506f] mt-1">ICICI Bank</p>
-                    </div>
-                </div>
-
-                <div class="text-right">
-                    <span class="block text-[9px] tracking-[0.2em] text-[#34506f] uppercase">
-                        From
-                    </span>
-                    <span class="font-['Cormorant_Garamond'] text-lg text-[#d99a28]">
-                        7.30
-                    </span>
-                </div>
-            </div>
-
-            <!-- SBI -->
-            <div class="bg-white border border-[#dedbd5] rounded-2xl px-6 py-5 flex items-center justify-between min-h-[87px] shadow-[0_8px_22px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.08)] transition-all duration-300">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 flex items-center justify-center">
-                        <img src="https://logo.clearbit.com/sbi.co.in" alt="State Bank of India" class="max-w-9 max-h-9 object-contain">
-                    </div>
-                    <div>
-                        <h3 class="font-['Cormorant_Garamond'] text-xl text-[#071d3b] leading-none">
-                            SBI
-                        </h3>
-                        <p class="text-xs text-[#34506f] mt-1">State Bank of India</p>
-                    </div>
-                </div>
-
-                <div class="text-right">
-                    <span class="block text-[9px] tracking-[0.2em] text-[#34506f] uppercase">
-                        From
-                    </span>
-                    <span class="font-['Cormorant_Garamond'] text-lg text-[#d99a28]">
-                        7.30
-                    </span>
-                </div>
-            </div>
-
-            <!-- Axis -->
-            <div class="bg-white border border-[#dedbd5] rounded-2xl px-6 py-5 flex items-center justify-between min-h-[87px] shadow-[0_8px_22px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.08)] transition-all duration-300">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 flex items-center justify-center">
-                        <img src="https://logo.clearbit.com/axisbank.com" alt="Axis Bank" class="max-w-9 max-h-9 object-contain">
-                    </div>
-                    <div>
-                        <h3 class="font-['Cormorant_Garamond'] text-xl text-[#071d3b] leading-none">
-                            Axis
-                        </h3>
-                        <p class="text-xs text-[#34506f] mt-1">Axis Bank</p>
-                    </div>
-                </div>
-
-                <div class="text-right">
-                    <span class="block text-[9px] tracking-[0.2em] text-[#34506f] uppercase">
-                        From
-                    </span>
-                    <span class="font-['Cormorant_Garamond'] text-lg text-[#d99a28]">
-                        7.45
-                    </span>
-                </div>
-            </div>
-
-            <!-- Kotak -->
-            <div class="bg-white border border-[#dedbd5] rounded-2xl px-6 py-5 flex items-center justify-between min-h-[87px] shadow-[0_8px_22px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.08)] transition-all duration-300">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 flex items-center justify-center">
-                        <img src="https://logo.clearbit.com/kotak.com" alt="Kotak Mahindra Bank" class="max-w-9 max-h-9 object-contain">
-                    </div>
-                    <div>
-                        <h3 class="font-['Cormorant_Garamond'] text-xl text-[#071d3b] leading-none">
-                            Kotak
-                        </h3>
-                        <p class="text-xs text-[#34506f] mt-1">Kotak Mahindra</p>
-                    </div>
-                </div>
-
-                <div class="text-right">
-                    <span class="block text-[9px] tracking-[0.2em] text-[#34506f] uppercase">
-                        From
-                    </span>
-                    <span class="font-['Cormorant_Garamond'] text-lg text-[#d99a28]">
-                        8
-                    </span>
-                </div>
-            </div>
-
-            <!-- Bank of Baroda -->
-            <div class="bg-white border border-[#dedbd5] rounded-2xl px-6 py-5 flex items-center justify-between min-h-[87px] shadow-[0_8px_22px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.08)] transition-all duration-300">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 flex items-center justify-center">
-                        <img src="https://logo.clearbit.com/bankofbaroda.in" alt="Bank of Baroda" class="max-w-9 max-h-9 object-contain">
-                    </div>
-                    <div>
-                        <h3 class="font-['Cormorant_Garamond'] text-xl text-[#071d3b] leading-none">
-                            BoB
-                        </h3>
-                        <p class="text-xs text-[#34506f] mt-1">Bank of Baroda</p>
-                    </div>
-                </div>
-
-                <div class="text-right">
-                    <span class="block text-[9px] tracking-[0.2em] text-[#34506f] uppercase">
-                        From
-                    </span>
-                    <span class="font-['Cormorant_Garamond'] text-lg text-[#d99a28]">
-                        7.30
-                    </span>
-                </div>
-            </div>
-
-            <!-- PNB -->
-            <div class="bg-white border border-[#dedbd5] rounded-2xl px-6 py-5 flex items-center justify-between min-h-[87px] shadow-[0_8px_22px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.08)] transition-all duration-300">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 flex items-center justify-center">
-                        <img src="https://logo.clearbit.com/pnbhousing.com" alt="PNB Housing" class="max-w-9 max-h-9 object-contain">
-                    </div>
-                    <div>
-                        <h3 class="font-['Cormorant_Garamond'] text-xl text-[#071d3b] leading-none">
-                            PNB
-                        </h3>
-                        <p class="text-xs text-[#34506f] mt-1">PNB Housing</p>
-                    </div>
-                </div>
-
-                <div class="text-right">
-                    <span class="block text-[9px] tracking-[0.2em] text-[#34506f] uppercase">
-                        From
-                    </span>
-                    <span class="font-['Cormorant_Garamond'] text-lg text-[#d99a28]">
-                        7.40
-                    </span>
-                </div>
-            </div>
-
-            <!-- LIC -->
-            <div class="bg-white border border-[#dedbd5] rounded-2xl px-6 py-5 flex items-center justify-between min-h-[87px] shadow-[0_8px_22px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.08)] transition-all duration-300">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 flex items-center justify-center">
-                        <img src="https://logo.clearbit.com/lichousing.com" alt="LIC Housing Finance" class="max-w-9 max-h-9 object-contain">
-                    </div>
-                    <div>
-                        <h3 class="font-['Cormorant_Garamond'] text-xl text-[#071d3b] leading-none">
-                            LIC
-                        </h3>
-                        <p class="text-xs text-[#34506f] mt-1">LIC Housing Finance</p>
-                    </div>
-                </div>
-
-                <div class="text-right">
-                    <span class="block text-[9px] tracking-[0.2em] text-[#34506f] uppercase">
-                        From
-                    </span>
-                    <span class="font-['Cormorant_Garamond'] text-lg text-[#d99a28]">
-                        7.85
-                    </span>
-                </div>
-            </div>
 
         </div>
 
@@ -1487,7 +1047,7 @@
             </div>
 
             <p class="text-xs sm:text-sm text-[#34506f] leading-5">
-                Rates indicative and subject to bank policy. Sigma Homes does not charge processing fees for loan assistance.
+                Rates indicative and subject to bank policy. {{settings_obj.site_name}} does not charge processing fees for loan assistance.
             </p>
         </div>
 
@@ -1515,117 +1075,33 @@
         <!-- FAQ -->
         <div class="max-w-3xl mx-auto border border-[#dedbd5] rounded-[22px] overflow-hidden bg-white">
 
-            <!-- FAQ 1 -->
-            <div class="faq-item border-b border-[#dedbd5]">
-                <button type="button"
-                        class="faq-btn w-full px-6 py-6 flex items-center justify-between text-left"
-                        onclick="toggleFaq(this)">
-                    <span class="font-['Cormorant_Garamond'] text-[17px] sm:text-lg text-[#071d3b]">
-                        Do you charge any brokerage fee?
-                    </span>
+         <!-- FAQ -->
+          {% for rs in faqs %}
+          <div class="faq-item border-b border-[#dedbd5]">
 
-                    <span class="faq-icon text-[#d99a28] text-xl font-light transition-transform duration-300">
-                        +
-                    </span>
-                </button>
+              <button 
+                  type="button" 
+                  class="faq-btn w-full px-6 py-6 flex items-center justify-between text-left"
+                  onclick="toggleFaq(this)"
+              >
+                  <span class="font-['Cormorant_Garamond'] text-[17px] sm:text-lg text-[#071d3b]">
+                      {{ rs.question }}
+                  </span>
 
-                <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300">
-                    <p class="px-6 pb-6 text-sm leading-6 text-[#34506f]">
-                        Our brokerage structure depends on the property and transaction.
-                        Any applicable charges are clearly communicated before proceeding.
-                    </p>
-                </div>
-            </div>
+                  <span class="faq-icon text-[#d99a28] text-xl font-light transition-transform duration-300">
+                      +
+                  </span>
+              </button>
 
-            <!-- FAQ 2 -->
-            <div class="faq-item border-b border-[#dedbd5]">
-                <button type="button"
-                        class="faq-btn w-full px-6 py-6 flex items-center justify-between text-left"
-                        onclick="toggleFaq(this)">
-                    <span class="font-['Cormorant_Garamond'] text-[17px] sm:text-lg text-[#071d3b]">
-                        Are all listed projects RERA-verified?
-                    </span>
+              <!-- ANSWER -->
+              <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300">
+                  <div class="px-6 pb-6 text-sm leading-6 text-[#34506f]">
+                      {{ rs.answer|safe }}
+                  </div>
+              </div>
 
-                    <span class="faq-icon text-[#d99a28] text-xl font-light transition-transform duration-300">
-                        +
-                    </span>
-                </button>
-
-                <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300">
-                    <p class="px-6 pb-6 text-sm leading-6 text-[#34506f]">
-                        We verify project details and RERA information wherever applicable
-                        and help buyers understand the available documentation before making a decision.
-                    </p>
-                </div>
-            </div>
-
-            <!-- FAQ 3 -->
-            <div class="faq-item border-b border-[#dedbd5]">
-                <button type="button"
-                        class="faq-btn w-full px-6 py-6 flex items-center justify-between text-left"
-                        onclick="toggleFaq(this)">
-                    <span class="font-['Cormorant_Garamond'] text-[17px] sm:text-lg text-[#071d3b]">
-                        Can you assist with home loans?
-                    </span>
-
-                    <span class="faq-icon text-[#d99a28] text-xl font-light transition-transform duration-300">
-                        +
-                    </span>
-                </button>
-
-                <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300">
-                    <p class="px-6 pb-6 text-sm leading-6 text-[#34506f]">
-                        Yes. We can connect you with our home-loan partners and assist
-                        with the application process, documentation and loan coordination.
-                    </p>
-                </div>
-            </div>
-
-            <!-- FAQ 4 -->
-            <div class="faq-item border-b border-[#dedbd5]">
-                <button type="button"
-                        class="faq-btn w-full px-6 py-6 flex items-center justify-between text-left"
-                        onclick="toggleFaq(this)">
-                    <span class="font-['Cormorant_Garamond'] text-[17px] sm:text-lg text-[#071d3b]">
-                        Do you help with legal due diligence?
-                    </span>
-
-                    <span class="faq-icon text-[#d99a28] text-xl font-light transition-transform duration-300">
-                        +
-                    </span>
-                </button>
-
-                <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300">
-                    <p class="px-6 pb-6 text-sm leading-6 text-[#34506f]">
-                        We help coordinate the required property documentation and can
-                        assist in connecting buyers with appropriate legal professionals
-                        for detailed due diligence.
-                    </p>
-                </div>
-            </div>
-
-            <!-- FAQ 5 -->
-            <div class="faq-item">
-                <button type="button"
-                        class="faq-btn w-full px-6 py-6 flex items-center justify-between text-left"
-                        onclick="toggleFaq(this)">
-                    <span class="font-['Cormorant_Garamond'] text-[17px] sm:text-lg text-[#071d3b]">
-                        How do site visits work?
-                    </span>
-
-                    <span class="faq-icon text-[#d99a28] text-xl font-light transition-transform duration-300">
-                        +
-                    </span>
-                </button>
-
-                <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300">
-                    <p class="px-6 pb-6 text-sm leading-6 text-[#34506f]">
-                        Simply contact us with your preferred property and convenient
-                        time. Our team will coordinate the site visit and guide you
-                        through the project.
-                    </p>
-                </div>
-            </div>
+          </div>
+          {% endfor %}
 
         </div>
     </div>
@@ -1667,13 +1143,11 @@
                 <!-- Buttons -->
                 <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
 
-                    <a href="#contact"
-                       class="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-full bg-[#e7a52f] text-[#071d3b] text-sm font-bold shadow-[0_10px_25px_rgba(217,154,40,0.25)] hover:bg-[#f0b33e] hover:-translate-y-0.5 transition-all duration-300">
+                    <a href="{% url "contact" %}" class="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-full bg-[#e7a52f] text-[#071d3b] text-sm font-bold shadow-[0_10px_25px_rgba(217,154,40,0.25)] hover:bg-[#f0b33e] hover:-translate-y-0.5 transition-all duration-300">
                         Book a private consult
                     </a>
 
-                    <a href="/properties/"
-                       class="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-full border border-slate-500 text-white text-sm font-bold hover:bg-white hover:text-[#071d3b] hover:border-white transition-all duration-300">
+                    <a href="{% url "portfolio" %}" class="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-full border border-slate-500 text-white text-sm font-bold hover:bg-white hover:text-[#071d3b] hover:border-white transition-all duration-300">
                         Browse portfolio
                     </a>
 

@@ -147,6 +147,8 @@ class ProjectAmenities(models.Model):
 class Bank(models.Model):
     title = models.CharField(max_length=50,blank=True)
     image = models.ImageField(upload_to='images/')
+    description = models.CharField(max_length=70,blank=True)
+
     def __str__(self):
         return self.title
     
