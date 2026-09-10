@@ -116,20 +116,6 @@
         });
         </script>
 
-      <div class="grid grid-cols-3 gap-6 mt-8 max-w-xl w-full text-slate-300">
-        <div>
-          <div class="text-xl md:text-2xl font-bold text-white">1.2M+</div>
-          <div class="text-xs text-slate-400 mt-0.5">Verified Listings</div>
-        </div>
-        <div>
-          <div class="text-xl md:text-2xl font-bold text-white">4,000+</div>
-          <div class="text-xs text-slate-400 mt-0.5">New Projects</div>
-        </div>
-        <div>
-          <div class="text-xl md:text-2xl font-bold text-white">800+</div>
-          <div class="text-xs text-slate-400 mt-0.5">Top Localities</div>
-        </div>
-      </div>
     </div>
 
 </section>
@@ -150,51 +136,36 @@
       </p>
     </div>
 
-    <div class="flex items-center gap-2 overflow-x-auto pb-1">
-      <button class="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-[#7a5927] text-white shadow-sm transition">
-        All Projects
-      </button>
-      <button class="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-white border border-slate-200 text-slate-600 hover:text-slate-900 hover:border-slate-300 transition">
-        New Launch
-      </button>
-      <button class="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-white border border-slate-200 text-slate-600 hover:text-slate-900 hover:border-slate-300 transition">
-        Under Construction
-      </button>
-    </div>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
     
+    {% for rs in projects %}
     <div class="bg-white rounded border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden w-full group">
       
       <div class="relative w-full h-64 bg-slate-100 overflow-hidden">
         <span class="absolute top-0 right-0 bg-slate-900 text-white text-[10px] font-bold tracking-widest px-3 py-1 uppercase z-10">
-          Under Construction
+          {{rs.construction_status}}
         </span>
 
-        <img 
-          src="https://www.gardenstrails.com/prestige-garden-trails-mira-road/assets/img/deskban1.webp" 
-          alt="Forest Hills @ The Prestige City" 
-          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-        />
+        <img src="{{rs.image.url}}"  alt="{{rs.project_name}}"  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
 
         <div class="absolute bottom-3 left-3 bg-white p-2.5 shadow-md border border-slate-100 flex flex-col items-center justify-center w-20 h-20">
           <div class="text-emerald-700">
             <i data-lucide="trees" class="w-6 h-6"></i>
           </div>
           <span class="text-[8px] font-extrabold tracking-tight text-slate-800 uppercase mt-1 text-center leading-tight">
-            Forest Hills
+            {{rs.project_name}}
           </span>
-          <span class="text-[6px] text-slate-400 uppercase tracking-tighter">The Prestige City</span>
         </div>
       </div>
 
       <div class="p-5 pb-5">
         <h3 class="font-serif text-2xl text-[#8d6d39] font-normal tracking-wide">
-          Forest Hills @ The Prestige City
+          {{rs.project_name}}
         </h3>
         <p class="text-slate-600 text-sm mt-0.5 font-normal">
-          Yogi Hills, Mulund, Mumbai
+          {{rs.city.name}}, {{rs.locality.name}}
         </p>
         <div class="text-[#7a5927] text-lg font-bold mt-2.5 tracking-tight">
           3.29* Crore Onwards
@@ -207,7 +178,7 @@
             <div class="text-slate-400 pt-0.5"><i data-lucide="building" class="w-5 h-5 stroke-[1.5]"></i></div>
             <div>
               <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Project Type</span>
-              <span class="text-sm font-bold text-slate-800 mt-1 block">Apartment</span>
+              <span class="text-sm font-medium text-slate-800 mt-1 block"> {{rs.property_type.name}}</span>
             </div>
           </div>
 
@@ -215,7 +186,9 @@
             <div class="text-slate-400 pt-0.5"><i data-lucide="layout-grid" class="w-5 h-5 stroke-[1.5]"></i></div>
             <div>
               <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Bedrooms</span>
-              <span class="text-sm font-bold text-slate-800 mt-1 block">3, 4 BHK</span>
+              <span class="text-sm font-bold text-slate-800 mt-1 block whitespace-nowrap">
+                  {{ project.get_bhk_display }}
+              </span>
             </div>
           </div>
 
@@ -252,185 +225,9 @@
           </a>
         </div>
       </div>
+
     </div>
-
-    <div class="bg-white rounded border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden w-full group">
-      
-      <div class="relative w-full h-64 bg-slate-100 overflow-hidden">
-        <span class="absolute top-0 right-0 bg-[#a37a2c] text-white text-[10px] font-bold tracking-widest px-3.5 py-1 uppercase z-10">
-          New Launch
-        </span>
-
-        <img 
-          src="https://www.gardenstrails.com/prestige-garden-trails-mira-road/assets/img/gallery/1.webp" 
-          alt="Prestige Garden Trails" 
-          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-        />
-
-        <div class="absolute bottom-3 left-3 bg-white p-2.5 shadow-md border border-slate-100 flex flex-col items-center justify-center w-20 h-20">
-          <div class="text-[#557b42]">
-            <i data-lucide="sprout" class="w-6 h-6"></i>
-          </div>
-          <span class="text-[8px] font-extrabold tracking-tight text-slate-700 uppercase mt-1 text-center leading-tight">
-            Garden Trails
-          </span>
-          <span class="text-[6px] text-slate-400 uppercase tracking-tighter">Prestige Group</span>
-        </div>
-      </div>
-
-      <div class="p-5 pb-5">
-        <h3 class="font-serif text-2xl text-[#8d6d39] font-normal tracking-wide">
-          Prestige Garden Trails
-        </h3>
-        <p class="text-slate-600 text-sm mt-0.5 font-normal">
-          Mira Road East, Mira Bhayandar, Mumbai
-        </p>
-        <div class="text-[#7a5927] text-lg font-bold mt-2.5 tracking-tight">
-          1.59* Cr onwards
-        </div>
-
-        <div class="w-full h-px bg-slate-200 my-4"></div>
-
-        <div class="grid grid-cols-2 gap-y-4 gap-x-2 text-left">
-          <div class="flex items-start gap-2.5">
-            <div class="text-slate-400 pt-0.5"><i data-lucide="building" class="w-5 h-5 stroke-[1.5]"></i></div>
-            <div>
-              <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Project Type</span>
-              <span class="text-sm font-bold text-slate-800 mt-1 block">Apartment</span>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-2.5">
-            <div class="text-slate-400 pt-0.5"><i data-lucide="layout-grid" class="w-5 h-5 stroke-[1.5]"></i></div>
-            <div>
-              <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Bedrooms</span>
-              <span class="text-sm font-bold text-slate-800 mt-1 block">2 & 3 BHK</span>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-2.5">
-            <div class="text-slate-400 pt-0.5"><i data-lucide="maximize" class="w-5 h-5 stroke-[1.5]"></i></div>
-            <div>
-              <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Development Size</span>
-              <span class="text-sm font-bold text-slate-800 mt-1 block">5.2 acres</span>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-2.5">
-            <div class="text-slate-400 pt-0.5"><i data-lucide="shield-check" class="w-5 h-5 stroke-[1.5]"></i></div>
-            <div>
-              <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Status</span>
-              <span class="text-sm font-bold text-emerald-600 mt-1 block">Pre-Booking</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="p-4 pt-0 mt-auto border-t border-slate-100 bg-white">
-        <div class="flex items-center gap-2 pt-3">
-          <button class="flex-1 py-2.5 px-2 bg-[#faebd7] hover:bg-[#f3dcbe] border border-[#d8be98] text-[#7a5927] text-xs font-semibold rounded flex items-center justify-center gap-1.5 transition">
-            <i data-lucide="send" class="w-3.5 h-3.5"></i>
-            <span>Enquire Now</span>
-          </button>
-          <button class="flex-1 py-2.5 px-2 bg-[#faebd7] hover:bg-[#f3dcbe] border border-[#d8be98] text-[#7a5927] text-xs font-semibold rounded flex items-center justify-center gap-1.5 transition">
-            <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
-            <span>Book Site Visit</span>
-          </button>
-          <a href="tel:+910000000000" class="w-10 h-10 bg-[#7a5927] hover:bg-[#63481f] text-white rounded flex items-center justify-center shrink-0 transition shadow-sm">
-            <i data-lucide="phone" class="w-4 h-4"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <div class="bg-white rounded border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden w-full group">
-      
-      <div class="relative w-full h-64 bg-slate-100 overflow-hidden">
-        <span class="absolute top-0 right-0 bg-slate-900 text-white text-[10px] font-bold tracking-widest px-3 py-1 uppercase z-10">
-          Under Construction
-        </span>
-
-        <img 
-          src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=800&q=80" 
-          alt="Bellanza @ The Prestige City" 
-          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-        />
-
-        <div class="absolute bottom-3 left-3 bg-white p-2.5 shadow-md border border-slate-100 flex flex-col items-center justify-center w-20 h-20">
-          <div class="text-[#8d6d39]">
-            <i data-lucide="gem" class="w-6 h-6"></i>
-          </div>
-          <span class="text-[8px] font-extrabold tracking-tight text-slate-800 uppercase mt-1 text-center leading-tight">
-            Bellanza
-          </span>
-          <span class="text-[6px] text-slate-400 uppercase tracking-tighter">The Prestige City</span>
-        </div>
-      </div>
-
-      <div class="p-5 pb-5">
-        <h3 class="font-serif text-2xl text-[#8d6d39] font-normal tracking-wide">
-          Bellanza @ The Prestige City
-        </h3>
-        <p class="text-slate-600 text-sm mt-0.5 font-normal">
-          Mulund West, Central Mumbai
-        </p>
-        <div class="text-[#7a5927] text-lg font-bold mt-2.5 tracking-tight">
-          2.75* Crore Onwards
-        </div>
-
-        <div class="w-full h-px bg-slate-200 my-4"></div>
-
-        <div class="grid grid-cols-2 gap-y-4 gap-x-2 text-left">
-          <div class="flex items-start gap-2.5">
-            <div class="text-slate-400 pt-0.5"><i data-lucide="building" class="w-5 h-5 stroke-[1.5]"></i></div>
-            <div>
-              <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Project Type</span>
-              <span class="text-sm font-bold text-slate-800 mt-1 block">Apartment</span>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-2.5">
-            <div class="text-slate-400 pt-0.5"><i data-lucide="layout-grid" class="w-5 h-5 stroke-[1.5]"></i></div>
-            <div>
-              <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Bedrooms</span>
-              <span class="text-sm font-bold text-slate-800 mt-1 block">2, 3 BHK</span>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-2.5">
-            <div class="text-slate-400 pt-0.5"><i data-lucide="maximize" class="w-5 h-5 stroke-[1.5]"></i></div>
-            <div>
-              <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Development Size</span>
-              <span class="text-sm font-bold text-slate-800 mt-1 block">8.0 Acres</span>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-2.5">
-            <div class="text-slate-400 pt-0.5"><i data-lucide="grid" class="w-5 h-5 stroke-[1.5]"></i></div>
-            <div>
-              <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Total Units</span>
-              <span class="text-sm font-bold text-slate-800 mt-1 block">850</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="p-4 pt-0 mt-auto border-t border-slate-100 bg-white">
-        <div class="flex items-center gap-2 pt-3">
-          <button class="flex-1 py-2.5 px-2 bg-[#faebd7] hover:bg-[#f3dcbe] border border-[#d8be98] text-[#7a5927] text-xs font-semibold rounded flex items-center justify-center gap-1.5 transition">
-            <i data-lucide="send" class="w-3.5 h-3.5"></i>
-            <span>Enquire Now</span>
-          </button>
-          <button class="flex-1 py-2.5 px-2 bg-[#faebd7] hover:bg-[#f3dcbe] border border-[#d8be98] text-[#7a5927] text-xs font-semibold rounded flex items-center justify-center gap-1.5 transition">
-            <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
-            <span>Book Site Visit</span>
-          </button>
-          <a href="tel:+910000000000" class="w-10 h-10 bg-[#7a5927] hover:bg-[#63481f] text-white rounded flex items-center justify-center shrink-0 transition shadow-sm">
-            <i data-lucide="phone" class="w-4 h-4"></i>
-          </a>
-        </div>
-      </div>
-    </div>
+    {% endfor %}
 
   </div>
 </section>

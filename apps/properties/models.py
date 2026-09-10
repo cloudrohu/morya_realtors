@@ -796,10 +796,7 @@ class Project(MPTTModel, BaseModel):
     commencement_certificate = models.CharField(max_length=25, choices=COMMENCEMENT_CERTIFICATE_CHOICES,null=True, blank=True)
     
     construction_status = models.CharField(max_length=25, choices=CONSTRUCTION_STATUS_CHOICES)
-    property_type = models.ForeignKey(
-        PropertyType,
-        on_delete=models.PROTECT,
-        related_name="projects",
+    property_type = models.ForeignKey(PropertyType,on_delete=models.PROTECT,related_name="projects",
     )
 
     # MPTT Hierarchy
@@ -807,61 +804,15 @@ class Project(MPTTModel, BaseModel):
     project_name = models.CharField(max_length=250)
     
     # Foreign Keys
-    developer = models.ForeignKey(
-        Developer,
-        on_delete=models.PROTECT,
-        related_name="projects",
-    )
-    architect = models.ForeignKey(
-        Architects,
-        on_delete=models.PROTECT,
-        related_name="projects",
-        blank=True,
-        null=True,
-    )
-    engineer = models.ForeignKey(
-        Engineer,
-        on_delete=models.PROTECT,
-        related_name="projects",
-        blank=True,
-        null=True,
-)
+    developer = models.ForeignKey(Developer,on_delete=models.PROTECT,related_name="projects",)
+    architect = models.ForeignKey(Architects,on_delete=models.PROTECT,related_name="projects",blank=True,null=True,)
+    engineer = models.ForeignKey(Engineer,on_delete=models.PROTECT,related_name="projects",blank=True,null=True,)
     
-    city = models.ForeignKey(
-        Location,
-        on_delete=models.PROTECT,
-        related_name="project_city",
-        limit_choices_to={"location_type": LocationType.DISTRICT_CITY},
-        null=True,
-        blank=True,
-    )
-    locality = models.ForeignKey(
-        Location,
-        on_delete=models.PROTECT,
-        related_name="projects_locality",
-        limit_choices_to={"location_type": LocationType.LOCALITY_AREA},
-        null=True,
-        blank=True,
-    )
-    area = models.ForeignKey(
-        Location,
-        on_delete=models.PROTECT,
-        related_name="projects_area",
-        limit_choices_to={"location_type": LocationType.SUBLOCALITY_AREA},
-        null=True,
-        blank=True,
-    )
-    postal_code = models.ForeignKey(
-        PostalCode,
-        on_delete=models.PROTECT,
-        related_name="projects",
-        null=True,
-        blank=True,
-    )
-    address = models.TextField(
-        blank=True,
-        null=True,
-    )
+    city = models.ForeignKey(Location,on_delete=models.PROTECT,related_name="project_city",limit_choices_to={"location_type": LocationType.DISTRICT_CITY},null=True,blank=True,)
+    locality = models.ForeignKey(Location,on_delete=models.PROTECT,related_name="projects_locality",limit_choices_to={"location_type": LocationType.LOCALITY_AREA},null=True,blank=True,)
+    area = models.ForeignKey(Location,on_delete=models.PROTECT,related_name="projects_area",limit_choices_to={"location_type": LocationType.SUBLOCALITY_AREA},null=True,blank=True,)
+    postal_code = models.ForeignKey(PostalCode,on_delete=models.PROTECT,related_name="projects",null=True,blank=True,)
+    address = models.TextField(blank=True,null=True,)
     
     land_parcel = models.CharField(max_length=50,null=True, blank=True)
     bhk_type = MultiSelectField(choices=BHK_CHOICES, max_length=50,null=True, blank=True)
@@ -872,31 +823,34 @@ class Project(MPTTModel, BaseModel):
     
     luxurious = models.CharField(max_length=50,null=True, blank=True)
     pricing = models.CharField(max_length=50,null=True, blank=True) 
-    youtube_embed_id = models.CharField(
-        max_length=50, 
-        blank=True, 
-        null=True,
-        verbose_name="YouTube Video ID"
-    )
+    youtube_embed_id = models.CharField(max_length=50, blank=True, null=True,verbose_name="YouTube Video ID")
     
     featured_property = models.BooleanField(default=False)
     balcony = models.BooleanField(default=False)
-    image = models.ImageField(
-        upload_to="projects/",
-        blank=True,
-        null=True,
-    )
-    google_map_iframe = models.TextField(
-        blank=True,
-        null=True,
-    )
-    id = models.CharField(
-        primary_key=True,
-        max_length=20,
-        editable=False,
-    )
+    image = models.ImageField(upload_to="projects/",blank=True,null=True,)
+    google_map_iframe = models.TextField(blank=True,null=True,)
+    id = models.CharField(primary_key=True,max_length=20,editable=False,)
     slug = models.SlugField(unique=True, null=True, blank=True,max_length=555,)
 
+    def get_bhk_display(self):
+        if not self.bhk_type:
+            return ""
+
+        bhks = self.bhk_type
+
+        if isinstance(bhks, str):
+            bhks = [
+                x.strip()
+                for x in bhks.split(",")
+                if x.strip()
+            ]
+
+        numbers = [
+            bhk.replace(" BHK", "").strip()
+            for bhk in bhks
+        ]
+
+        return f"{', '.join(numbers)} BHK"
 
     # --- Overridden Methods ---
     def __str__(self):
@@ -1103,6 +1057,7 @@ class Project(MPTTModel, BaseModel):
             return f"₹ {fmt(price_min)}"
 
         return f"₹ {fmt(price_min)} – {fmt(price_max)}"
+
 
 
 class BookingOffer(BaseModel):
