@@ -1,0 +1,1639 @@
+{% extends "home/base.html" %}
+
+{% block content %}
+
+<style>
+    /* ================================
+   PROJECT LISTING
+================================ */
+
+.project-listing {
+    background: #f8fafc;
+    padding: 60px 0 80px;
+}
+
+.project-container {
+    max-width: 1280px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+
+/* ================================
+   TOP AREA
+================================ */
+
+.project-heading {
+    margin-bottom: 35px;
+}
+
+.project-heading h1 {
+    font-size: 38px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 10px;
+}
+
+.project-heading p {
+    color: #64748b;
+    font-size: 15px;
+    margin: 0;
+}
+
+
+/* ================================
+   LAYOUT
+================================ */
+
+.project-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 30px;
+    align-items: start;
+}
+
+
+/* ================================
+   SIDEBAR
+================================ */
+
+.project-filter {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 22px;
+    position: sticky;
+    top: 100px;
+}
+
+.filter-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.filter-title h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.clear-filter {
+    border: 0;
+    background: none;
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.clear-filter:hover {
+    color: #0f172a;
+}
+
+
+/* ================================
+   FILTER GROUP
+================================ */
+
+.filter-group {
+    padding-bottom: 22px;
+    margin-bottom: 22px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.filter-group:last-child {
+    border-bottom: 0;
+    margin-bottom: 0;
+}
+
+.filter-group label.filter-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #334155;
+    margin-bottom: 10px;
+}
+
+
+/* Search */
+
+.filter-search {
+    position: relative;
+}
+
+.filter-search input {
+    width: 100%;
+    height: 42px;
+    border: 1px solid #cbd5e1;
+    border-radius: 9px;
+    padding: 0 12px;
+    font-size: 13px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.filter-search input:focus {
+    border-color: #0f172a;
+}
+
+
+/* Select */
+
+.filter-group select {
+    width: 100%;
+    height: 42px;
+    border: 1px solid #cbd5e1;
+    border-radius: 9px;
+    padding: 0 12px;
+    background: #fff;
+    font-size: 13px;
+    color: #334155;
+    outline: none;
+}
+
+
+/* Checkbox */
+
+.filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+}
+
+.filter-option {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #475569;
+}
+
+.filter-option input {
+    width: 16px;
+    height: 16px;
+    accent-color: #0f172a;
+}
+
+
+/* ================================
+   CONTENT TOP
+================================ */
+
+.project-content-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.project-count {
+    font-size: 14px;
+    color: #64748b;
+}
+
+.project-count strong {
+    color: #0f172a;
+}
+
+.project-sort select {
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background: #fff;
+    outline: none;
+}
+
+
+/* ================================
+   PROJECT GRID
+================================ */
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+
+/* ================================
+   PROJECT CARD
+================================ */
+
+.project-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: .25s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(15, 23, 42, .08);
+}
+
+
+/* Image */
+
+.project-image {
+    height: 230px;
+    position: relative;
+    overflow: hidden;
+    background: #e2e8f0;
+}
+
+.project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .5s ease;
+}
+
+.project-card:hover .project-image img {
+    transform: scale(1.06);
+}
+
+
+/* Badge */
+
+.project-badge {
+    position: absolute;
+    top: 13px;
+    left: 13px;
+    padding: 6px 10px;
+    border-radius: 30px;
+    background: #fff;
+    color: #0f172a;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+/* Card body */
+
+.project-body {
+    padding: 18px;
+}
+
+.project-location {
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 7px;
+}
+
+.project-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 6px;
+}
+
+.project-description {
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+
+/* Details */
+
+.project-details {
+    display: flex;
+    gap: 12px;
+    margin-top: 15px;
+    color: #475569;
+    font-size: 12px;
+}
+
+.project-details span {
+    position: relative;
+}
+
+.project-details span:not(:last-child)::after {
+    content: "•";
+    margin-left: 12px;
+    color: #cbd5e1;
+}
+
+
+/* Bottom */
+
+.project-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #f1f5f9;
+    margin-top: 16px;
+    padding-top: 15px;
+}
+
+.project-price small {
+    display: block;
+    color: #94a3b8;
+    font-size: 10px;
+    margin-bottom: 3px;
+}
+
+.project-price strong {
+    font-size: 17px;
+    color: #0f172a;
+}
+
+.project-button {
+    width: 38px;
+    height: 38px;
+    border: 0;
+    border-radius: 9px;
+    background: #f1f5f9;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.project-button:hover {
+    background: #0f172a;
+    color: #fff;
+}
+
+
+/* ================================
+   MOBILE FILTER BUTTON
+================================ */
+
+.mobile-filter-button {
+    display: none;
+    width: 100%;
+    height: 45px;
+    border: 0;
+    border-radius: 9px;
+    background: #0f172a;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+
+/* ================================
+   MOBILE OVERLAY
+================================ */
+
+.filter-overlay {
+    display: none;
+}
+
+
+/* ================================
+   NO RESULTS
+================================ */
+
+.no-projects {
+    display: none;
+    text-align: center;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 15px;
+    padding: 60px 20px;
+}
+
+.no-projects.active {
+    display: block;
+}
+
+.no-projects h3 {
+    margin: 0 0 8px;
+    font-size: 18px;
+}
+
+.no-projects p {
+    color: #64748b;
+    font-size: 13px;
+}
+
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 1100px) {
+
+    .project-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 900px) {
+
+    .project-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .mobile-filter-button {
+        display: block;
+    }
+
+    .project-filter {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 320px;
+        max-width: 85%;
+        z-index: 1001;
+        border-radius: 0 16px 16px 0;
+        overflow-y: auto;
+        transform: translateX(-110%);
+        transition: transform .3s ease;
+    }
+
+    .project-filter.active {
+        transform: translateX(0);
+    }
+
+    .filter-overlay.active {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, .5);
+        z-index: 1000;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .project-listing {
+        padding: 35px 0 60px;
+    }
+
+    .project-container {
+        padding: 0 15px;
+    }
+
+    .project-heading h1 {
+        font-size: 28px;
+    }
+
+    .project-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .project-content-top {
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .project-sort select {
+        max-width: 145px;
+    }
+
+}
+</style>
+
+
+<main class="project-listing">
+
+    <div class="project-container">
+
+        <!-- Heading -->
+        <div class="project-heading">
+            <h1>Our Projects</h1>
+            <p>
+                Explore our residential and commercial projects
+                across prime locations.
+            </p>
+        </div>
+
+
+        <!-- Mobile Filter Button -->
+        <button
+            type="button"
+            class="mobile-filter-button"
+            id="openProjectFilter">
+
+            ☰ &nbsp; Filter Projects
+
+        </button>
+
+
+        <!-- Overlay -->
+        <div
+            class="filter-overlay"
+            id="projectFilterOverlay">
+        </div>
+
+
+        <div class="project-layout">
+
+
+            <!-- =========================================
+                 ASIDE FILTER
+            ========================================== -->
+
+            <aside
+                class="project-filter"
+                id="projectFilter">
+
+                <div class="filter-title">
+
+                    <h2>Filters</h2>
+
+                    <button
+                        type="button"
+                        class="clear-filter"
+                        id="clearProjectFilter">
+
+                        Clear All
+
+                    </button>
+
+                </div>
+
+
+                <!-- Search -->
+                <div class="filter-group">
+
+                    <label class="filter-label">
+                        Search Project
+                    </label>
+
+                    <div class="filter-search">
+
+                        <input
+                            type="text"
+                            id="projectSearch"
+                            placeholder="Search project...">
+
+                    </div>
+
+                </div>
+
+
+                <!-- Location -->
+                <div class="filter-group">
+
+                    <label class="filter-label">
+                        Location
+                    </label>
+
+                    <select id="projectLocation">
+
+                        <option value="all">
+                            All Locations
+                        </option>
+
+                        <option value="lucknow">
+                            Lucknow
+                        </option>
+
+                        <option value="noida">
+                            Noida
+                        </option>
+
+                        <option value="delhi">
+                            Delhi
+                        </option>
+
+                        <option value="gurgaon">
+                            Gurgaon
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Property Type -->
+                <div class="filter-group">
+
+                    <label class="filter-label">
+                        Property Type
+                    </label>
+
+                    <div class="filter-options">
+
+                        <label class="filter-option">
+                            <input
+                                type="checkbox"
+                                class="type-filter"
+                                value="residential">
+
+                            Residential
+                        </label>
+
+                        <label class="filter-option">
+                            <input
+                                type="checkbox"
+                                class="type-filter"
+                                value="commercial">
+
+                            Commercial
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- BHK -->
+                <div class="filter-group">
+
+                    <label class="filter-label">
+                        Configuration
+                    </label>
+
+                    <div class="filter-options">
+
+                        <label class="filter-option">
+                            <input
+                                type="checkbox"
+                                class="bhk-filter"
+                                value="1bhk">
+
+                            1 BHK
+                        </label>
+
+                        <label class="filter-option">
+                            <input
+                                type="checkbox"
+                                class="bhk-filter"
+                                value="2bhk">
+
+                            2 BHK
+                        </label>
+
+                        <label class="filter-option">
+                            <input
+                                type="checkbox"
+                                class="bhk-filter"
+                                value="3bhk">
+
+                            3 BHK
+                        </label>
+
+                        <label class="filter-option">
+                            <input
+                                type="checkbox"
+                                class="bhk-filter"
+                                value="4bhk">
+
+                            4 BHK
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Budget -->
+                <div class="filter-group">
+
+                    <label class="filter-label">
+                        Budget
+                    </label>
+
+                    <select id="projectBudget">
+
+                        <option value="all">
+                            Any Budget
+                        </option>
+
+                        <option value="1">
+                            Under ₹50 Lakh
+                        </option>
+
+                        <option value="2">
+                            ₹50 Lakh - ₹1 Cr
+                        </option>
+
+                        <option value="3">
+                            ₹1 Cr - ₹2 Cr
+                        </option>
+
+                        <option value="4">
+                            Above ₹2 Cr
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Status -->
+                <div class="filter-group">
+
+                    <label class="filter-label">
+                        Project Status
+                    </label>
+
+                    <div class="filter-options">
+
+                        <label class="filter-option">
+                            <input
+                                type="checkbox"
+                                class="status-filter"
+                                value="ongoing">
+
+                            Ongoing
+                        </label>
+
+                        <label class="filter-option">
+                            <input
+                                type="checkbox"
+                                class="status-filter"
+                                value="upcoming">
+
+                            Upcoming
+                        </label>
+
+                        <label class="filter-option">
+                            <input
+                                type="checkbox"
+                                class="status-filter"
+                                value="completed">
+
+                            Completed
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </aside>
+
+
+            <!-- =========================================
+                 PROJECT CONTENT
+            ========================================== -->
+
+            <section class="project-content">
+
+
+                <div class="project-content-top">
+
+                    <div class="project-count">
+
+                        <strong id="projectCount">6</strong>
+                        Projects Found
+
+                    </div>
+
+
+                    <div class="project-sort">
+
+                        <select id="projectSort">
+
+                            <option value="featured">
+                                Featured
+                            </option>
+
+                            <option value="low">
+                                Price: Low to High
+                            </option>
+
+                            <option value="high">
+                                Price: High to Low
+                            </option>
+
+                            <option value="newest">
+                                Newest
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =====================================
+                     PROJECT GRID
+                ====================================== -->
+
+                <div
+                    class="project-grid"
+                    id="projectGrid">
+
+
+                    <!-- CARD -->
+
+                    <article
+                        class="project-card"
+                        data-name="Green Valley"
+                        data-location="lucknow"
+                        data-type="residential"
+                        data-bhk="2bhk"
+                        data-budget="1"
+                        data-status="completed"
+                        data-year="2024"
+                        data-price="42">
+
+                        <div class="project-image">
+
+                            <img
+                                src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=900&q=80"
+                                alt="Green Valley">
+
+                            <span class="project-badge">
+                                Completed
+                            </span>
+
+                        </div>
+
+                        <div class="project-body">
+
+                            <div class="project-location">
+                                📍 Shaheed Path, Lucknow
+                            </div>
+
+                            <h3>
+                                Green Valley
+                            </h3>
+
+                            <p class="project-description">
+                                Premium family residences designed
+                                for comfortable modern living.
+                            </p>
+
+                            <div class="project-details">
+                                <span>2 BHK</span>
+                                <span>1100 Sq.Ft.</span>
+                            </div>
+
+                            <div class="project-bottom">
+
+                                <div class="project-price">
+
+                                    <small>
+                                        Starting From
+                                    </small>
+
+                                    <strong>
+                                        ₹42 Lakh
+                                    </strong>
+
+                                </div>
+
+                                <button class="project-button">
+                                    →
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- CARD -->
+
+                    <article
+                        class="project-card"
+                        data-name="The Grand Residency"
+                        data-location="lucknow"
+                        data-type="residential"
+                        data-bhk="3bhk"
+                        data-budget="3"
+                        data-status="ongoing"
+                        data-year="2026"
+                        data-price="145">
+
+                        <div class="project-image">
+
+                            <img
+                                src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=900&q=80"
+                                alt="The Grand Residency">
+
+                            <span class="project-badge">
+                                Ongoing
+                            </span>
+
+                        </div>
+
+                        <div class="project-body">
+
+                            <div class="project-location">
+                                📍 Gomti Nagar, Lucknow
+                            </div>
+
+                            <h3>
+                                The Grand Residency
+                            </h3>
+
+                            <p class="project-description">
+                                Luxury residences in one of the
+                                city's most premium locations.
+                            </p>
+
+                            <div class="project-details">
+                                <span>3 BHK</span>
+                                <span>1850 Sq.Ft.</span>
+                            </div>
+
+                            <div class="project-bottom">
+
+                                <div class="project-price">
+
+                                    <small>
+                                        Starting From
+                                    </small>
+
+                                    <strong>
+                                        ₹1.45 Cr
+                                    </strong>
+
+                                </div>
+
+                                <button class="project-button">
+                                    →
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- CARD -->
+
+                    <article
+                        class="project-card"
+                        data-name="Urban Heights"
+                        data-location="noida"
+                        data-type="residential"
+                        data-bhk="2bhk"
+                        data-budget="2"
+                        data-status="upcoming"
+                        data-year="2027"
+                        data-price="78">
+
+                        <div class="project-image">
+
+                            <img
+                                src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=900&q=80"
+                                alt="Urban Heights">
+
+                            <span class="project-badge">
+                                Upcoming
+                            </span>
+
+                        </div>
+
+                        <div class="project-body">
+
+                            <div class="project-location">
+                                📍 Sector 150, Noida
+                            </div>
+
+                            <h3>
+                                Urban Heights
+                            </h3>
+
+                            <p class="project-description">
+                                Contemporary apartments with
+                                thoughtfully designed spaces.
+                            </p>
+
+                            <div class="project-details">
+                                <span>2 BHK</span>
+                                <span>1250 Sq.Ft.</span>
+                            </div>
+
+                            <div class="project-bottom">
+
+                                <div class="project-price">
+
+                                    <small>
+                                        Starting From
+                                    </small>
+
+                                    <strong>
+                                        ₹78 Lakh
+                                    </strong>
+
+                                </div>
+
+                                <button class="project-button">
+                                    →
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- CARD -->
+
+                    <article
+                        class="project-card"
+                        data-name="Skyline Business Park"
+                        data-location="gurgaon"
+                        data-type="commercial"
+                        data-bhk=""
+                        data-budget="4"
+                        data-status="ongoing"
+                        data-year="2026"
+                        data-price="240">
+
+                        <div class="project-image">
+
+                            <img
+                                src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=80"
+                                alt="Skyline Business Park">
+
+                            <span class="project-badge">
+                                Ongoing
+                            </span>
+
+                        </div>
+
+                        <div class="project-body">
+
+                            <div class="project-location">
+                                📍 Golf Course Road, Gurgaon
+                            </div>
+
+                            <h3>
+                                Skyline Business Park
+                            </h3>
+
+                            <p class="project-description">
+                                Premium commercial spaces for
+                                modern businesses.
+                            </p>
+
+                            <div class="project-details">
+                                <span>Office</span>
+                                <span>2500 Sq.Ft.</span>
+                            </div>
+
+                            <div class="project-bottom">
+
+                                <div class="project-price">
+
+                                    <small>
+                                        Starting From
+                                    </small>
+
+                                    <strong>
+                                        ₹2.40 Cr
+                                    </strong>
+
+                                </div>
+
+                                <button class="project-button">
+                                    →
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- CARD -->
+
+                    <article
+                        class="project-card"
+                        data-name="Royal Enclave"
+                        data-location="delhi"
+                        data-type="residential"
+                        data-bhk="4bhk"
+                        data-budget="4"
+                        data-status="ongoing"
+                        data-year="2026"
+                        data-price="280">
+
+                        <div class="project-image">
+
+                            <img
+                                src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=80"
+                                alt="Royal Enclave">
+
+                            <span class="project-badge">
+                                Ongoing
+                            </span>
+
+                        </div>
+
+                        <div class="project-body">
+
+                            <div class="project-location">
+                                📍 Dwarka, Delhi
+                            </div>
+
+                            <h3>
+                                Royal Enclave
+                            </h3>
+
+                            <p class="project-description">
+                                Ultra-luxury residences with
+                                spacious premium interiors.
+                            </p>
+
+                            <div class="project-details">
+                                <span>4 BHK</span>
+                                <span>2800 Sq.Ft.</span>
+                            </div>
+
+                            <div class="project-bottom">
+
+                                <div class="project-price">
+
+                                    <small>
+                                        Starting From
+                                    </small>
+
+                                    <strong>
+                                        ₹2.80 Cr
+                                    </strong>
+
+                                </div>
+
+                                <button class="project-button">
+                                    →
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- CARD -->
+
+                    <article
+                        class="project-card"
+                        data-name="Lakeview Homes"
+                        data-location="lucknow"
+                        data-type="residential"
+                        data-bhk="1bhk"
+                        data-budget="1"
+                        data-status="upcoming"
+                        data-year="2027"
+                        data-price="35">
+
+                        <div class="project-image">
+
+                            <img
+                                src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=900&q=80"
+                                alt="Lakeview Homes">
+
+                            <span class="project-badge">
+                                Upcoming
+                            </span>
+
+                        </div>
+
+                        <div class="project-body">
+
+                            <div class="project-location">
+                                📍 Sushant Golf City, Lucknow
+                            </div>
+
+                            <h3>
+                                Lakeview Homes
+                            </h3>
+
+                            <p class="project-description">
+                                Smart compact residences for
+                                modern urban lifestyles.
+                            </p>
+
+                            <div class="project-details">
+                                <span>1 BHK</span>
+                                <span>750 Sq.Ft.</span>
+                            </div>
+
+                            <div class="project-bottom">
+
+                                <div class="project-price">
+
+                                    <small>
+                                        Starting From
+                                    </small>
+
+                                    <strong>
+                                        ₹35 Lakh
+                                    </strong>
+
+                                </div>
+
+                                <button class="project-button">
+                                    →
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                </div>
+
+
+                <!-- No Results -->
+
+                <div
+                    class="no-projects"
+                    id="noProjects">
+
+                    <h3>
+                        No Projects Found
+                    </h3>
+
+                    <p>
+                        Try changing your filters or search.
+                    </p>
+
+                </div>
+
+
+            </section>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+    const search = document.getElementById("projectSearch");
+    const location = document.getElementById("projectLocation");
+    const budget = document.getElementById("projectBudget");
+
+    const sort = document.getElementById("projectSort");
+
+    const cards = document.querySelectorAll(".project-card");
+    const grid = document.getElementById("projectGrid");
+
+    const count = document.getElementById("projectCount");
+    const noProjects = document.getElementById("noProjects");
+
+    const typeFilters =
+        document.querySelectorAll(".type-filter");
+
+    const bhkFilters =
+        document.querySelectorAll(".bhk-filter");
+
+    const statusFilters =
+        document.querySelectorAll(".status-filter");
+
+
+    /* =========================================
+       GET CHECKED VALUES
+    ========================================= */
+
+    function getCheckedValues(elements) {
+
+        return Array.from(elements)
+            .filter(input => input.checked)
+            .map(input => input.value);
+
+    }
+
+
+    /* =========================================
+       FILTER
+    ========================================= */
+
+    function filterProjects() {
+
+        const searchValue =
+            search.value.toLowerCase().trim();
+
+        const locationValue =
+            location.value;
+
+        const budgetValue =
+            budget.value;
+
+        const selectedTypes =
+            getCheckedValues(typeFilters);
+
+        const selectedBhk =
+            getCheckedValues(bhkFilters);
+
+        const selectedStatuses =
+            getCheckedValues(statusFilters);
+
+
+        let visible = 0;
+
+
+        cards.forEach(card => {
+
+            const name =
+                card.dataset.name.toLowerCase();
+
+            const cardLocation =
+                card.dataset.location;
+
+            const cardType =
+                card.dataset.type;
+
+            const cardBhk =
+                card.dataset.bhk;
+
+            const cardBudget =
+                card.dataset.budget;
+
+            const cardStatus =
+                card.dataset.status;
+
+
+            /* Search */
+
+            const searchMatch =
+                searchValue === "" ||
+                name.includes(searchValue);
+
+
+            /* Location */
+
+            const locationMatch =
+                locationValue === "all" ||
+                cardLocation === locationValue;
+
+
+            /* Type */
+
+            const typeMatch =
+                selectedTypes.length === 0 ||
+                selectedTypes.includes(cardType);
+
+
+            /* BHK */
+
+            const bhkMatch =
+                selectedBhk.length === 0 ||
+                selectedBhk.includes(cardBhk);
+
+
+            /* Budget */
+
+            const budgetMatch =
+                budgetValue === "all" ||
+                cardBudget === budgetValue;
+
+
+            /* Status */
+
+            const statusMatch =
+                selectedStatuses.length === 0 ||
+                selectedStatuses.includes(cardStatus);
+
+
+            const show =
+                searchMatch &&
+                locationMatch &&
+                typeMatch &&
+                bhkMatch &&
+                budgetMatch &&
+                statusMatch;
+
+
+            if (show) {
+
+                card.style.display = "";
+
+                visible++;
+
+            } else {
+
+                card.style.display = "none";
+
+            }
+
+        });
+
+
+        count.textContent = visible;
+
+
+        if (visible === 0) {
+
+            noProjects.classList.add("active");
+
+        } else {
+
+            noProjects.classList.remove("active");
+
+        }
+
+    }
+
+
+    /* =========================================
+       EVENTS
+    ========================================= */
+
+    search.addEventListener(
+        "input",
+        filterProjects
+    );
+
+    location.addEventListener(
+        "change",
+        filterProjects
+    );
+
+    budget.addEventListener(
+        "change",
+        filterProjects
+    );
+
+
+    typeFilters.forEach(input => {
+
+        input.addEventListener(
+            "change",
+            filterProjects
+        );
+
+    });
+
+
+    bhkFilters.forEach(input => {
+
+        input.addEventListener(
+            "change",
+            filterProjects
+        );
+
+    });
+
+
+    statusFilters.forEach(input => {
+
+        input.addEventListener(
+            "change",
+            filterProjects
+        );
+
+    });
+
+
+    /* =========================================
+       SORT
+    ========================================= */
+
+    sort.addEventListener("change", function () {
+
+        const value = this.value;
+
+        const projectCards =
+            Array.from(
+                document.querySelectorAll(".project-card")
+            );
+
+
+        if (value === "low") {
+
+            projectCards.sort((a, b) => {
+
+                return Number(a.dataset.price) -
+                       Number(b.dataset.price);
+
+            });
+
+        }
+
+
+        if (value === "high") {
+
+            projectCards.sort((a, b) => {
+
+                return Number(b.dataset.price) -
+                       Number(a.dataset.price);
+
+            });
+
+        }
+
+
+        if (value === "newest") {
+
+            projectCards.sort((a, b) => {
+
+                return Number(b.dataset.year) -
+                       Number(a.dataset.year);
+
+            });
+
+        }
+
+
+        if (value === "featured") {
+
+            projectCards.sort((a, b) => {
+
+                return Number(a.dataset.year) -
+                       Number(b.dataset.year);
+
+            });
+
+            projectCards.reverse();
+
+        }
+
+
+        projectCards.forEach(card => {
+
+            grid.appendChild(card);
+
+        });
+
+    });
+
+
+    /* =========================================
+       CLEAR FILTERS
+    ========================================= */
+
+    document
+        .getElementById("clearProjectFilter")
+        .addEventListener("click", function () {
+
+            search.value = "";
+
+            location.value = "all";
+
+            budget.value = "all";
+
+            typeFilters.forEach(input => {
+                input.checked = false;
+            });
+
+            bhkFilters.forEach(input => {
+                input.checked = false;
+            });
+
+            statusFilters.forEach(input => {
+                input.checked = false;
+            });
+
+            filterProjects();
+
+        });
+
+
+    /* =========================================
+       MOBILE SIDEBAR
+    ========================================= */
+
+    const openFilter =
+        document.getElementById("openProjectFilter");
+
+    const filterSidebar =
+        document.getElementById("projectFilter");
+
+    const overlay =
+        document.getElementById("projectFilterOverlay");
+
+
+    openFilter.addEventListener("click", function () {
+
+        filterSidebar.classList.add("active");
+
+        overlay.classList.add("active");
+
+        document.body.style.overflow = "hidden";
+
+    });
+
+
+    overlay.addEventListener("click", function () {
+
+        filterSidebar.classList.remove("active");
+
+        overlay.classList.remove("active");
+
+        document.body.style.overflow = "";
+
+    });
+
+
+    /* Initial */
+
+    filterProjects();
+
+});
+</script>
+
+{% endblock content %}

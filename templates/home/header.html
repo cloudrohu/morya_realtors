@@ -30,7 +30,7 @@
                     About Us
                 </a>
 
-                <a href=""     class="text-[13px] font-medium text-[#444] hover:text-[#b08d57] transition-colors duration-300">
+                <a href="{% url "search_projects" %}"     class="text-[13px] font-medium text-[#444] hover:text-[#b08d57] transition-colors duration-300">
                     Properties
                 </a>
 
@@ -98,33 +98,33 @@
                     Home
                 </a>
 
-                <a href="/properties" class="py-3 text-sm text-[#333] hover:text-[#b08d57] border-b border-[#eeeae3]">
+                <a href="{% url "search_projects" %}" class="py-3 text-sm text-[#333] hover:text-[#b08d57] border-b border-[#eeeae3]">
                     Properties
                 </a>
 
-                <a href="/localities" class="py-3 text-sm text-[#333] hover:text-[#b08d57] border-b border-[#eeeae3]">
+                <a href="{% url "localities" %}" class="py-3 text-sm text-[#333] hover:text-[#b08d57] border-b border-[#eeeae3]">
                     Localities
                 </a>
 
-                <a href="/developers" class="py-3 text-sm text-[#333] hover:text-[#b08d57] border-b border-[#eeeae3]">
+                <a href="{% url "developers" %}" class="py-3 text-sm text-[#333] hover:text-[#b08d57] border-b border-[#eeeae3]">
                     Developers
                 </a>
 
-                <a href="/services" class="py-3 text-sm text-[#333] hover:text-[#b08d57] border-b border-[#eeeae3]">
+                <a href="{% url "services" %}" class="py-3 text-sm text-[#333] hover:text-[#b08d57] border-b border-[#eeeae3]">
                     Services
                 </a>
 
-                <a href="/calculator" class="py-3 text-sm text-[#333] hover:text-[#b08d57] border-b border-[#eeeae3]">
+                <a href="{% url "calculator" %}" class="py-3 text-sm text-[#333] hover:text-[#b08d57] border-b border-[#eeeae3]">
                     Calculator
                 </a>
 
-                <a href="/blog" class="py-3 text-sm text-[#333] hover:text-[#b08d57]">
+                <a href="{% url "blog:blog_list" %}" class="py-3 text-sm text-[#333] hover:text-[#b08d57]">
                     Blog
                 </a>
 
 
                 <!-- Mobile CTA -->
-                <a href="/contact" class="mt-5 flex items-center justify-center gap-3 py-3.5 bg-[#171717] text-white text-sm font-medium">
+                <a href="{% url "contact" %}" class="mt-5 flex items-center justify-center gap-3 py-3.5 bg-[#171717] text-white text-sm font-medium">
 
                     Contact Us
 

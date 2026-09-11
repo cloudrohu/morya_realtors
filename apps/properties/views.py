@@ -21,84 +21,171 @@ from .models import (
     ProjectFAQ,
 )
 
-from utility.models import City, Locality, ProjectAmenities, PropertyType
+
+
+from apps.properties_utility.models import ProjectAmenities, PropertyType
+from apps.utility.models.location import Location, LocationType
+
+from apps.core.models.website import Setting
+
+def get_settings():
+    """Helper function to fetch settings object safely"""
+    return Setting.objects.first()
+
+
 
 def index(request):
-    queryset_list = Project.objects.filter(active=True).order_by('project_name')
-    
-    if 'city_id' in request.GET and request.GET['city_id']:
-        city_id = request.GET['city_id']
-        queryset_list = queryset_list.filter(city_id=city_id)
 
-    if 'locality_id' in request.GET and request.GET['locality_id']:
-        locality_id = request.GET['locality_id']
+    projects = Project.objects.filter(
+        is_active=True
+    ).order_by("project_name")
+
+    # ================= CITY =================
+    city_id = request.GET.get("city_id")
+
+    if city_id:
+        projects = projects.filter(
+            city_id=city_id
+        )
+
+    # ================= LOCALITY =================
+    locality_id = request.GET.get("locality_id")
+
+    if locality_id:
         try:
-            selected_locality = Locality.objects.get(pk=locality_id)
-            descendant_localities = selected_locality.get_descendants(include_self=True)
-            queryset_list = queryset_list.filter(locality__in=descendant_localities)
-        except Locality.DoesNotExist:
+            selected_locality = Location.objects.get(
+                pk=locality_id,
+                location_type=LocationType.LOCALITY_AREA,
+            )
+
+            descendant_localities = selected_locality.get_descendants(
+                include_self=True
+            )
+
+            projects = projects.filter(
+                locality__in=descendant_localities
+            )
+
+        except Location.DoesNotExist:
             pass
 
-    if 'status' in request.GET and request.GET['status']:
-        status = request.GET['status']
-        queryset_list = queryset_list.filter(construction_status__iexact=status)
+    # ================= CONSTRUCTION STATUS =================
+    status = request.GET.get("status")
 
-    if 'keywords' in request.GET and request.GET['keywords']:
-        keywords = request.GET['keywords']
-        queryset_list = queryset_list.filter(
-            Q(project_name__icontains=keywords) | 
+    if status:
+        projects = projects.filter(
+            construction_status__iexact=status
+        )
+
+    # ================= KEYWORDS =================
+    keywords = request.GET.get("keywords", "").strip()
+
+    if keywords:
+        projects = projects.filter(
+            Q(project_name__icontains=keywords)
+            |
             Q(developer__name__icontains=keywords)
         )
-        
-    available_cities = City.objects.all().order_by('name')
+
+    # ================= CITIES =================
+
+    available_cities = Location.objects.filter(
+        location_type=LocationType.DISTRICT_CITY
+    ).order_by("name")
+
+    # ================= LOCALITIES =================
+
+    available_localities = Location.objects.filter(
+        location_type=LocationType.LOCALITY_AREA
+    ).order_by("name")
+
+    # ================= AMENITIES =================
+
     amenities = ProjectAmenities.objects.all()
-    available_localities = Locality.objects.filter(parent__isnull=True).order_by('title')
-    construction_statuses = Project.Construction_Status
-    
+
+    # ================= CONSTRUCTION STATUS =================
+
+    construction_statuses = (
+        Project.objects
+        .exclude(construction_status__isnull=True)
+        .exclude(construction_status="")
+        .values_list(
+            "construction_status",
+            flat=True
+        )
+        .distinct()
+        .order_by("construction_status")
+    )
+
     context = {
-        'projects': queryset_list,
-        'available_cities': available_cities,
+        "projects": projects,
+        "available_cities": available_cities,
+        "available_localities": available_localities,
         "amenities": amenities,
-        'construction_statuses': construction_statuses,
-        'values': request.GET,
+        "construction_statuses": construction_statuses,
+        "values": request.GET,
     }
-    
-    return render(request, 'properties/index.html', context)
+
+    return render(
+        request,
+        "properties/index.html",
+        context
+    )
 
 def get_bhk_choices():
-    return [choice[0] for choice in Project.BHK_CHOICES]
-
+    return [
+        choice[0]
+        for choice in Project.BHK_CHOICES
+    ]
 
 def search_suggestions(request):
+
     q = request.GET.get("q", "").strip()
+
     results = []
 
     if q:
+
+        # ================= PROJECTS =================
 
         projects = Project.objects.filter(
             project_name__icontains=q
         )[:5]
 
         for p in projects:
+
             results.append({
                 "name": p.project_name,
-                "type": "Project"
+                "type": "Project",
             })
 
-        localities = Locality.objects.filter(
-            title__icontains=q
+        # ================= LOCATIONS =================
+
+        locations = Location.objects.filter(
+            name__icontains=q,
+            location_type__in=[
+                LocationType.LOCALITY_AREA,
+                LocationType.SUBLOCALITY_AREA,
+            ],
         )[:5]
 
-        for l in localities:
+        for location in locations:
+
             results.append({
-                "name": l.title,
-                "type": "Locality"
+                "name": location.name,
+                "type": "Locality",
             })
 
-    return JsonResponse(results, safe=False)
+    return JsonResponse(
+        results,
+        safe=False
+    )
 
 
 def search_projects(request):
+
+    settings_obj = get_settings()
+
     location = request.GET.get("q", "").strip()
     city = request.GET.get("city", "").strip()
     amenities = request.GET.get("amenities")
@@ -106,7 +193,7 @@ def search_projects(request):
     bhk = request.GET.get("bhk")
     developer_slug = request.GET.get("developer") 
     locality_ids = request.GET.getlist("locality")
-    projects = Project.objects.filter(active=True)
+    projects = Project.objects.filter(is_active=True)
 
 
     # 🔍 Single Clean Search Block
@@ -167,26 +254,56 @@ def search_projects(request):
     paginator = Paginator(projects, 9)
     projects_page = paginator.get_page(request.GET.get("page"))
 
+
     context = {
         "projects": projects_page,
+
         "amenities": ProjectAmenities.objects.all(),
-        "construction_status": [choice[0] for choice in Project.Construction_Status],
+
+        "construction_status": (
+            Project.objects
+            .exclude(construction_status__isnull=True)
+            .exclude(construction_status="")
+            .values_list("construction_status", flat=True)
+            .distinct()
+            .order_by("construction_status")
+        ),
+
         "bhk_choices": get_bhk_choices(),
+
         "selected_amenities": amenities,
+
         "selected_status": status,
+
         "selected_bhk": bhk,
+
+        
+
         "selected_bhk_list": selected_bhk_list,
-        "available_localities": Locality.objects.all().order_by("title"),
-        "selected_locality_ids": [str(x) for x in locality_ids],
+
+        "available_localities": Location.objects.filter(
+            location_type=LocationType.LOCALITY_AREA
+        ).order_by("name"),
+
+        "selected_locality_ids": [
+            str(x) for x in locality_ids
+        ],
     }
 
-    return render(request, "properties/residential_list.html", context)
+    return render(request, "home/residential_list.html", context)
+
+
+
 
 def residential_projects(request):
 
+
+    settings_obj = get_settings()
+
+
     projects = (
         Project.objects
-        .filter(active=True)
+        .filter(is_active=True)
         .annotate(
             min_price=Min(
                 "configurations__price_in_rupees"
@@ -200,13 +317,17 @@ def residential_projects(request):
     context = {
         "projects": projects,
         "page_title": "Residential Projects",
+        'settings_obj': settings_obj,
+        
     }
 
-    return render(request,"projects/residential_list.html",context,)
+    return render(request,"home/residential_list.html",context,)
+
+
 
 def commercial_projects(request):
 
-    projects = Project.objects.filter(active=True)
+    projects = Project.objects.filter(is_active=True)
 
     context = {
         "projects": projects,
@@ -217,7 +338,7 @@ def commercial_projects(request):
 
 def project_details(request, id, slug):
 
-    project = get_object_or_404(Project,id=id,slug=slug,active=True)
+    project = get_object_or_404(Project,id=id,slug=slug,is_active=True)
 
     carpet_range = (
         project.configurations.aggregate(
@@ -229,7 +350,7 @@ def project_details(request, id, slug):
     related_projects = (
         Project.objects.filter(
             city=project.city,
-            active=True
+            is_active=True
         )
         .exclude(id=project.id)[:8]
     )

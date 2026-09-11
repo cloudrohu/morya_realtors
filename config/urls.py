@@ -8,69 +8,30 @@ urlpatterns = [
 
    
 
-    path(
-        "grappelli/",
-        include("grappelli.urls"),
-    ),
+    path("grappelli/",include("grappelli.urls"),),
 
+    path("admin/",admin.site.urls,),
+
+    path("admin/ajax/",include("apps.utility.admin.urls"),),
     
+    path("",include("apps.core.urls"),),
 
-    path(
-        "admin/",
-        admin.site.urls,
-    ),
-
-    
-
-    path(
-        "admin/ajax/",
-        include("apps.utility.admin.urls"),
-    ),
-
-    
-    path(
-        "",
-        include("apps.core.urls"),
-    ),
-
-    path(
-        "",
-        include("apps.blog.urls"),
-    ),
+    path("",include("apps.blog.urls"),),
 
     path('blog/', include('apps.blog.urls', namespace='blog')),
 
-    path(
-        "",
-        include("apps.dashboard.urls"),
-    ),
+    path("",include("apps.dashboard.urls"),),
 
+    path("jobs/",include("apps.job.urls"),),
 
-    path(
-        "jobs/",
-        include("apps.job.urls"),
-    ),
+    path("companies/",include("apps.companies.urls"),),
 
-   
+    path("ckeditor5/",include("django_ckeditor_5.urls"),),
 
-    path(
-        "companies/",
-        include("apps.companies.urls"),
-    ),
+    path("importer/",include("apps.importer.urls"),),
 
-    
+    path("properties/", include("apps.properties.urls")),
 
-    path(
-        "ckeditor5/",
-        include("django_ckeditor_5.urls"),
-    ),
-
-    
-
-    path(
-        "importer/",
-        include("apps.importer.urls"),
-    ),
 ]
 
 
