@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 
-from apps.core.models.website import Setting , About
+from apps.core.models.website import Setting , About , ImpactMetric, Milestone
 
 def get_settings():
     """Helper function to fetch settings object safely"""
@@ -9,16 +9,22 @@ def get_settings():
 
 def about(request):
     settings_obj = get_settings()
-    about_obj = About.objects.filter(
-        setting=settings_obj
-    ).first()
+    about_obj = About.objects.filter(setting=settings_obj).first()
+
+
+    impact_metrics = ImpactMetric.objects.filter(setting=settings_obj).order_by("order", "-created_at")
+
+    milestones = Milestone.objects.filter(setting=settings_obj).order_by("year")
+
 
     return render(
         request,
         'home/about.html',
         {
             'settings_obj': settings_obj,
-            'about': about_obj,
+            'about_obj': about_obj,
+            'impact_metrics': impact_metrics,
+            'milestones': milestones,
         }
     )
 

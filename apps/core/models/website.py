@@ -655,6 +655,8 @@ class ImpactMetric(BaseModel):
     def __str__(self):
         return f"{self.title}: {self.value}"
 
+
+
 class Gallery(BaseModel):
 
     GALLERY_CHOICES = [
