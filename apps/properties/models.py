@@ -396,6 +396,7 @@ class Developer(BaseModel):
         refresh_calling_status(self)
 
 
+
 class Architects(BaseModel):
 
     CALLING_STATUS_CHOICES = [

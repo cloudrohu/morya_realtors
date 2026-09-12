@@ -1,6 +1,10 @@
 from django.shortcuts import render,redirect
+from django.db.models import Count
 
 from apps.core.models.website import Setting , About , ImpactMetric, Milestone
+
+from apps.properties.models import Developer
+
 
 def get_settings():
     """Helper function to fetch settings object safely"""
@@ -29,7 +33,26 @@ def about(request):
     )
 
 def developers(request):
-    return render(request, 'home/developers.html', {'settings_obj': get_settings()})
+
+    developers = (
+        Developer.objects
+        .annotate(
+            project_count=Count("projects", distinct=True)
+        )
+        .filter(
+            project_count__gt=0
+        )
+        .order_by("-project_count")
+    )
+
+    return render(
+        request,
+        "home/developers.html",
+        {
+            "settings_obj": get_settings(),
+            "developers": developers,
+        }
+    )
 
 def localities(request):
     return render(request, 'home/localities.html', {'settings_obj': get_settings()})

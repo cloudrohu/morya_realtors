@@ -778,4 +778,23 @@ class PropertyEnquiry(BaseModel):
     def __str__(self):
         return f"{self.name} - {self.phone}"
 
+class Services(BaseModel):
 
+    Title = models.CharField(max_length=200, verbose_name="Service Title")
+    Short_Description = models.CharField(max_length=300, verbose_name="Service Title")
+    Description = CKEditor5Field(blank=True, null=True, verbose_name="Service Description")
+    icon = models.CharField(max_length=50, verbose_name="Service Title")
+
+
+    def __str__(self):
+        return self.Title
+
+class Services_KeyPoints(BaseModel):
+
+    Title = models.CharField(max_length=200, verbose_name="Service Title")
+    Short_Description = models.CharField(max_length=300, verbose_name="Service Title")
+    icon = models.CharField(max_length=50, verbose_name="Service Title")
+
+
+    def __str__(self):
+        return self.Title
