@@ -1,0 +1,425 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}{{ project.project_name }} - Details{% endblock %}
+
+{% block content %}
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 mb-12 text-slate-800">
+
+  <!-- 1. HEADER CARD (Basic Details & Price) -->
+  <div class="bg-white rounded-xl border border-slate-200 p-5 sm:p-6 mb-6 shadow-sm">
+      <!-- Badges -->
+      <div class="flex flex-wrap items-center gap-2 mb-3">
+          {% if project.construction_status %}
+          <span class="px-2.5 py-1 text-xs font-semibold rounded bg-[#7a5927]/10 text-[#7a5927] border border-[#7a5927]/20">
+              {{ project.construction_status }}
+          </span>
+          {% endif %}
+
+          {% if project.property_type %}
+          <span class="px-2.5 py-1 text-xs font-semibold rounded bg-slate-100 text-slate-700 border border-slate-200">
+              {{ project.property_type.name }}
+          </span>
+          {% endif %}
+
+          {% if project.featured_property %}
+          <span class="px-2.5 py-1 text-xs font-semibold rounded bg-[#7a5927] text-white">
+              Featured
+          </span>
+          {% endif %}
+      </div>
+
+      <!-- Title & Price -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-5 border-b border-slate-200">
+          <div>
+            <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+                {{ project.project_name }}
+            </h1>
+            <p class="text-slate-600 text-sm mt-1 flex items-center gap-1.5">
+                <i data-lucide="map-pin" class="w-4 h-4 text-slate-400 shrink-0"></i>
+                <span>
+                {% if project.locality %}{{ project.locality.name }}, {% endif %}
+                {% if project.city %}{{ project.city.name }}{% endif %}
+                </span>
+            </p>
+          </div>
+
+          <div class="md:text-right border-t md:border-t-0 pt-3 md:pt-0 border-slate-100">
+            <span class="text-xs uppercase font-semibold text-slate-400 block tracking-wider">Starting Price</span>
+            <div class="text-2xl sm:text-3xl font-bold text-[#7a5927]">
+                {{ project.get_price_range }}
+            </div>
+          </div>
+      </div>
+
+      <!-- Quick Highlights Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-5">
+          <div class="p-3 bg-slate-50 rounded-lg border border-slate-100">
+            <span class="text-[11px] font-semibold uppercase text-slate-400 block">Configuration</span>
+            <span class="text-sm font-semibold text-slate-800 mt-0.5 block truncate">{{ project.bhk_display|default:"N/A" }}</span>
+          </div>
+
+          <div class="p-3 bg-slate-50 rounded-lg border border-slate-100">
+            <span class="text-[11px] font-semibold uppercase text-slate-400 block">Project Area</span>
+            <span class="text-sm font-semibold text-slate-800 mt-0.5 block truncate">{{ project.land_parcel|default:"N/A" }}</span>
+          </div>
+
+          <div class="p-3 bg-slate-50 rounded-lg border border-slate-100">
+            <span class="text-[11px] font-semibold uppercase text-slate-400 block">Possession</span>
+            <span class="text-sm font-semibold text-slate-800 mt-0.5 block truncate">
+                {% if project.possession_month %}{{ project.possession_month }}{% endif %}
+                {% if project.possession_year %}{{ project.possession_year.year }}{% else %}N/A{% endif %}
+            </span>
+          </div>
+
+          <div class="p-3 bg-slate-50 rounded-lg border border-slate-100">
+            <span class="text-[11px] font-semibold uppercase text-slate-400 block">Total Floors</span>
+            <span class="text-sm font-semibold text-slate-800 mt-0.5 block truncate">{{ project.floor|default:"-" }} Floors</span>
+          </div>
+      </div>
+  </div>  
+
+  <!-- 2. STICKY INTERNAL NAVBAR -->
+  <div class="sticky top-2 z-30 bg-white border border-slate-200 rounded-xl shadow-sm mb-6 overflow-x-auto scrollbar-none">
+    <nav class="flex items-center min-w-max px-3 py-1.5 gap-1.5 text-xs font-semibold text-slate-600">
+      <a href="#overview" class="px-3 py-2 rounded-lg hover:text-[#7a5927] hover:bg-slate-50 transition">Overview</a>
+      <a href="#pricing" class="px-3 py-2 rounded-lg hover:text-[#7a5927] hover:bg-slate-50 transition">Pricing & Unit Plans</a>
+      <a href="#floor-plan" class="px-3 py-2 rounded-lg hover:text-[#7a5927] hover:bg-slate-50 transition">Floor Plan</a>
+      <a href="#video" class="px-3 py-2 rounded-lg hover:text-[#7a5927] hover:bg-slate-50 transition">Video</a>
+      <a href="#amenities" class="px-3 py-2 rounded-lg hover:text-[#7a5927] hover:bg-slate-50 transition">Amenities</a>
+      <a href="#payment-scheme" class="px-3 py-2 rounded-lg hover:text-[#7a5927] hover:bg-slate-50 transition">Payment Scheme</a>
+      <a href="#bank-approval" class="px-3 py-2 rounded-lg hover:text-[#7a5927] hover:bg-slate-50 transition">Bank Approval</a>
+      <a href="#emi-calculator" class="px-3 py-2 rounded-lg hover:text-[#7a5927] hover:bg-slate-50 transition">EMI Calculator</a>
+      <a href="#location" class="px-3 py-2 rounded-lg hover:text-[#7a5927] hover:bg-slate-50 transition">Location</a>
+      <a href="#about-developer" class="px-3 py-2 rounded-lg hover:text-[#7a5927] hover:bg-slate-50 transition">About Developer</a>
+      <a href="#faqs" class="px-3 py-2 rounded-lg hover:text-[#7a5927] hover:bg-slate-50 transition">FAQs</a>
+    </nav>
+  </div>
+
+  <!-- 3. MAIN CONTENT GRID -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+    <!-- LEFT COLUMN (All Sections) -->
+    <div class="lg:col-span-2 space-y-8">
+
+      <!-- MAIN BANNER IMAGE -->
+      <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200">
+        {% if project.image %}
+          <img src="{{ project.image.url }}" alt="{{ project.project_name }}" class="w-full h-[320px] sm:h-[420px] object-cover">
+        {% else %}
+          <div class="w-full h-[320px] sm:h-[420px] bg-slate-200 flex items-center justify-center text-slate-400">
+            <i data-lucide="image" class="w-16 h-16"></i>
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- SECTION 1: OVERVIEW -->
+      <div id="overview" class="scroll-mt-20 bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-4">
+        <h2 class="text-lg font-bold text-slate-900 border-b border-slate-100 pb-2">Overview</h2>
+        {% if project.welcomes.first %}
+          <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">{{ project.welcomes.first.description }}</p>
+        {% else %}
+          <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+            Welcome to <strong>{{ project.project_name }}</strong>{% if project.developer %} by <strong>{{ project.developer.name }}</strong>{% endif %}. Located in {{ project.locality.name|default:"" }} {{ project.city.name|default:"" }}, offering premium spaces with modern architectural design and seamless connectivity.
+          </p>
+        {% endif %}
+
+        {% if project.usps.all %}
+          <div class="pt-3 border-t border-slate-100">
+            <h3 class="text-xs font-bold text-slate-800 mb-2">Key Highlights</h3>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-600">
+              {% for usp in project.usps.all %}
+                <li class="flex items-start gap-1.5">
+                  <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-[#7a5927] shrink-0 mt-0.5"></i>
+                  <span>{{ usp.point }}</span>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- SECTION 2: PRICING & UNIT PLANS -->
+      <div id="pricing" class="scroll-mt-20 bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+        <h2 class="text-lg font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2">Pricing & Unit Plans</h2>
+        {% if project.configurations.all %}
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs sm:text-sm text-slate-600">
+              <thead>
+                <tr class="border-b border-slate-200 bg-slate-50 font-semibold text-slate-500 uppercase text-[11px]">
+                  <th class="p-3">Unit Type</th>
+                  <th class="p-3">Carpet Area</th>
+                  <th class="p-3">Price</th>
+                  <th class="p-3 text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                {% for config in project.configurations.all %}
+                  <tr class="hover:bg-slate-50/80 transition">
+                    <td class="p-3 font-semibold text-slate-800">{{ config.bhk_type }}</td>
+                    <td class="p-3">{{ config.area_sqft }} Sq.Ft.</td>
+                    <td class="p-3 font-bold text-[#7a5927]">
+                      {% if config.price_in_rupees %}₹ {{ config.price_in_rupees }}{% else %}Price on Request{% endif %}
+                    </td>
+                    <td class="p-3 text-right">
+                      <a href="#enquire" class="inline-block px-3 py-1.5 text-xs font-semibold rounded bg-[#7a5927] text-white hover:bg-[#63481f] transition">
+                        Enquire
+                      </a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% else %}
+          <p class="text-xs text-slate-500 italic">Configuration and unit plan details will be updated shortly.</p>
+        {% endif %}
+      </div>
+
+      <!-- SECTION 3: FLOOR PLAN -->
+      <div id="floor-plan" class="scroll-mt-20 bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+        <h2 class="text-lg font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2">Floor Plan</h2>
+        {% if project.gallery.all %}
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {% for item in project.gallery.all %}
+              <div class="border border-slate-200 rounded-lg p-2 bg-slate-50 text-center">
+                <img src="{{ item.image.url }}" alt="Floor Plan" class="w-full h-44 object-contain rounded mb-2 bg-white">
+                <span class="text-xs font-semibold text-slate-700">Master Floor Plan</span>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <p class="text-xs text-slate-500 italic">Floor plans available on request.</p>
+        {% endif %}
+      </div>
+
+      <!-- SECTION 4: VIDEO TOUR -->
+      <div id="video" class="scroll-mt-20 bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+        <h2 class="text-lg font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2">Video Tour</h2>
+        {% if project.video_url %}
+          <div class="aspect-video w-full rounded-lg overflow-hidden border border-slate-200">
+            <iframe class="w-full h-full" src="{{ project.video_url }}" title="Project Video" frameborder="0" allowfullscreen></iframe>
+          </div>
+        {% else %}
+          <div class="p-8 bg-slate-50 border border-slate-100 rounded-lg text-center text-slate-400">
+            <i data-lucide="video" class="w-8 h-8 mx-auto mb-1"></i>
+            <p class="text-xs">Video walkthrough for this project is coming soon.</p>
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- SECTION 5: AMENITIES -->
+      {% if project.amenities.all %}
+      <div id="amenities" class="scroll-mt-20 bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+        <h2 class="text-lg font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2">Amenities</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+          {% for item in project.amenities.all %}
+            <div class="p-2.5 rounded-lg border border-slate-100 bg-slate-50 flex items-center gap-2">
+              <i data-lucide="check" class="w-3.5 h-3.5 text-[#7a5927] shrink-0"></i>
+              <span class="text-xs font-semibold text-slate-700 truncate">{{ item.amenities.title }}</span>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- SECTION 6: PAYMENT SCHEME -->
+      <div id="payment-scheme" class="scroll-mt-20 bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+        <h2 class="text-lg font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2">Payment Scheme</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="p-3 rounded-lg border border-slate-100 bg-slate-50">
+            <span class="text-[10px] uppercase font-bold text-[#7a5927] block">Booking Amount</span>
+            <span class="text-xs font-semibold text-slate-800 mt-1 block">10% at Booking</span>
+          </div>
+          <div class="p-3 rounded-lg border border-slate-100 bg-slate-50">
+            <span class="text-[10px] uppercase font-bold text-[#7a5927] block">Construction Linked</span>
+            <span class="text-xs font-semibold text-slate-800 mt-1 block">80% In Milestones</span>
+          </div>
+          <div class="p-3 rounded-lg border border-slate-100 bg-slate-50">
+            <span class="text-[10px] uppercase font-bold text-[#7a5927] block">On Possession</span>
+            <span class="text-xs font-semibold text-slate-800 mt-1 block">10% Final Balance</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 7: BANK APPROVAL / OFFERS -->
+      <div id="bank-approval" class="scroll-mt-20 bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+        <h2 class="text-lg font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2">Bank Approvals & Loan Offers</h2>
+        <p class="text-xs text-slate-500 mb-3">Approved by leading national and private banks for instant home loan processing.</p>
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="px-3 py-1.5 text-xs font-semibold bg-slate-50 border border-slate-200 text-slate-700 rounded-lg">SBI Bank</span>
+          <span class="px-3 py-1.5 text-xs font-semibold bg-slate-50 border border-slate-200 text-slate-700 rounded-lg">HDFC Bank</span>
+          <span class="px-3 py-1.5 text-xs font-semibold bg-slate-50 border border-slate-200 text-slate-700 rounded-lg">ICICI Bank</span>
+          <span class="px-3 py-1.5 text-xs font-semibold bg-slate-50 border border-slate-200 text-slate-700 rounded-lg">Axis Bank</span>
+          <span class="px-3 py-1.5 text-xs font-semibold bg-slate-50 border border-slate-200 text-slate-700 rounded-lg">PNB Housing</span>
+        </div>
+      </div>
+
+      <!-- SECTION 8: EMI CALCULATOR -->
+      <div id="emi-calculator" class="scroll-mt-20 bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+        <h2 class="text-lg font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2">Home Loan EMI Calculator</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Loan Amount (₹)</label>
+            <input type="number" id="emiAmount" value="5000000" class="w-full text-xs p-2 border border-slate-200 rounded-lg focus:outline-none focus:border-[#7a5927]">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Interest Rate (%)</label>
+            <input type="number" id="emiRate" value="8.5" step="0.1" class="w-full text-xs p-2 border border-slate-200 rounded-lg focus:outline-none focus:border-[#7a5927]">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Tenure (Years)</label>
+            <input type="number" id="emiYears" value="20" class="w-full text-xs p-2 border border-slate-200 rounded-lg focus:outline-none focus:border-[#7a5927]">
+          </div>
+        </div>
+        <div class="mt-4 p-4 bg-slate-50 border border-slate-100 rounded-lg flex items-center justify-between">
+          <span class="text-xs font-semibold text-slate-600">Estimated Monthly EMI:</span>
+          <span id="emiResult" class="text-lg font-bold text-[#7a5927]">₹ 43,391 / mo</span>
+        </div>
+      </div>
+
+      <!-- SECTION 9: LOCATION -->
+      {% if project.google_map_iframe %}
+      <div id="location" class="scroll-mt-20 bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+        <h2 class="text-lg font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2">Location</h2>
+        <div class="w-full h-64 sm:h-72 rounded-lg overflow-hidden border border-slate-200">
+          {{ project.google_map_iframe|safe }}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- SECTION 10: ABOUT DEVELOPER -->
+      <div id="about-developer" class="scroll-mt-20 bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+        <h2 class="text-lg font-bold text-slate-900 mb-3 border-b border-slate-100 pb-2">About Developer</h2>
+        {% if project.developer %}
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-600 font-bold text-xs shrink-0">
+              {{ project.developer.name|slice:":2"|upper }}
+            </div>
+            <div>
+              <h3 class="text-sm font-bold text-slate-800">{{ project.developer.name }}</h3>
+              <span class="text-xs text-slate-500">Established Builder & Developer</span>
+            </div>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            {{ project.developer.description|default:"Known for quality construction, timely delivery, and customer satisfaction across top real estate projects." }}
+          </p>
+        {% else %}
+          <p class="text-xs text-slate-500 italic">Developer details will be updated soon.</p>
+        {% endif %}
+      </div>
+
+      <!-- SECTION 11: FAQS -->
+      {% if project.faqs.all %}
+      <div id="faqs" class="scroll-mt-20 bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+        <h2 class="text-lg font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2">Frequently Asked Questions</h2>
+        <div class="space-y-3">
+          {% for faq in project.faqs.all %}
+            <div class="border-b border-slate-100 pb-2.5">
+              <h3 class="text-xs sm:text-sm font-semibold text-slate-800 flex items-center gap-1.5">
+                <i data-lucide="help-circle" class="w-3.5 h-3.5 text-[#7a5927] shrink-0"></i>
+                {{ faq.question }}
+              </h3>
+              <p class="text-xs text-slate-600 mt-1 pl-5 leading-relaxed">{{ faq.answer }}</p>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+    </div>
+
+    <!-- RIGHT COLUMN (Sticky Form & Related Projects) -->
+    <div class="space-y-6">
+
+      <!-- Enquiry Form Sticky Card -->
+      <div id="enquire" class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 lg:sticky lg:top-16">
+        <h3 class="text-lg font-bold text-slate-900 mb-1">Enquire About This Project</h3>
+        <p class="text-xs text-slate-500 mb-4">Fill in your details below and our agent will get back to you shortly.</p>
+
+        <form action="" method="POST" class="space-y-3">
+          {% csrf_token %}
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Full Name</label>
+            <input type="text" name="name" required placeholder="Enter your full name" 
+                   class="w-full text-sm px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-[#7a5927]">
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Phone Number</label>
+            <input type="tel" name="phone" required placeholder="Enter phone number" 
+                   class="w-full text-sm px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-[#7a5927]">
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Email Address</label>
+            <input type="email" name="email" placeholder="Enter email address" 
+                   class="w-full text-sm px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-[#7a5927]">
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Message / Notes</label>
+            <textarea name="message" rows="3" placeholder="I would like to get more information regarding..." 
+                      class="w-full text-sm px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-[#7a5927]"></textarea>
+          </div>
+
+          <button type="submit" class="w-full py-2.5 bg-[#7a5927] hover:bg-[#63481f] text-white text-sm font-semibold rounded-lg transition flex items-center justify-center gap-2">
+            <i data-lucide="send" class="w-4 h-4"></i>
+            <span>Submit Enquiry</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Related Projects Sidebar -->
+      {% if related_projects %}
+      <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+        <h3 class="text-base font-bold text-slate-900 mb-4 border-b pb-2">Similar Projects in {{ project.city.name }}</h3>
+        <div class="space-y-3">
+          {% for rel in related_projects %}
+          <a href="{{ rel.get_absolute_url }}" class="flex gap-3 group items-center p-2 rounded-lg hover:bg-slate-50 transition">
+            {% if rel.image %}
+              <img src="{{ rel.image.url }}" alt="{{ rel.project_name }}" class="w-16 h-16 rounded-md object-cover shrink-0">
+            {% else %}
+              <div class="w-16 h-16 bg-slate-100 rounded-md flex items-center justify-center text-slate-400 shrink-0">
+                <i data-lucide="building" class="w-6 h-6"></i>
+              </div>
+            {% endif %}
+            <div class="min-w-0 flex-1">
+              <h4 class="text-xs font-bold text-slate-800 group-hover:text-[#7a5927] truncate">{{ rel.project_name }}</h4>
+              <p class="text-[11px] text-slate-500 truncate">{{ rel.locality.name|default:"" }}</p>
+              <p class="text-xs font-semibold text-[#7a5927] mt-0.5">{{ rel.get_price_range }}</p>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Interactive EMI Calculator Script -->
+<script>
+  function calculateEMI() {
+    const P = parseFloat(document.getElementById('emiAmount').value) || 0;
+    const r = (parseFloat(document.getElementById('emiRate').value) || 0) / 12 / 100;
+    const n = (parseFloat(document.getElementById('emiYears').value) || 0) * 12;
+
+    if (P > 0 && r > 0 && n > 0) {
+      const emi = (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+      document.getElementById('emiResult').innerText = '₹ ' + Math.round(emi).toLocaleString('en-IN') + ' / mo';
+    } else {
+      document.getElementById('emiResult').innerText = '₹ 0 / mo';
+    }
+  }
+
+  ['emiAmount', 'emiRate', 'emiYears'].forEach(id => {
+    document.getElementById(id).addEventListener('input', calculateEMI);
+  });
+</script>
+
+{% endblock %}

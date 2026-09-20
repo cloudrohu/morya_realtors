@@ -764,7 +764,7 @@ class Project(MPTTModel, BaseModel):
     ]
 
     BHK_CHOICES = (
-        ('1 BHK', '1 BHK'), ('2 BHK', '2 BHK'), ('3 BHK', '3 BHK'), ('4 BHK', '4 BHK'),('5 BHK', '5 BHK'), 
+        ('1 BHK', '1 BHK'), ('2 BHK', '2 BHK'), ('3 BHK', '3 BHK'), ('4 BHK', '4 BHK'), ('5 BHK', '5 BHK'), 
         ('6 BHK', '6 BHK'), ('7 BHK', '7 BHK'), ('8 BHK', '8 BHK'), ('9 BHK', '9 BHK'),
         ('10 BHK', '10 BHK'), ('10+ BHK', '10+ BHK'),
     )
@@ -781,8 +781,8 @@ class Project(MPTTModel, BaseModel):
         ('September', 'September'), ('October', 'October'), ('November', 'November'), ('December', 'December'),
     ]
     
-    OCCUPANCY_CERTIFICATE_CHOICES = (('Yes', 'Yes'),('No', 'No'), )
-    COMMENCEMENT_CERTIFICATE_CHOICES = (('Yes', 'Yes'),('No', 'No'),)
+    OCCUPANCY_CERTIFICATE_CHOICES = (('Yes', 'Yes'), ('No', 'No'))
+    COMMENCEMENT_CERTIFICATE_CHOICES = (('Yes', 'Yes'), ('No', 'No'))
     
     calling_status = models.CharField(
         max_length=25,
@@ -793,49 +793,49 @@ class Project(MPTTModel, BaseModel):
     )
 
     # --- Project Core Fields ---
-    occupancy_certificate = models.CharField(max_length=25, choices=OCCUPANCY_CERTIFICATE_CHOICES,null=True, blank=True)
-    commencement_certificate = models.CharField(max_length=25, choices=COMMENCEMENT_CERTIFICATE_CHOICES,null=True, blank=True)
+    occupancy_certificate = models.CharField(max_length=25, choices=OCCUPANCY_CERTIFICATE_CHOICES, null=True, blank=True)
+    commencement_certificate = models.CharField(max_length=25, choices=COMMENCEMENT_CERTIFICATE_CHOICES, null=True, blank=True)
     
     construction_status = models.CharField(max_length=25, choices=CONSTRUCTION_STATUS_CHOICES)
-    property_type = models.ForeignKey(PropertyType,on_delete=models.PROTECT,related_name="projects",
-    )
+    property_type = models.ForeignKey(PropertyType, on_delete=models.PROTECT, related_name="projects")
 
     # MPTT Hierarchy
     parent = TreeForeignKey('self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)
     project_name = models.CharField(max_length=250)
     
     # Foreign Keys
-    developer = models.ForeignKey(Developer,on_delete=models.PROTECT,related_name="projects",)
-    architect = models.ForeignKey(Architects,on_delete=models.PROTECT,related_name="projects",blank=True,null=True,)
-    engineer = models.ForeignKey(Engineer,on_delete=models.PROTECT,related_name="projects",blank=True,null=True,)
+    developer = models.ForeignKey(Developer, on_delete=models.PROTECT, related_name="projects")
+    architect = models.ForeignKey(Architects, on_delete=models.PROTECT, related_name="projects", blank=True, null=True)
+    engineer = models.ForeignKey(Engineer, on_delete=models.PROTECT, related_name="projects", blank=True, null=True)
     
-    city = models.ForeignKey(Location,on_delete=models.PROTECT,related_name="project_city",limit_choices_to={"location_type": LocationType.DISTRICT_CITY},null=True,blank=True,)
-    locality = models.ForeignKey(Location,on_delete=models.PROTECT,related_name="projects_locality",limit_choices_to={"location_type": LocationType.LOCALITY_AREA},null=True,blank=True,)
-    area = models.ForeignKey(Location,on_delete=models.PROTECT,related_name="projects_area",limit_choices_to={"location_type": LocationType.SUBLOCALITY_AREA},null=True,blank=True,)
-    postal_code = models.ForeignKey(PostalCode,on_delete=models.PROTECT,related_name="projects",null=True,blank=True,)
-    address = models.TextField(blank=True,null=True,)
+    city = models.ForeignKey(Location, on_delete=models.PROTECT, related_name="project_city", limit_choices_to={"location_type": LocationType.DISTRICT_CITY}, null=True, blank=True)
+    locality = models.ForeignKey(Location, on_delete=models.PROTECT, related_name="projects_locality", limit_choices_to={"location_type": LocationType.LOCALITY_AREA}, null=True, blank=True)
+    area = models.ForeignKey(Location, on_delete=models.PROTECT, related_name="projects_area", limit_choices_to={"location_type": LocationType.SUBLOCALITY_AREA}, null=True, blank=True)
+    postal_code = models.ForeignKey(PostalCode, on_delete=models.PROTECT, related_name="projects", null=True, blank=True)
+    address = models.TextField(blank=True, null=True)
     
-    land_parcel = models.CharField(max_length=50,null=True, blank=True)
-    bhk_type = MultiSelectField(choices=BHK_CHOICES, max_length=50,null=True, blank=True)
-    floor = models.CharField(max_length=50,null=True, blank=True)
+    land_parcel = models.CharField(max_length=50, null=True, blank=True)
+    bhk_type = MultiSelectField(choices=BHK_CHOICES, max_length=50, null=True, blank=True)
+    floor = models.CharField(max_length=50, null=True, blank=True)
     
-    possession_year = models.ForeignKey(PossessionIn, on_delete=models.PROTECT,null=True, blank=True) 
+    possession_year = models.ForeignKey(PossessionIn, on_delete=models.PROTECT, null=True, blank=True) 
     possession_month = models.CharField(max_length=20, choices=MONTH_CHOICES, blank=True, null=True, help_text="Select Possession Month")
     
-    luxurious = models.CharField(max_length=50,null=True, blank=True)
-    pricing = models.CharField(max_length=50,null=True, blank=True) 
-    youtube_embed_id = models.CharField(max_length=50, blank=True, null=True,verbose_name="YouTube Video ID")
+    luxurious = models.CharField(max_length=50, null=True, blank=True)
+    pricing = models.CharField(max_length=50, null=True, blank=True) 
+    youtube_embed_id = models.CharField(max_length=50, blank=True, null=True, verbose_name="YouTube Video ID")
     
     featured_property = models.BooleanField(default=False)
     balcony = models.BooleanField(default=False)
-    image = models.ImageField(upload_to="projects/",blank=True,null=True,)
-    google_map_iframe = models.TextField(blank=True,null=True,)
+    image = models.ImageField(upload_to="projects/", blank=True, null=True)
+    google_map_iframe = models.TextField(blank=True, null=True)
+    
     id = models.CharField(
         primary_key=True,
         max_length=20,
         editable=False,
     )
-    slug = models.SlugField(unique=True, null=True, blank=True,max_length=555,)
+    slug = models.SlugField(unique=True, null=True, blank=True, max_length=555)
 
     @property
     def bhk_display(self):
@@ -843,22 +843,13 @@ class Project(MPTTModel, BaseModel):
             return ""
 
         bhks = self.bhk_type
-
         if isinstance(bhks, str):
             bhks = [x.strip() for x in bhks.split(",") if x.strip()]
 
-        numbers = []
-
-        for bhk in bhks:
-            bhk = str(bhk).strip()
-            bhk = bhk.replace(" BHK", "")
-            numbers.append(bhk)
-
+        numbers = [str(bhk).strip().replace(" BHK", "") for bhk in bhks]
         return ", ".join(numbers) + " BHK"
 
-    # --- Overridden Methods ---
     def __str__(self):
-        # Uses MPTT logic for full path (e.g., Phase 1 / Block A)
         full_path = [str(node.project_name) for node in self.get_ancestors(include_self=True)]
         return ' / '.join(full_path)
     
@@ -867,103 +858,54 @@ class Project(MPTTModel, BaseModel):
         verbose_name = "Project"
         verbose_name_plural = "4. Projects"
     
-        # models.py
+    class MPTTMeta:
+        order_insertion_by = ['project_name']
+
     def image_tag(self):
         if self.image:
-            return mark_safe(
-                f'<img src="{self.image.url}" height="60" />'
-            )
+            return mark_safe(f'<img src="{self.image.url}" height="60" />')
         return "-"
-
     image_tag.short_description = "Image"
 
     def refresh_calling_status(self):
         refresh_calling_status(self)
 
-
-
     def save(self, *args, **kwargs):
-
-        # ==========================================
-        # GENERATE PROJECT ID FIRST
-        # ==========================================
+        # 1. GENERATE PROJECT ID
         if not self.id:
-
             last_project = (
                 Project.objects
                 .filter(id__startswith="PRO")
                 .order_by("-id")
                 .first()
             )
-
             if last_project and last_project.id:
-                last_number = int(
-                    last_project.id.replace("PRO", "")
-                )
-                next_number = last_number + 1
+                try:
+                    last_number = int(last_project.id.replace("PRO", ""))
+                    next_number = last_number + 1
+                except ValueError:
+                    next_number = 1
             else:
                 next_number = 1
 
             self.id = f"PRO{next_number:06d}"
 
-        # ==========================================
-        # BHK SLUG
-        # ==========================================
+        # 2. BHK SLUG BUILD
         bhk_slug = ""
-
         if self.bhk_type:
-
             bhk_values = self.bhk_type
-
             if isinstance(bhk_values, str):
-                bhk_values = [
-                    value.strip()
-                    for value in bhk_values.split(",")
-                    if value.strip()
-                ]
-
-            bhk_numbers = []
-
-            for bhk in bhk_values:
-                number = str(bhk).replace(" BHK", "").strip()
-                bhk_numbers.append(number)
-
+                bhk_values = [v.strip() for v in bhk_values.split(",") if v.strip()]
+            bhk_numbers = [str(bhk).replace(" BHK", "").strip() for bhk in bhk_values]
             if bhk_numbers:
                 bhk_slug = f"{'-'.join(bhk_numbers)}-bhk"
 
-        # ==========================================
-        # PROPERTY TYPE
-        # ==========================================
-        property_type_slug = ""
+        # 3. OTHER SLUG PARTS
+        property_type_slug = slugify(self.property_type.name) if self.property_type else ""
+        locality_slug = slugify(self.locality.name) if self.locality else ""
+        city_slug = slugify(self.city.name) if self.city else ""
 
-        if self.property_type:
-            property_type_slug = slugify(
-                self.property_type.name
-            )
-
-        # ==========================================
-        # LOCALITY
-        # ==========================================
-        locality_slug = ""
-
-        if self.locality:
-            locality_slug = slugify(
-                self.locality.name
-            )
-
-        # ==========================================
-        # CITY
-        # ==========================================
-        city_slug = ""
-
-        if self.city:
-            city_slug = slugify(
-                self.city.name
-            )
-
-        # ==========================================
-        # SEO SLUG
-        # ==========================================
+        # 4. SEO SLUG GENERATION
         slug_parts = [
             self.project_name,
             bhk_slug,
@@ -973,23 +915,15 @@ class Project(MPTTModel, BaseModel):
             city_slug,
         ]
 
-        self.slug = slugify(
-            "-".join(
-                str(part).strip()
-                for part in slug_parts
-                if part
-            )
-        )
+        # Always re-generate slug if missing or blank
+        if not self.slug:
+            raw_slug = "-".join(str(part).strip() for part in slug_parts if part)
+            generated_slug = slugify(raw_slug)
+            
+            # Fallback for unexpected empty strings
+            self.slug = generated_slug if generated_slug else f"project-{self.id}".lower()
 
-        # ==========================================
-        # SAVE
-        # ==========================================
         super().save(*args, **kwargs)
-
-
-    
-    class MPTTMeta:
-        order_insertion_by = ['project_name']
 
     def get_absolute_url(self):
         return reverse("project_details", kwargs={'id': self.id, 'slug': self.slug})
@@ -1006,13 +940,10 @@ class Project(MPTTModel, BaseModel):
 
         for bhk in bhk_types:
             bhk_configs = configs.filter(bhk_type=bhk)
-
-            # Area range
             area_min = bhk_configs.aggregate(Min("area_sqft"))["area_sqft__min"]
             area_max = bhk_configs.aggregate(Max("area_sqft"))["area_sqft__max"]
             area_range = f"{area_min}" if area_min == area_max else f"{area_min}-{area_max}"
 
-            # Price range
             price_min = bhk_configs.aggregate(Min("price_in_rupees"))["price_in_rupees__min"]
             price_max = bhk_configs.aggregate(Max("price_in_rupees"))["price_in_rupees__max"]
             price_range = format_price_range(price_min, price_max)
@@ -1021,14 +952,8 @@ class Project(MPTTModel, BaseModel):
 
         return "\n".join(summary_lines)
 
-
     def get_carpet_area_range(self):
-        """
-        Returns min-max carpet area from configurations
-        Example: 761–1475 sqft
-        """
         from django.db.models import Min, Max
-
         qs = self.configurations.all()
         if not qs.exists():
             return "NA"
@@ -1042,6 +967,7 @@ class Project(MPTTModel, BaseModel):
         return f"{area_min}–{area_max} sqft"
 
     def get_price_range(self):
+        from django.db.models import Min, Max
         qs = self.configurations.all()
 
         if not qs.exists():
@@ -1062,14 +988,14 @@ class Project(MPTTModel, BaseModel):
 
         return f"₹ {fmt(price_min)} – {fmt(price_max)}"
 
-
-
 class BookingOffer(BaseModel):
     Project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="BookingOffer")
     title = models.CharField(max_length=255)
 
     def __str__(self):
         return self.title
+
+
 class WelcomeTo(BaseModel):
     Project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="welcomes")
     description = models.TextField(null=True, blank=True,max_length=5500)
@@ -1086,6 +1012,8 @@ class WebSlider(BaseModel):
 
     def __str__(self):
         return self.caption or f"Slider #{self.pk}"
+
+
 class Overview(BaseModel):
     Project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="overviews")
     heading = models.CharField(max_length=255)
@@ -1093,12 +1021,15 @@ class Overview(BaseModel):
 
     def __str__(self):
         return self.heading
+
 class AboutUs(BaseModel):
     Project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="aboutus")
     content = models.TextField()
 
     def __str__(self):
         return "About Us"
+
+
 class USP(BaseModel):
     Project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="usps")
     point = models.CharField(null=True, blank=True,max_length=150)

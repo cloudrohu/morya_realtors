@@ -293,8 +293,6 @@ def search_projects(request):
     return render(request, "home/residential_list.html", context)
 
 
-
-
 def residential_projects(request):
 
 
@@ -323,8 +321,6 @@ def residential_projects(request):
 
     return render(request,"home/residential_list.html",context,)
 
-
-
 def commercial_projects(request):
 
     projects = Project.objects.filter(is_active=True)
@@ -336,19 +332,21 @@ def commercial_projects(request):
 
     return render(request,"projects/commercial_list.html",context,)
 
+
 def project_details(request, id, slug):
 
     project = get_object_or_404(Project,id=id,slug=slug,is_active=True)
 
-    carpet_range = (
-        project.configurations.aggregate(
-            min_area=Min("area_sqft"),
-            max_area=Max("area_sqft"),
-        )
+    carpet_range = project.configurations.aggregate(
+        min_area=Min("area_sqft"),
+        max_area=Max("area_sqft"),
     )
 
+    settings_obj = get_settings()
+
     related_projects = (
-        Project.objects.filter(
+        Project.objects
+        .filter(
             city=project.city,
             is_active=True
         )
@@ -360,9 +358,13 @@ def project_details(request, id, slug):
         "min_carpet": carpet_range["min_area"],
         "max_carpet": carpet_range["max_area"],
         "related_projects": related_projects,
+        "settings_obj": settings_obj,
+
     }
 
-    return render(request,"projects/project_detail.html",context,)
+    return render(request,"projects/project_detail.html",context)
+
+
 
 def submit_enquiry(request, id):
 
@@ -399,3 +401,4 @@ def thank_you(request):
         request,
         "projects/thank_you.html"
     )
+
