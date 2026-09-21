@@ -132,11 +132,13 @@ def index(request):
         context
     )
 
+
 def get_bhk_choices():
     return [
         choice[0]
         for choice in Project.BHK_CHOICES
     ]
+
 
 def search_suggestions(request):
 
@@ -277,7 +279,7 @@ def search_projects(request):
 
         "selected_bhk": bhk,
 
-        
+        "settings_obj": get_settings(),
 
         "selected_bhk_list": selected_bhk_list,
 
@@ -320,6 +322,7 @@ def residential_projects(request):
     }
 
     return render(request,"home/residential_list.html",context,)
+
 
 def commercial_projects(request):
 
@@ -365,7 +368,6 @@ def project_details(request, id, slug):
     return render(request,"projects/project_detail.html",context)
 
 
-
 def submit_enquiry(request, id):
 
     project = get_object_or_404(
@@ -395,6 +397,7 @@ def submit_enquiry(request, id):
         id=project.id,
         slug=project.slug,
     )
+
 
 def thank_you(request):
     return render(
