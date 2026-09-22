@@ -296,32 +296,38 @@ def search_projects(request):
 
 
 def residential_projects(request):
-
-
     settings_obj = get_settings()
-
 
     projects = (
         Project.objects
         .filter(is_active=True)
         .annotate(
-            min_price=Min(
-                "configurations__price_in_rupees"
-            ),
-            max_price=Max(
-                "configurations__price_in_rupees"
-            ),
+            min_price=Min("configurations__price_in_rupees"),
+            max_price=Max("configurations__price_in_rupees"),
         )
     )
+
+    # Developer aur Locality filter check karein
+    developer_id = request.GET.get("developer")
+    locality_id = request.GET.get("locality")
+    
+    if developer_id:
+        projects = projects.filter(developer_id=developer_id)
+
+    if locality_id:
+        projects = projects.filter(locality_id=locality_id)
+
+    projects = projects.distinct()
 
     context = {
         "projects": projects,
         "page_title": "Residential Projects",
-        'settings_obj': settings_obj,
-        
+        "settings_obj": settings_obj,
+        "selected_developer": developer_id,
+        "selected_locality": locality_id,
     }
 
-    return render(request,"home/residential_list.html",context,)
+    return render(request, "home/residential_list.html", context)
 
 
 def commercial_projects(request):

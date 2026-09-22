@@ -1,1639 +1,1205 @@
-{% extends "home/base.html" %}
+
+{% extends 'home/base.html' %} 
+{% load static %}
+{% block title %}{{ site_settings.meta_title|default:'Best Real Estate Deals' }}{% endblock %}
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+<style>
+  .slider-animation {
+      display: flex;
+      animation: slide 12s infinite linear;
+  }
+  .slider-animation img {
+      width: 100%;
+      flex-shrink: 0;
+      object-fit: cover;
+  }
+
+  @keyframes slide {
+      0% { transform: translateX(0); }
+      20% { transform: translateX(0); }
+
+      25% { transform: translateX(-100%); }
+      45% { transform: translateX(-100%); }
+
+      50% { transform: translateX(-200%); }
+      70% { transform: translateX(-200%); }
+
+      75% { transform: translateX(-300%); }
+      100% { transform: translateX(-300%); }
+  }
+  .nice-scroll::-webkit-scrollbar { width: 6px; }
+  .nice-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+  .nice-scroll::-webkit-scrollbar-track { background: transparent; }
+
+  .filter-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+  }
+  .filter-body.open {
+    max-height: 420px;
+  }
+</style>
 
 {% block content %}
 
-<style>
-    /* ================================
-   PROJECT LISTING
-================================ */
 
-.project-listing {
-    background: #f8fafc;
-    padding: 60px 0 80px;
-}
 
-.project-container {
-    max-width: 1280px;
-    margin: auto;
-    padding: 0 20px;
-}
+<!-- ================= MAIN CONTAINER ================= -->
+<div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
 
+  <aside class="space-y-4 md:space-y-5 lg:space-y-6 lg:sticky lg:top-24">
 
-/* ================================
-   TOP AREA
-================================ */
+    <form class="bg-white shadow-md md:shadow-lg rounded-2xl p-4 md:p-5 lg:p-6 space-y-4 md:space-y-5" id="filterForm" method="GET">
 
-.project-heading {
-    margin-bottom: 35px;
-}
+      <!-- ================= HEADER ================= -->
+      <div class="border-b pb-3">
+        <h3 class="font-bold text-gray-800 text-lg">
+          Advanced Search
+        </h3>
+      </div>
 
-.project-heading h1 {
-    font-size: 38px;
-    font-weight: 700;
-    color: #0f172a;
-    margin: 0 0 10px;
-}
+    <!-- ================= Locality ================= -->
+      <div class="border overflow-hidden bg-white">
 
-.project-heading p {
-    color: #64748b;
-    font-size: 15px;
-    margin: 0;
-}
+        <!-- header -->
+        <div class="flex items-center justify-between px-4 py-3">
+          <button type="button" class="flex-1 flex items-center justify-between text-left" onclick="toggleFilter('localityBody','localityArrow')">
 
+            <h4 class="text-sm font-semibold text-gray-800">Locality</h4>
 
-/* ================================
-   LAYOUT
-================================ */
+            <svg id="localityArrow" class="w-4 h-4 text-gray-500 transition-transform duration-300 rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
 
-.project-layout {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: 30px;
-    align-items: start;
-}
+         <button type="button" onclick="clearLocalityOnly()" class="text-sm font-semibold text-blue-600 hover:text-blue-700 ml-2">
+            Clear
+          </button>
 
-
-/* ================================
-   SIDEBAR
-================================ */
-
-.project-filter {
-    background: #fff;
-    border: 1px solid #e2e8f0;
-    border-radius: 16px;
-    padding: 22px;
-    position: sticky;
-    top: 100px;
-}
-
-.filter-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-}
-
-.filter-title h2 {
-    font-size: 18px;
-    font-weight: 700;
-    margin: 0;
-}
-
-.clear-filter {
-    border: 0;
-    background: none;
-    color: #64748b;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-.clear-filter:hover {
-    color: #0f172a;
-}
-
-
-/* ================================
-   FILTER GROUP
-================================ */
-
-.filter-group {
-    padding-bottom: 22px;
-    margin-bottom: 22px;
-    border-bottom: 1px solid #e2e8f0;
-}
-
-.filter-group:last-child {
-    border-bottom: 0;
-    margin-bottom: 0;
-}
-
-.filter-group label.filter-label {
-    display: block;
-    font-size: 13px;
-    font-weight: 700;
-    color: #334155;
-    margin-bottom: 10px;
-}
-
-
-/* Search */
-
-.filter-search {
-    position: relative;
-}
-
-.filter-search input {
-    width: 100%;
-    height: 42px;
-    border: 1px solid #cbd5e1;
-    border-radius: 9px;
-    padding: 0 12px;
-    font-size: 13px;
-    outline: none;
-    box-sizing: border-box;
-}
-
-.filter-search input:focus {
-    border-color: #0f172a;
-}
-
-
-/* Select */
-
-.filter-group select {
-    width: 100%;
-    height: 42px;
-    border: 1px solid #cbd5e1;
-    border-radius: 9px;
-    padding: 0 12px;
-    background: #fff;
-    font-size: 13px;
-    color: #334155;
-    outline: none;
-}
-
-
-/* Checkbox */
-
-.filter-options {
-    display: flex;
-    flex-direction: column;
-    gap: 11px;
-}
-
-.filter-option {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    cursor: pointer;
-    font-size: 13px;
-    color: #475569;
-}
-
-.filter-option input {
-    width: 16px;
-    height: 16px;
-    accent-color: #0f172a;
-}
-
-
-/* ================================
-   CONTENT TOP
-================================ */
-
-.project-content-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.project-count {
-    font-size: 14px;
-    color: #64748b;
-}
-
-.project-count strong {
-    color: #0f172a;
-}
-
-.project-sort select {
-    height: 40px;
-    padding: 0 12px;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    background: #fff;
-    outline: none;
-}
-
-
-/* ================================
-   PROJECT GRID
-================================ */
-
-.project-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
-}
-
-
-/* ================================
-   PROJECT CARD
-================================ */
-
-.project-card {
-    background: #fff;
-    border: 1px solid #e2e8f0;
-    border-radius: 15px;
-    overflow: hidden;
-    transition: .25s ease;
-}
-
-.project-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 15px 35px rgba(15, 23, 42, .08);
-}
-
-
-/* Image */
-
-.project-image {
-    height: 230px;
-    position: relative;
-    overflow: hidden;
-    background: #e2e8f0;
-}
-
-.project-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform .5s ease;
-}
-
-.project-card:hover .project-image img {
-    transform: scale(1.06);
-}
-
-
-/* Badge */
-
-.project-badge {
-    position: absolute;
-    top: 13px;
-    left: 13px;
-    padding: 6px 10px;
-    border-radius: 30px;
-    background: #fff;
-    color: #0f172a;
-    font-size: 11px;
-    font-weight: 700;
-}
-
-
-/* Card body */
-
-.project-body {
-    padding: 18px;
-}
-
-.project-location {
-    font-size: 12px;
-    color: #64748b;
-    margin-bottom: 7px;
-}
-
-.project-card h3 {
-    font-size: 18px;
-    font-weight: 700;
-    color: #0f172a;
-    margin: 0 0 6px;
-}
-
-.project-description {
-    color: #64748b;
-    font-size: 12px;
-    line-height: 1.6;
-}
-
-
-/* Details */
-
-.project-details {
-    display: flex;
-    gap: 12px;
-    margin-top: 15px;
-    color: #475569;
-    font-size: 12px;
-}
-
-.project-details span {
-    position: relative;
-}
-
-.project-details span:not(:last-child)::after {
-    content: "•";
-    margin-left: 12px;
-    color: #cbd5e1;
-}
-
-
-/* Bottom */
-
-.project-bottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-top: 1px solid #f1f5f9;
-    margin-top: 16px;
-    padding-top: 15px;
-}
-
-.project-price small {
-    display: block;
-    color: #94a3b8;
-    font-size: 10px;
-    margin-bottom: 3px;
-}
-
-.project-price strong {
-    font-size: 17px;
-    color: #0f172a;
-}
-
-.project-button {
-    width: 38px;
-    height: 38px;
-    border: 0;
-    border-radius: 9px;
-    background: #f1f5f9;
-    cursor: pointer;
-    transition: .2s;
-}
-
-.project-button:hover {
-    background: #0f172a;
-    color: #fff;
-}
-
-
-/* ================================
-   MOBILE FILTER BUTTON
-================================ */
-
-.mobile-filter-button {
-    display: none;
-    width: 100%;
-    height: 45px;
-    border: 0;
-    border-radius: 9px;
-    background: #0f172a;
-    color: #fff;
-    font-weight: 600;
-    cursor: pointer;
-    margin-bottom: 20px;
-}
-
-
-/* ================================
-   MOBILE OVERLAY
-================================ */
-
-.filter-overlay {
-    display: none;
-}
-
-
-/* ================================
-   NO RESULTS
-================================ */
-
-.no-projects {
-    display: none;
-    text-align: center;
-    background: #fff;
-    border: 1px solid #e2e8f0;
-    border-radius: 15px;
-    padding: 60px 20px;
-}
-
-.no-projects.active {
-    display: block;
-}
-
-.no-projects h3 {
-    margin: 0 0 8px;
-    font-size: 18px;
-}
-
-.no-projects p {
-    color: #64748b;
-    font-size: 13px;
-}
-
-
-/* ================================
-   RESPONSIVE
-================================ */
-
-@media (max-width: 1100px) {
-
-    .project-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-}
-
-
-@media (max-width: 900px) {
-
-    .project-layout {
-        grid-template-columns: 1fr;
-    }
-
-    .mobile-filter-button {
-        display: block;
-    }
-
-    .project-filter {
-        position: fixed;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        width: 320px;
-        max-width: 85%;
-        z-index: 1001;
-        border-radius: 0 16px 16px 0;
-        overflow-y: auto;
-        transform: translateX(-110%);
-        transition: transform .3s ease;
-    }
-
-    .project-filter.active {
-        transform: translateX(0);
-    }
-
-    .filter-overlay.active {
-        display: block;
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, .5);
-        z-index: 1000;
-    }
-
-}
-
-
-@media (max-width: 600px) {
-
-    .project-listing {
-        padding: 35px 0 60px;
-    }
-
-    .project-container {
-        padding: 0 15px;
-    }
-
-    .project-heading h1 {
-        font-size: 28px;
-    }
-
-    .project-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .project-content-top {
-        align-items: flex-start;
-        gap: 10px;
-    }
-
-    .project-sort select {
-        max-width: 145px;
-    }
-
-}
-</style>
-
-
-<main class="project-listing">
-
-    <div class="project-container">
-
-        <!-- Heading -->
-        <div class="project-heading">
-            <h1>Our Projects</h1>
-            <p>
-                Explore our residential and commercial projects
-                across prime locations.
-            </p>
+       
         </div>
 
+        <!-- body -->
+        <div id="localityBody" class="filter-body open">
+          <div class="px-4 pb-4 space-y-3">
 
-        <!-- Mobile Filter Button -->
-        <button
-            type="button"
-            class="mobile-filter-button"
-            id="openProjectFilter">
+            <!-- search -->
+            <div class="relative">
+              <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+              <input id="localitySearch" type="text" placeholder="Search locality..." class="w-full border px-10 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-300" oninput="filterLocality()" />
+            </div>
 
-            ☰ &nbsp; Filter Projects
+            <!-- list -->
+            <div class="border p-2 max-h-[220px] overflow-auto nice-scroll" id="localityList">
 
+            {% for locality in available_localities %}
+              <label class="locality-item flex items-center gap-3 px-2 py-2 rounded-md hover:bg-gray-50 cursor-pointer">
+                <input type="checkbox" name="locality" value="{{ locality.id }}" class="locality-check w-4 h-4" onchange="submitFilters()"
+                  {% if locality.id|stringformat:"s" in selected_locality_ids %}
+                    checked
+                  {% endif %}>
+                <span class="text-sm text-gray-800">{{ locality.name }}</span>
+              </label>
+              {% endfor %}
+
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= BHK CHOICE ================= -->
+      <div class="border overflow-hidden shadow-sm md:shadow-none">
+
+          <div class="flex justify-between items-center px-4 py-3 bg-white active:bg-gray-50">
+              <button type="button" onclick="toggleBhkSection()"
+                  class="flex-1 flex items-center justify-between text-left">
+                  <h4 class="text-sm font-semibold text-gray-800">
+                      No. of Bedrooms
+                  </h4>
+                  <svg id="bhkArrow" class="w-4 h-4 text-gray-500 transition-transform duration-300"
+                      fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+              </button>
+
+              <button type="button" onclick="bhkClear()" class="ml-4 text-blue-600 text-sm font-medium hover:underline">
+                  Clear
+              </button>
+          </div>
+
+          <div id="bhkBody" class="hidden px-4 pt-3 pb-4 space-y-3">
+              <div class="flex flex-wrap gap-2">
+
+                  {% for bhk in bhk_choices|slice:":5" %}
+                  <button type="button" onclick="toggleBhkPill(this)" data-value="{{ bhk }}"
+                   class="bhk-pill px-4 py-1.5 rounded-full border text-sm transition font-medium
+                        {% if bhk in selected_bhk_list %} 
+                          bg-blue-50 border-blue-200 text-blue-600 
+                        {% else %} 
+                          bg-white border-gray-200 text-gray-600 hover:bg-gray-50 
+                        {% endif %}">
+                      + {{ bhk }}
+                  </button>
+                  {% endfor %}
+
+                  <div id="bhkMore" class="hidden flex flex-wrap gap-2">
+                      {% for bhk in bhk_choices|slice:"5:" %}
+                      <button type="button" onclick="toggleBhkPill(this)" data-value="{{ bhk }}"
+                          class="bhk-pill px-4 py-1.5 rounded-full border text-sm transition font-medium
+                          {% if bhk in selected_bhk_list %} 
+                              bg-blue-50 border-blue-200 text-blue-600 
+                          {% else %} 
+                              bg-white border-gray-200 text-gray-600 hover:bg-gray-50 
+                          {% endif %}">
+                          + {{ bhk }}
+                      </button>
+                      {% endfor %}
+                  </div>
+
+              </div>
+
+              {% if bhk_choices|length > 5 %}
+              <button id="bhkMoreBtn" type="button" onclick="showMoreBhk()"
+                  class="text-sm text-orange-600 font-medium hover:underline mt-2">
+                  + {{ bhk_choices|length|add:"-5" }} more
+              </button>
+              {% endif %}
+
+              <input type="hidden" name="bhk" id="bhkInput" value="{{ selected_bhk|default:'' }}">
+          </div>
+      </div>
+
+      <!-- ================= CONSTRUCTION STATUS ================= -->
+      <div class="border overflow-hidden shadow-sm md:shadow-none">
+
+        <div class="flex justify-between items-center px-4 py-3 bg-white active:bg-gray-50">
+          <button type="button" onclick="csToggle()" class="flex-1 flex items-center justify-between text-left">
+            
+            <h4 class="text-sm font-semibold text-gray-800">
+              Construction Status
+            </h4>
+
+            <svg id="csArrow" class="w-4 h-4 text-gray-500 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+
+          <button type="button" onclick="csClear()" class="ml-4 text-blue-600 text-sm font-medium hover:underline">
+            Clear
+          </button>
+        </div>
+
+        <div id="csBody" class="hidden px-4 pt-3 pb-4">
+
+          <div class="flex flex-wrap gap-2">
+
+            {% for status in construction_status %}
+              <button type="button" onclick="csPill(this)" data-value="{{ status }}" class="cs-pill {% if selected_status and status in selected_status %} bg-blue-50 text-blue-600 border-blue-200 {% endif %}">
+                + {{ status }}
+              </button>
+            {% endfor %}
+            </div>
+
+          <input type="hidden"  name="construction_status"  id="csInput"  value="{{ selected_status|default:'' }}">
+        </div>
+      </div>
+
+      <!-- ================= RERA APPROVED ================= -->
+      <div class="border overflow-hidden shadow-sm md:shadow-none">
+
+        <!-- HEADER -->
+        <div class="flex justify-between items-center px-4 py-3 bg-white">
+
+          <button type="button" onclick="reraToggle()" class="flex items-center gap-2 text-sm font-semibold text-gray-800">
+            RERA Approved
+            <svg id="reraArrow" class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+
+          <button type="button" onclick="reraClear()" class="text-blue-600 text-sm font-medium">
+            Clear
+          </button>
+        </div>
+
+        <!-- BODY -->
+        <div id="reraBody" class="hidden px-4 pt-3 pb-4 space-y-3">
+
+          <div class="flex flex-wrap gap-2">
+
+            <button type="button" class="rera-pill" onclick="reraSelect(this)" data-value="RERA approved Projects">
+              + RERA approved Projects
+            </button>
+
+          </div>
+
+          <!-- hidden input -->
+          <input type="hidden" name="rera" id="reraInput">
+        </div>
+      </div>
+
+      <!-- ================= SUBMIT ================= -->
+      <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3">
+        Filter Properties
+      </button>
+
+    </form>
+        
+      <!-- ================= FILTER BUTTON ================= -->
+      <div class="fixed bottom-0 left-0 right-0 p-3 bg-white shadow-lg md:hidden z-50">
+        <button type="submit" form="filterForm" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-xl">
+          Search Properties
         </button>
+      </div>
 
+  </aside>
 
-        <!-- Overlay -->
-        <div
-            class="filter-overlay"
-            id="projectFilterOverlay">
-        </div>
 
+  <div class="lg:col-span-2 space-y-6">
 
-        <div class="project-layout">
+    <div class="flex items-center gap-2 bg-white shadow p-3 mb-4">
 
+      <button id="listViewBtn" class="bg-orange-500 text-white p-2">
+        <i class="fas fa-list"></i>
+      </button>
 
-            <!-- =========================================
-                 ASIDE FILTER
-            ========================================== -->
+      <!-- Grid Button (Desktop only) -->
+      <button id="gridViewBtn" class="hidden sm:hidden md:inline-flex items-center justify-center bg-gray-200 text-gray-700 p-[12px] hover:bg-orange-100 hover:text-orange-600 transition">
+        <i class="fas fa-th"></i>
+      </button>
 
-            <aside
-                class="project-filter"
-                id="projectFilter">
-
-                <div class="filter-title">
-
-                    <h2>Filters</h2>
-
-                    <button
-                        type="button"
-                        class="clear-filter"
-                        id="clearProjectFilter">
-
-                        Clear All
-
-                    </button>
-
-                </div>
-
-
-                <!-- Search -->
-                <div class="filter-group">
-
-                    <label class="filter-label">
-                        Search Project
-                    </label>
-
-                    <div class="filter-search">
-
-                        <input
-                            type="text"
-                            id="projectSearch"
-                            placeholder="Search project...">
-
-                    </div>
-
-                </div>
-
-
-                <!-- Location -->
-                <div class="filter-group">
-
-                    <label class="filter-label">
-                        Location
-                    </label>
-
-                    <select id="projectLocation">
-
-                        <option value="all">
-                            All Locations
-                        </option>
-
-                        <option value="lucknow">
-                            Lucknow
-                        </option>
-
-                        <option value="noida">
-                            Noida
-                        </option>
-
-                        <option value="delhi">
-                            Delhi
-                        </option>
-
-                        <option value="gurgaon">
-                            Gurgaon
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <!-- Property Type -->
-                <div class="filter-group">
-
-                    <label class="filter-label">
-                        Property Type
-                    </label>
-
-                    <div class="filter-options">
-
-                        <label class="filter-option">
-                            <input
-                                type="checkbox"
-                                class="type-filter"
-                                value="residential">
-
-                            Residential
-                        </label>
-
-                        <label class="filter-option">
-                            <input
-                                type="checkbox"
-                                class="type-filter"
-                                value="commercial">
-
-                            Commercial
-                        </label>
-
-                    </div>
-
-                </div>
-
-
-                <!-- BHK -->
-                <div class="filter-group">
-
-                    <label class="filter-label">
-                        Configuration
-                    </label>
-
-                    <div class="filter-options">
-
-                        <label class="filter-option">
-                            <input
-                                type="checkbox"
-                                class="bhk-filter"
-                                value="1bhk">
-
-                            1 BHK
-                        </label>
-
-                        <label class="filter-option">
-                            <input
-                                type="checkbox"
-                                class="bhk-filter"
-                                value="2bhk">
-
-                            2 BHK
-                        </label>
-
-                        <label class="filter-option">
-                            <input
-                                type="checkbox"
-                                class="bhk-filter"
-                                value="3bhk">
-
-                            3 BHK
-                        </label>
-
-                        <label class="filter-option">
-                            <input
-                                type="checkbox"
-                                class="bhk-filter"
-                                value="4bhk">
-
-                            4 BHK
-                        </label>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Budget -->
-                <div class="filter-group">
-
-                    <label class="filter-label">
-                        Budget
-                    </label>
-
-                    <select id="projectBudget">
-
-                        <option value="all">
-                            Any Budget
-                        </option>
-
-                        <option value="1">
-                            Under ₹50 Lakh
-                        </option>
-
-                        <option value="2">
-                            ₹50 Lakh - ₹1 Cr
-                        </option>
-
-                        <option value="3">
-                            ₹1 Cr - ₹2 Cr
-                        </option>
-
-                        <option value="4">
-                            Above ₹2 Cr
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <!-- Status -->
-                <div class="filter-group">
-
-                    <label class="filter-label">
-                        Project Status
-                    </label>
-
-                    <div class="filter-options">
-
-                        <label class="filter-option">
-                            <input
-                                type="checkbox"
-                                class="status-filter"
-                                value="ongoing">
-
-                            Ongoing
-                        </label>
-
-                        <label class="filter-option">
-                            <input
-                                type="checkbox"
-                                class="status-filter"
-                                value="upcoming">
-
-                            Upcoming
-                        </label>
-
-                        <label class="filter-option">
-                            <input
-                                type="checkbox"
-                                class="status-filter"
-                                value="completed">
-
-                            Completed
-                        </label>
-
-                    </div>
-
-                </div>
-
-            </aside>
-
-
-            <!-- =========================================
-                 PROJECT CONTENT
-            ========================================== -->
-
-            <section class="project-content">
-
-
-                <div class="project-content-top">
-
-                    <div class="project-count">
-
-                        <strong id="projectCount">6</strong>
-                        Projects Found
-
-                    </div>
-
-
-                    <div class="project-sort">
-
-                        <select id="projectSort">
-
-                            <option value="featured">
-                                Featured
-                            </option>
-
-                            <option value="low">
-                                Price: Low to High
-                            </option>
-
-                            <option value="high">
-                                Price: High to Low
-                            </option>
-
-                            <option value="newest">
-                                Newest
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                </div>
-
-
-                <!-- =====================================
-                     PROJECT GRID
-                ====================================== -->
-
-                <div
-                    class="project-grid"
-                    id="projectGrid">
-
-
-                    <!-- CARD -->
-
-                    <article
-                        class="project-card"
-                        data-name="Green Valley"
-                        data-location="lucknow"
-                        data-type="residential"
-                        data-bhk="2bhk"
-                        data-budget="1"
-                        data-status="completed"
-                        data-year="2024"
-                        data-price="42">
-
-                        <div class="project-image">
-
-                            <img
-                                src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=900&q=80"
-                                alt="Green Valley">
-
-                            <span class="project-badge">
-                                Completed
-                            </span>
-
-                        </div>
-
-                        <div class="project-body">
-
-                            <div class="project-location">
-                                📍 Shaheed Path, Lucknow
-                            </div>
-
-                            <h3>
-                                Green Valley
-                            </h3>
-
-                            <p class="project-description">
-                                Premium family residences designed
-                                for comfortable modern living.
-                            </p>
-
-                            <div class="project-details">
-                                <span>2 BHK</span>
-                                <span>1100 Sq.Ft.</span>
-                            </div>
-
-                            <div class="project-bottom">
-
-                                <div class="project-price">
-
-                                    <small>
-                                        Starting From
-                                    </small>
-
-                                    <strong>
-                                        ₹42 Lakh
-                                    </strong>
-
-                                </div>
-
-                                <button class="project-button">
-                                    →
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- CARD -->
-
-                    <article
-                        class="project-card"
-                        data-name="The Grand Residency"
-                        data-location="lucknow"
-                        data-type="residential"
-                        data-bhk="3bhk"
-                        data-budget="3"
-                        data-status="ongoing"
-                        data-year="2026"
-                        data-price="145">
-
-                        <div class="project-image">
-
-                            <img
-                                src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=900&q=80"
-                                alt="The Grand Residency">
-
-                            <span class="project-badge">
-                                Ongoing
-                            </span>
-
-                        </div>
-
-                        <div class="project-body">
-
-                            <div class="project-location">
-                                📍 Gomti Nagar, Lucknow
-                            </div>
-
-                            <h3>
-                                The Grand Residency
-                            </h3>
-
-                            <p class="project-description">
-                                Luxury residences in one of the
-                                city's most premium locations.
-                            </p>
-
-                            <div class="project-details">
-                                <span>3 BHK</span>
-                                <span>1850 Sq.Ft.</span>
-                            </div>
-
-                            <div class="project-bottom">
-
-                                <div class="project-price">
-
-                                    <small>
-                                        Starting From
-                                    </small>
-
-                                    <strong>
-                                        ₹1.45 Cr
-                                    </strong>
-
-                                </div>
-
-                                <button class="project-button">
-                                    →
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- CARD -->
-
-                    <article
-                        class="project-card"
-                        data-name="Urban Heights"
-                        data-location="noida"
-                        data-type="residential"
-                        data-bhk="2bhk"
-                        data-budget="2"
-                        data-status="upcoming"
-                        data-year="2027"
-                        data-price="78">
-
-                        <div class="project-image">
-
-                            <img
-                                src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=900&q=80"
-                                alt="Urban Heights">
-
-                            <span class="project-badge">
-                                Upcoming
-                            </span>
-
-                        </div>
-
-                        <div class="project-body">
-
-                            <div class="project-location">
-                                📍 Sector 150, Noida
-                            </div>
-
-                            <h3>
-                                Urban Heights
-                            </h3>
-
-                            <p class="project-description">
-                                Contemporary apartments with
-                                thoughtfully designed spaces.
-                            </p>
-
-                            <div class="project-details">
-                                <span>2 BHK</span>
-                                <span>1250 Sq.Ft.</span>
-                            </div>
-
-                            <div class="project-bottom">
-
-                                <div class="project-price">
-
-                                    <small>
-                                        Starting From
-                                    </small>
-
-                                    <strong>
-                                        ₹78 Lakh
-                                    </strong>
-
-                                </div>
-
-                                <button class="project-button">
-                                    →
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- CARD -->
-
-                    <article
-                        class="project-card"
-                        data-name="Skyline Business Park"
-                        data-location="gurgaon"
-                        data-type="commercial"
-                        data-bhk=""
-                        data-budget="4"
-                        data-status="ongoing"
-                        data-year="2026"
-                        data-price="240">
-
-                        <div class="project-image">
-
-                            <img
-                                src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=80"
-                                alt="Skyline Business Park">
-
-                            <span class="project-badge">
-                                Ongoing
-                            </span>
-
-                        </div>
-
-                        <div class="project-body">
-
-                            <div class="project-location">
-                                📍 Golf Course Road, Gurgaon
-                            </div>
-
-                            <h3>
-                                Skyline Business Park
-                            </h3>
-
-                            <p class="project-description">
-                                Premium commercial spaces for
-                                modern businesses.
-                            </p>
-
-                            <div class="project-details">
-                                <span>Office</span>
-                                <span>2500 Sq.Ft.</span>
-                            </div>
-
-                            <div class="project-bottom">
-
-                                <div class="project-price">
-
-                                    <small>
-                                        Starting From
-                                    </small>
-
-                                    <strong>
-                                        ₹2.40 Cr
-                                    </strong>
-
-                                </div>
-
-                                <button class="project-button">
-                                    →
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- CARD -->
-
-                    <article
-                        class="project-card"
-                        data-name="Royal Enclave"
-                        data-location="delhi"
-                        data-type="residential"
-                        data-bhk="4bhk"
-                        data-budget="4"
-                        data-status="ongoing"
-                        data-year="2026"
-                        data-price="280">
-
-                        <div class="project-image">
-
-                            <img
-                                src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=80"
-                                alt="Royal Enclave">
-
-                            <span class="project-badge">
-                                Ongoing
-                            </span>
-
-                        </div>
-
-                        <div class="project-body">
-
-                            <div class="project-location">
-                                📍 Dwarka, Delhi
-                            </div>
-
-                            <h3>
-                                Royal Enclave
-                            </h3>
-
-                            <p class="project-description">
-                                Ultra-luxury residences with
-                                spacious premium interiors.
-                            </p>
-
-                            <div class="project-details">
-                                <span>4 BHK</span>
-                                <span>2800 Sq.Ft.</span>
-                            </div>
-
-                            <div class="project-bottom">
-
-                                <div class="project-price">
-
-                                    <small>
-                                        Starting From
-                                    </small>
-
-                                    <strong>
-                                        ₹2.80 Cr
-                                    </strong>
-
-                                </div>
-
-                                <button class="project-button">
-                                    →
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- CARD -->
-
-                    <article
-                        class="project-card"
-                        data-name="Lakeview Homes"
-                        data-location="lucknow"
-                        data-type="residential"
-                        data-bhk="1bhk"
-                        data-budget="1"
-                        data-status="upcoming"
-                        data-year="2027"
-                        data-price="35">
-
-                        <div class="project-image">
-
-                            <img
-                                src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=900&q=80"
-                                alt="Lakeview Homes">
-
-                            <span class="project-badge">
-                                Upcoming
-                            </span>
-
-                        </div>
-
-                        <div class="project-body">
-
-                            <div class="project-location">
-                                📍 Sushant Golf City, Lucknow
-                            </div>
-
-                            <h3>
-                                Lakeview Homes
-                            </h3>
-
-                            <p class="project-description">
-                                Smart compact residences for
-                                modern urban lifestyles.
-                            </p>
-
-                            <div class="project-details">
-                                <span>1 BHK</span>
-                                <span>750 Sq.Ft.</span>
-                            </div>
-
-                            <div class="project-bottom">
-
-                                <div class="project-price">
-
-                                    <small>
-                                        Starting From
-                                    </small>
-
-                                    <strong>
-                                        ₹35 Lakh
-                                    </strong>
-
-                                </div>
-
-                                <button class="project-button">
-                                    →
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    </article>
-
-
-                </div>
-
-
-                <!-- No Results -->
-
-                <div
-                    class="no-projects"
-                    id="noProjects">
-
-                    <h3>
-                        No Projects Found
-                    </h3>
-
-                    <p>
-                        Try changing your filters or search.
-                    </p>
-
-                </div>
-
-
-            </section>
-
-        </div>
+      <span class="font-semibold text-orange-600">
+        Properties
+      </span>
 
     </div>
 
-</main>
+    <!-- ✅ List View -->   
+    <div id="listView" class="space-y-6">
+      {% for project in projects %}
+
+        <div class="flex flex-col sm:flex-row bg-white  shadow border p-3 hover:border-orange-500 hover:shadow-xl transition-all ">
+
+          <a href="{{ project.get_absolute_url }}">
+            {% if project.image %}
+              <img src="{{ project.image.url }}"  class="w-full sm:w-64 h-48 object-cover mt-0" style="height: 250px;"  alt="{{ project.project_name }}" class="h-80">
+            {% else %}
+              <img src="{% static 'images/no-images.jpg' %}"  class="w-full sm:w-64 h-48 object-cover" style="height: 250px;"  alt="No Image">
+            {% endif %}
+          </a>
+
+          <!-- Right Section -->
+          <div class="sm:ml-5 sm:mt-0 flex-1 space-y-2">
+
+          <!-- Title + Price + Location -->
+          <div class="flex flex-col gap-1">
+
+            <a href="{{ project.get_absolute_url }}" class="block rounded-lg p-1 hover:bg-gray-50 transition-all duration-200">
+
+              <!-- Row 1 -->
+              <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1">
+
+                <!-- Project Name -->
+                <h2 class="text-[17px] sm:text-xl font-semibold text-gray-900 leading-snug tracking-tight">
+                  {{ project.project_name }}
+                </h2>
+
+                <!-- Price -->
+                <span class="text-[18px] sm:text-xl font-bold text-orange-600 tracking-tight drop-shadow-sm">
+                  {{ project.get_price_range }}
+                </span>
+
+              </div>
+
+              <!-- Row 2: Location -->
+              <p class="text-[13px] sm:text-sm text-gray-500 flex items-center gap-1 mt-1">
+
+                <i class="fas fa-map-marker-alt text-orange-500 text-[12px]"></i>
+
+                <span class="leading-none">
+                  {{ project.locality }}
+                </span>
+
+              </p>
+
+            </a>
+          </div>
+
+
+          <!-- Badges -->
+          <div class="flex flex-wrap gap-2 text-xs text-gray-700 mb-[10px]">
+            <span class="px-2 py-1 rounded-full bg-gray-100">{{ project.construction_status }}</span>
+            <span class="px-2 py-1 rounded-full bg-gray-100">{{ project.propert_type }}</span>
+            <span class="px-2 py-1 rounded-full bg-gray-100">Possession {{ project.possession_month|default:"N/A" }}--{{ project.possession_year|default:"N/A" }}</span>
+          </div>
+
+    
+        <!-- ================= CONFIGURATION CARD ================= -->
+          <div class="config-card border bg-white">
+            {% with project.configurations.all as configs %}
+            {% if configs %}
+            {% regroup configs by bhk_type as bhk_groups %}
+
+            <div class="relative  overflow-x-auto">
+              <div class="bhk-tabs flex gap-1 text-sm font-semibold whitespace-nowrap relative">
+
+                <!-- Animated underline -->
+                <span class="bhk-underline absolute bottom-0 h-[3px]"></span>
+
+                {% for group in bhk_groups %}
+                  <button type="button"
+                    class="bhk-tab px-2  transition-all duration-200
+                    {% if group.list|length == 0 %}
+                      bhk-disabled
+                    {% endif %}"
+                    data-target="bhk-{{ project.id }}-{{ forloop.counter }}">
+                    {{ group.grouper }}
+                  </button>
+                {% endfor %}
+
+              </div>
+            </div>
+
+
+
+            <!-- ================= PANELS ================= -->
+            {% for group in bhk_groups %}
+            <div class="bhk-panel {% if not forloop.first %}hidden{% endif %}" data-panel="bhk-{{ project.id }}-{{ forloop.counter }}">
+
+              <div class="table-scroll bg-white top-0">
+
+                <table class="w-full text-xs sm:text-sm">
+                  <thead class="bg-gray-100">
+                    <tr class="text-center font-semibold">
+                      <th class="border px-2 py-1">Area</th>
+                      <th class="border px-2 py-1">Price</th>
+                      <th class="border px-2 py-1">Parking</th>
+                      <th class="border px-2 py-1">Balcony</th>
+                    </tr>
+                  </thead>
+
+                  <tbody class="text-center">
+                    {% for cfg in group.list %}
+                    <tr class="{% if cfg.sold_out %}bg-red-50{% endif %}">
+                      <td class="border px-1 py-1">{{ cfg.area_sqft }} sqft</td>
+
+                      <td class="border px-1 py-1 font-semibold">
+                        {% if cfg.sold_out %}
+                          <span class="text-red-600 text-xs uppercase font-bold">Sold Out</span>
+                        {% else %}
+                          {{ cfg.formatted_price }}
+                        {% endif %}
+                      </td>
+
+                      <td class="border px-1 py-1">
+                        {% if cfg.parking %}
+                          <span class="text-green-600 font-semibold">Yes</span>
+                        {% else %}
+                          <span class="text-gray-500">*</span>
+                        {% endif %}
+                      </td>
+
+                      <td class="border px-1 py-1">
+                        {% if cfg.balcony %}
+                          <span class="text-green-600 font-semibold">Yes</span>
+                        {% else %}
+                          <span class="text-gray-500">*</span>
+                        {% endif %}
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+
+              </div>
+
+            </div>
+            {% endfor %}
+
+            {% else %}
+            <!-- ================= NO CONFIG ================= -->
+            <div class="text-center text-sm text-gray-500 py-3">
+              Configuration details available on request
+            </div>
+            {% endif %}
+            {% endwith %}
+
+          </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2.5 items-center">
+
+              <!-- ================= DEVELOPER ================= -->
+              {% if project.developer %}
+              <div class="flex items-center gap-2">
+
+                <!-- Developer Logo -->
+                <span class="h-8 w-8 flex items-center justify-center rounded-full overflow-hidden border bg-gray-100">
+                  {% if project.developer.logo %}
+                    <img src="{{ project.developer.logo.url }}"
+                        alt="{{ project.developer.title }}"
+                        class="h-[90px] w-full object-cover">
+                  {% else %}
+                    <i class="fas fa-building text-gray-400 text-sm"></i>
+                  {% endif %}
+                </span>
+
+                <!-- Developer Name -->
+                <span class="text-blue-600 text-sm font-medium">
+                  By {{ project.developer.title }}
+                </span>
+
+              </div>
+              {% endif %}
+
+
+              <!-- CTA BUTTONS -->
+              <div class="flex gap-3 md:justify-end">
+
+                    <!-- View Details -->
+                    <a href="{{ project.get_absolute_url }}" target="_blank" class="flex-1 md:flex-none inline-flex items-center justify-center gap-2  px-4 py-2 bg-orange-500 text-white text-sm font-semibold  rounded-3xl hover:bg-orange-600 transition">
+                      View Details
+                      
+                    </a>
+
+                    <!-- Contact Us -->
+                    <a href="javascript:void(0)" data-project="{{ project.project_name }}" data-project-id="{{ project.id }}" class="openContactPopup flex-1 md:flex-none inline-flex items-center justify-center gap-2
+                    px-4 py-2 border border-orange-500 text-orange-600 text-sm font-semibold rounded-3xl hover:bg-orange-50 transition">
+                      Contact Us
+                    </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+
+      {% empty %}
+      <div class="text-center text-gray-500 py-10">No projects found.</div>
+      {% endfor %}
+    </div>
+
+      <!-- ================= GRID VIEW ================= -->
+      <div id="gridView" class="hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+
+            {% for project in projects %}
+            <div class="bg-white shadow border hover:shadow-lg hover:border-orange-500 transition">
+
+              <!-- IMAGE -->
+              <a href="{{ project.get_absolute_url }}">
+                {% if project.image %}
+                  <img src="{{ project.image.url }}" class="w-full h-[230px] object-cover"
+                      alt="{{ project.project_name }}">
+                {% else %}
+                  <img src="{% static 'images/no-images.jpg' %}" class="w-full h-[230px] object-cover"
+                      alt="No Image">
+                {% endif %}
+              </a>
+
+              <!-- CONTENT -->
+              <div class="p-4 space-y-3">
+
+                <!-- TITLE + PRICE -->
+                <div class="flex justify-between items-start gap-3">
+                  <h3 class="text-lg font-semibold text-gray-900 leading-snug">
+                    {{ project.project_name }}
+                  </h3>
+
+                  <span class="text-sm font-bold text-gray-900 whitespace-nowrap">
+                    {{ project.get_price_range }}
+                  </span>
+                </div>
+
+                <!-- LOCATION -->
+                <p class="text-xs text-gray-500 flex items-center gap-1">
+                  <i class="fas fa-map-marker-alt text-orange-500"></i>
+                  {{ project.locality }}, {{ project.city }}
+                </p>
+
+                <!-- BADGES -->
+                <div class="flex flex-wrap gap-2 text-[11px] text-gray-700">
+                  <span class="px-2 py-0.5 rounded-full bg-gray-100">
+                    {{ project.construction_status }}
+                  </span>
+                  <span class="px-2 py-0.5 rounded-full bg-gray-100">
+                    {{ project.propert_type.name }}
+                  </span>
+                </div>
+
+                <!-- ================= CONFIGURATION BOX ================= -->
+                <div class="border  bg-white text-xs">
+
+                  {% with project.configurations.all as configs %}
+                  {% if configs %}
+
+                  {% regroup configs by bhk_type as bhk_groups %}
+
+                  <!-- ================= TABS ================= -->
+                  <div class="border-b px-3 pt-2 overflow-x-auto whitespace-nowrap">
+                    <div class="flex gap-4 font-semibold text-gray-600">
+                      {% for group in bhk_groups %}
+                      <button type="button"
+                        class="bhk-tab pb-1 border-b-2
+                        {% if forloop.first %}
+                          border-orange-500 text-orange-600
+                        {% else %}
+                          border-transparent hover:text-orange-600
+                        {% endif %}"
+                        data-target="grid-bhk-{{ project.id }}-{{ forloop.counter }}">
+                        {{ group.grouper }}
+                      </button>
+                      {% endfor %}
+                    </div>
+                  </div>
+
+                  <!-- ================= PANELS ================= -->
+                  {% for group in bhk_groups %}
+                  <div class="bhk-panel {% if not forloop.first %}hidden{% endif %}"
+                      data-panel="grid-bhk-{{ project.id }}-{{ forloop.counter }}">
+
+                    <!-- HEADER -->
+                    <div class="grid grid-cols-4 px-3 py-2 bg-gray-50 border-b font-semibold text-gray-600 uppercase text-[10px]">
+                      <span>Area</span>
+                      <span>Balcony</span>
+                      <span>Parking</span>
+                      <span class="text-right">Price</span>
+                    </div>
+
+                    <!-- BODY -->
+                    <div class="max-h-[120px] overflow-y-auto divide-y">
+
+                      {% for cfg in group.list %}
+                      <div class="grid grid-cols-4 px-3 py-1 items-center {% if cfg.sold_out %}bg-red-50{% endif %}">
+
+                        <!-- AREA -->
+                        <span class="text-gray-700">
+                          {{ cfg.area_sqft }} sqft
+                        </span>
+
+                        <!-- BALCONY -->
+                        <span class="text-gray-500">
+                          {% if cfg.balcony %}Yes{% else %}No{% endif %}
+                        </span>
+
+                        <!-- PARKING -->
+                        <span class="text-gray-500">
+                          {% if cfg.parking %}Yes{% else %}No{% endif %}
+                        </span>
+
+                        <!-- PRICE / SOLD OUT -->
+                        <span class="text-right font-semibold">
+                          {% if cfg.sold_out %}
+                            <span class="text-red-600 uppercase text-[10px]">
+                              Sold Out
+                            </span>
+                          {% else %}
+                            {% if cfg.price_in_rupees %}
+                                {{ cfg.formatted_price }}
+                            {% else %}
+                              On Request
+                            {% endif %}
+                          {% endif %}
+                        </span>
+
+                      </div>
+                      {% endfor %}
+
+                    </div>
+                  </div>
+                  {% endfor %}
+
+                  {% else %}
+                  <!-- ================= NO CONFIG ================= -->
+                  <div class="px-3 py-3 text-center text-gray-500">
+                    Configuration available on request
+                  </div>
+                  {% endif %}
+                  {% endwith %}
+
+                </div>
+
+                        <!-- Developer -->
+                  {% if project.developer %}
+                  <div class="flex items-center gap-2">
+                  {% if project.developer.logo %}
+                    <span class="h-8 w-8 flex items-center justify-center rounded-full overflow-hidden border">
+                      <img src="{{ project.developer.logo.url }}"
+                          alt="{{ project.developer.title }}"
+                          class="h-full w-full object-cover">
+                    </span>
+                  {% endif %}
+
+                    <span class="text-blue-600 text-sm font-medium">
+                      {{ project.developer.title }}
+                    </span>
+                  </div>
+                  {% endif %}
+
+
+
+                <!-- CTA -->
+                <div class="flex gap-3 pt-2">
+                  <a href="{{ project.get_absolute_url }}" class="flex-1 text-center px-3 py-2 bg-orange-500 text-white text-sm font-semibold rounded-full hover:bg-orange-600" target="_blank" >
+                    View Details
+                  </a>
+
+                  <a href="javascript:void(0)"
+                    class="flex-1 text-center px-3 py-2 border border-orange-500 text-orange-600 text-sm font-semibold rounded-full">
+                    Contact
+                  </a>
+                </div>
+
+              </div>
+            </div>
+            {% empty %}
+            <div class="col-span-2 text-center text-gray-500 py-10">
+              No projects found.
+            </div>
+            {% endfor %}
+      </div>
+
+      <!-- Pagination Section -->
+      {% if projects.has_other_pages %}
+        <nav class="flex justify-center mt-10">
+          <ul class="flex items-center gap-2 text-gray-700">
+
+            {% if projects.has_previous %}
+              <li>
+                <a href="?" 
+                  class="px-3 py-1 border rounded hover:bg-gray-200 transition">
+                  &laquo; Prev
+                </a>
+              </li>
+            {% else %}
+              <li class="px-3 py-1 text-gray-400 border rounded cursor-not-allowed">
+                &laquo; Prev
+              </li>
+            {% endif %}
+
+            {% for num in projects.paginator.page_range %}
+              {% if projects.number == num %}
+                <li class="px-3 py-1 bg-[#00E0FF] text-white rounded font-bold">
+                  {{ num }}
+                </li>
+              {% elif num > projects.number|add:'-3' and num < projects.number|add:'3' %}
+                <li>
+                  <a href="" 
+                    class="px-3 py-1 border rounded hover:bg-gray-200 transition">
+                    {{ num }}
+                  </a>
+                </li>
+              {% endif %}
+            {% endfor %}
+
+            {% if projects.has_next %}
+              <li>
+                <a href="?" 
+                  class="px-3 py-1 border rounded hover:bg-gray-200 transition">
+                  Next &raquo;
+                </a>
+              </li>
+            {% else %}
+              <li class="px-3 py-1 text-gray-400 border rounded cursor-not-allowed">
+                Next &raquo;
+              </li>
+            {% endif %}
+
+          </ul>
+        </nav>
+      {% endif %}
+
+  </div>
+
+</div>
+
+
+
+<div id="paginationWrapper" class="flex justify-center mt-10 space-x-3"></div>
+
+<!-- ================= CONTACT POPUP ================= -->
+<div id="contactPopup" class="fixed inset-0 bg-black/70 hidden items-center justify-center z-50 px-3">
+
+  <div class="relative w-full max-w-sm rounded-xl shadow-2xl bg-white overflow-hidden">
+
+    <!-- HEADER -->
+    <div class="bg-gradient-to-r from-orange-500 to-orange-600 px-4 py-3 text-white">
+      <h3 class="text-base font-semibold">Enquiry For</h3>
+      <p id="enquiryProjectName" class="text-xs opacity-90 mt-0.5">
+        Project Name
+      </p>
+    </div>
+
+    <!-- CLOSE -->
+    <button id="closeContactPopup" class="absolute top-3 right-3 text-white text-lg">
+      ✕
+    </button>
+
+    <!-- FORM -->
+    <form method="post" id="enquiryForm" class="p-4 space-y-3 text-sm bg-white">
+      {% csrf_token %}
+
+      <!-- Honeypot -->
+      <input type="text" name="company" class="hidden">
+
+      <!-- reCAPTCHA token -->
+      <input type="hidden" name="g-recaptcha-response" id="recaptchaToken">
+
+      <input type="hidden" name="project_id" id="projectIdInput">
+
+      <!-- NAME -->
+      <div>
+        <label class="font-medium text-gray-600">Full Name</label>
+        <input type="text" name="name" required class="mt-1 w-full border rounded-md px-3 py-2">
+      </div>
+
+      <!-- EMAIL -->
+      <div>
+        <label class="font-medium text-gray-600">Email</label>
+        <input type="email" name="email" class="mt-1 w-full border rounded-md px-3 py-2">
+      </div>
+
+      <!-- PHONE -->
+      <div>
+        <label class="font-medium text-gray-600">Mobile</label>
+        <input type="tel" name="phone" required class="mt-1 w-full border rounded-md px-3 py-2">
+      </div>
+
+      <!-- MESSAGE -->
+      <div>
+        <label class="font-medium text-gray-600">Message</label>
+        <textarea name="message" rows="2" class="mt-1 w-full border rounded-md px-3 py-2"></textarea>
+      </div>
+
+        {% if settings_obj %}
+
+            {% if settings_obj.consent_sms_text %}
+            <div class="flex items-start gap-2 text-xs text-gray-500 leading-tight pt-1">
+                <input type="checkbox" required class="mt-1 w-4 h-4 accent-[#B8925A]" checked>
+                <label>{{ settings_obj.consent_sms_text }}</label>
+            </div>
+            {% endif %}
+
+            {% if settings_obj.consent_terms_text %}
+            <div class="flex items-start gap-2 text-xs text-gray-500 leading-tight">
+                <input type="checkbox" required class="mt-1 w-4 h-4 accent-[#B8925A]" checked>
+                <label>{{ settings_obj.consent_terms_text|safe }}</label>
+            </div>
+            {% endif %}
+
+        {% endif %}
+
+      <!-- SUBMIT -->
+      <button type="submit" class="w-full bg-orange-500 text-white py-2.5 rounded-lg font-semibold">
+        Submit Enquiry
+      </button>
+
+      <p class="text-[11px] text-center text-gray-400">
+        🔒 100% Privacy Protected
+      </p>
+    </form>
+
+  </div>
+</div>
+<!-- ================= END POPUP ================= -->
+
+<style>
+  /* ================= CONFIG TABLE SCROLL ================= */
+  .table-scroll {
+    max-height: 105px;          /* yahin se height control */
+    overflow-y: auto;
+    border: 1px solid #e5e7eb;
+  }
+
+  /* Sticky header */
+  .table-scroll thead th {
+    position: sticky;
+    top: 0;
+    background: #f3f4f6;
+    z-index: 5;
+  }
+
+  /* Orange scrollbar */
+  .table-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+  .table-scroll::-webkit-scrollbar-thumb {
+    background: #fb923c;
+    border-radius: 10px;
+  }
+
+</style>
 
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", function () {
 
-    const search = document.getElementById("projectSearch");
-    const location = document.getElementById("projectLocation");
-    const budget = document.getElementById("projectBudget");
+    const popup = document.getElementById("contactPopup");
+    const closeBtn = document.getElementById("closeContactPopup");
+    const projectNameText = document.getElementById("enquiryProjectName");
+    const projectIdInput = document.getElementById("projectIdInput");
+    const enquiryForm = document.getElementById("enquiryForm");
 
-    const sort = document.getElementById("projectSort");
+    document.querySelectorAll(".openContactPopup").forEach(btn => {
+      btn.addEventListener("click", function (e) {
+        e.preventDefault();
 
-    const cards = document.querySelectorAll(".project-card");
-    const grid = document.getElementById("projectGrid");
+        const projectName = this.dataset.project;
+        const projectId = this.dataset.projectId;
 
-    const count = document.getElementById("projectCount");
-    const noProjects = document.getElementById("noProjects");
+        projectNameText.textContent = projectName;
+        projectIdInput.value = projectId;
 
-    const typeFilters =
-        document.querySelectorAll(".type-filter");
+        enquiryForm.action = `/projects/submit-enquiry/${projectId}/`;
 
-    const bhkFilters =
-        document.querySelectorAll(".bhk-filter");
-
-    const statusFilters =
-        document.querySelectorAll(".status-filter");
-
-
-    /* =========================================
-       GET CHECKED VALUES
-    ========================================= */
-
-    function getCheckedValues(elements) {
-
-        return Array.from(elements)
-            .filter(input => input.checked)
-            .map(input => input.value);
-
-    }
-
-
-    /* =========================================
-       FILTER
-    ========================================= */
-
-    function filterProjects() {
-
-        const searchValue =
-            search.value.toLowerCase().trim();
-
-        const locationValue =
-            location.value;
-
-        const budgetValue =
-            budget.value;
-
-        const selectedTypes =
-            getCheckedValues(typeFilters);
-
-        const selectedBhk =
-            getCheckedValues(bhkFilters);
-
-        const selectedStatuses =
-            getCheckedValues(statusFilters);
-
-
-        let visible = 0;
-
-
-        cards.forEach(card => {
-
-            const name =
-                card.dataset.name.toLowerCase();
-
-            const cardLocation =
-                card.dataset.location;
-
-            const cardType =
-                card.dataset.type;
-
-            const cardBhk =
-                card.dataset.bhk;
-
-            const cardBudget =
-                card.dataset.budget;
-
-            const cardStatus =
-                card.dataset.status;
-
-
-            /* Search */
-
-            const searchMatch =
-                searchValue === "" ||
-                name.includes(searchValue);
-
-
-            /* Location */
-
-            const locationMatch =
-                locationValue === "all" ||
-                cardLocation === locationValue;
-
-
-            /* Type */
-
-            const typeMatch =
-                selectedTypes.length === 0 ||
-                selectedTypes.includes(cardType);
-
-
-            /* BHK */
-
-            const bhkMatch =
-                selectedBhk.length === 0 ||
-                selectedBhk.includes(cardBhk);
-
-
-            /* Budget */
-
-            const budgetMatch =
-                budgetValue === "all" ||
-                cardBudget === budgetValue;
-
-
-            /* Status */
-
-            const statusMatch =
-                selectedStatuses.length === 0 ||
-                selectedStatuses.includes(cardStatus);
-
-
-            const show =
-                searchMatch &&
-                locationMatch &&
-                typeMatch &&
-                bhkMatch &&
-                budgetMatch &&
-                statusMatch;
-
-
-            if (show) {
-
-                card.style.display = "";
-
-                visible++;
-
-            } else {
-
-                card.style.display = "none";
-
-            }
-
-        });
-
-
-        count.textContent = visible;
-
-
-        if (visible === 0) {
-
-            noProjects.classList.add("active");
-
-        } else {
-
-            noProjects.classList.remove("active");
-
-        }
-
-    }
-
-
-    /* =========================================
-       EVENTS
-    ========================================= */
-
-    search.addEventListener(
-        "input",
-        filterProjects
-    );
-
-    location.addEventListener(
-        "change",
-        filterProjects
-    );
-
-    budget.addEventListener(
-        "change",
-        filterProjects
-    );
-
-
-    typeFilters.forEach(input => {
-
-        input.addEventListener(
-            "change",
-            filterProjects
-        );
-
-    });
-
-
-    bhkFilters.forEach(input => {
-
-        input.addEventListener(
-            "change",
-            filterProjects
-        );
-
-    });
-
-
-    statusFilters.forEach(input => {
-
-        input.addEventListener(
-            "change",
-            filterProjects
-        );
-
-    });
-
-
-    /* =========================================
-       SORT
-    ========================================= */
-
-    sort.addEventListener("change", function () {
-
-        const value = this.value;
-
-        const projectCards =
-            Array.from(
-                document.querySelectorAll(".project-card")
-            );
-
-
-        if (value === "low") {
-
-            projectCards.sort((a, b) => {
-
-                return Number(a.dataset.price) -
-                       Number(b.dataset.price);
-
-            });
-
-        }
-
-
-        if (value === "high") {
-
-            projectCards.sort((a, b) => {
-
-                return Number(b.dataset.price) -
-                       Number(a.dataset.price);
-
-            });
-
-        }
-
-
-        if (value === "newest") {
-
-            projectCards.sort((a, b) => {
-
-                return Number(b.dataset.year) -
-                       Number(a.dataset.year);
-
-            });
-
-        }
-
-
-        if (value === "featured") {
-
-            projectCards.sort((a, b) => {
-
-                return Number(a.dataset.year) -
-                       Number(b.dataset.year);
-
-            });
-
-            projectCards.reverse();
-
-        }
-
-
-        projectCards.forEach(card => {
-
-            grid.appendChild(card);
-
-        });
-
-    });
-
-
-    /* =========================================
-       CLEAR FILTERS
-    ========================================= */
-
-    document
-        .getElementById("clearProjectFilter")
-        .addEventListener("click", function () {
-
-            search.value = "";
-
-            location.value = "all";
-
-            budget.value = "all";
-
-            typeFilters.forEach(input => {
-                input.checked = false;
-            });
-
-            bhkFilters.forEach(input => {
-                input.checked = false;
-            });
-
-            statusFilters.forEach(input => {
-                input.checked = false;
-            });
-
-            filterProjects();
-
-        });
-
-
-    /* =========================================
-       MOBILE SIDEBAR
-    ========================================= */
-
-    const openFilter =
-        document.getElementById("openProjectFilter");
-
-    const filterSidebar =
-        document.getElementById("projectFilter");
-
-    const overlay =
-        document.getElementById("projectFilterOverlay");
-
-
-    openFilter.addEventListener("click", function () {
-
-        filterSidebar.classList.add("active");
-
-        overlay.classList.add("active");
-
+        popup.classList.remove("hidden");
+        popup.classList.add("flex");
         document.body.style.overflow = "hidden";
-
+      });
     });
 
+    closeBtn.addEventListener("click", closePopup);
 
-    overlay.addEventListener("click", function () {
-
-        filterSidebar.classList.remove("active");
-
-        overlay.classList.remove("active");
-
-        document.body.style.overflow = "";
-
+    popup.addEventListener("click", e => {
+      if (e.target === popup) closePopup();
     });
 
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") closePopup();
+    });
 
-    /* Initial */
+    function closePopup() {
+      popup.classList.add("hidden");
+      popup.classList.remove("flex");
+      document.body.style.overflow = "";
+    }
 
-    filterProjects();
+  });
+</script>
 
+<script>
+  function openBHK(e, id) {
+    document.querySelectorAll('.bhk-content').forEach(el => el.classList.add('hidden'));
+    document.querySelectorAll('.bhk-tab').forEach(el => el.classList.remove('active'));
+
+    document.getElementById(id).classList.remove('hidden');
+    e.target.classList.add('active');
+  }
+</script>
+
+<script>
+  document.getElementById("city").addEventListener("change", function () {
+    fetch(`/ajax/load-localities/?city_id=${this.value}`)
+      .then(res => res.json())
+      .then(data => {
+        let locality = document.getElementById("locality");
+        locality.innerHTML = '<option value="">Select Locality</option>';
+        data.forEach(l => {
+          locality.innerHTML += `<option value="${l.id}">${l.name}</option>`;
+        });
+      });
+  });
+</script>
+
+<script>
+  document.addEventListener("click", function (e) {
+
+    const tab = e.target.closest(".bhk-tab");
+    if (!tab) return;
+
+    const card = tab.closest(".config-card");
+    if (!card) return;
+
+    const tabsWrapper = card.querySelector(".bhk-tabs");
+    const underline = tabsWrapper.querySelector(".bhk-underline");
+
+    /* ================= RESET TABS ================= */
+    card.querySelectorAll(".bhk-tab").forEach(btn => {
+      btn.classList.remove("text-green-600");
+      btn.classList.add("text-gray-600");
+    });
+
+    /* ================= HIDE PANELS ================= */
+    card.querySelectorAll(".bhk-panel").forEach(panel => {
+      panel.classList.add("hidden");
+    });
+
+    /* ================= ACTIVATE TAB ================= */
+    tab.classList.remove("text-gray-600");
+    tab.classList.add("text-green-600");
+
+    /* ================= MOVE UNDERLINE ================= */
+    const tabRect = tab.getBoundingClientRect();
+    const wrapperRect = tabsWrapper.getBoundingClientRect();
+
+    underline.style.width = `${tabRect.width}px`;
+    underline.style.left = `${tabRect.left - wrapperRect.left}px`;
+
+    /* ================= SHOW PANEL ================= */
+    const target = tab.dataset.target;
+    const panel = card.querySelector(`[data-panel="${target}"]`);
+    if (panel) panel.classList.remove("hidden");
+
+  });
+</script>
+
+
+<script>
+document.addEventListener("click", function (e) {
+
+  const tab = e.target.closest(".bhk-tab");
+  if (!tab) return;
+
+  const card = tab.closest(".bg-white");
+  if (!card) return;
+
+  // reset tabs
+  card.querySelectorAll(".bhk-tab").forEach(t => {
+    t.classList.remove("border-orange-500", "text-orange-600");
+    t.classList.add("border-transparent", "text-gray-600");
+  });
+
+  // reset panels
+  card.querySelectorAll(".bhk-panel").forEach(p => {
+    p.classList.add("hidden");
+  });
+
+  // activate
+  tab.classList.add("border-orange-500", "text-orange-600");
+  tab.classList.remove("border-transparent", "text-gray-600");
+
+  const panel = card.querySelector(`[data-panel="${tab.dataset.target}"]`);
+  if (panel) panel.classList.remove("hidden");
 });
 </script>
 
-{% endblock content %}
+<script>
+  function activateTab(tab, card) {
+
+    const tabsWrapper = card.querySelector(".bhk-tabs");
+    const underline = tabsWrapper.querySelector(".bhk-underline");
+
+    // reset tabs
+    card.querySelectorAll(".bhk-tab").forEach(t => {
+      t.classList.remove("active");
+    });
+
+    // hide panels
+    card.querySelectorAll(".bhk-panel").forEach(p => {
+      p.classList.add("hidden");
+    });
+
+    // activate tab
+    tab.classList.add("active");
+
+    // move underline
+    const tabRect = tab.getBoundingClientRect();
+    const wrapRect = tabsWrapper.getBoundingClientRect();
+
+    underline.style.width = tabRect.width + "px";
+    underline.style.left = (tabRect.left - wrapRect.left) + "px";
+
+    // show panel
+    const panel = card.querySelector(
+      `[data-panel="${tab.dataset.target}"]`
+    );
+    if (panel) panel.classList.remove("hidden");
+  }
+
+  /* ================= CLICK HANDLER ================= */
+  document.addEventListener("click", function (e) {
+    const tab = e.target.closest(".bhk-tab");
+    if (!tab || tab.classList.contains("bhk-disabled")) return;
+
+    const card = tab.closest(".config-card");
+    if (!card) return;
+
+    activateTab(tab, card);
+  });
+
+  /* ================= AUTO ACTIVATE FIRST TAB ================= */
+  document.querySelectorAll(".config-card").forEach(card => {
+    const firstTab = card.querySelector(".bhk-tab:not(.bhk-disabled)");
+    if (firstTab) activateTab(firstTab, card);
+  });
+</script>
+
+
+<style>
+  /* Glass tabs */
+  .bhk-tab {
+    backdrop-filter: blur(10px);
+    background: rgba(255,255,255,0.6);
+    color: #4b5563;
+  }
+
+  /* Active tab */
+  .bhk-tab.active {
+    color: #16a34a;
+  }
+
+  /* Disabled tab */
+  .bhk-disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  /* Gradient underline */
+  .bhk-underline {
+    background: linear-gradient(90deg, #16a34a, #22c55e);
+    width: 0;
+    left: 0;
+    opacity: 0;
+    transition:
+      left 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+      width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+</style>
+
+
+<style>
+      /* ================= BHK TABS SCROLL ================= */
+  .bhk-tabs {
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #fb923c transparent;
+    padding-bottom: 6px;
+  }
+
+  .bhk-tabs::-webkit-scrollbar {
+    height: 5px;
+  }
+  .bhk-tabs::-webkit-scrollbar-thumb {
+    background: #fb923c;
+    border-radius: 10px;
+  }
+
+  /* ================= TAB STYLE ================= */
+  .bhk-tab {
+    position: relative;
+    padding: 6px 10px;
+    color: #374151;
+    white-space: nowrap;
+  }
+
+  .bhk-tab.active {
+    color: #fb923c;
+  }
+
+  /* ================= UNDERLINE ================= */
+  .bhk-underline {
+    left: 0;
+    width: 0;
+    background: #fb923c;
+      transition: all 0.3s ease;
+    }
+    .bhk-panel div {
+    scrollbar-width: thin;
+    scrollbar-color: #fb923c transparent;
+  }
+
+  .bhk-panel div::-webkit-scrollbar {
+    width: 6px;
+  }
+  .bhk-panel div::-webkit-scrollbar-thumb {
+    background: #fb923c;
+    border-radius: 10px;
+  }
+
+</style>
+
+<script>
+  function toggleFilter(bodyId, arrowId){
+    const body = document.getElementById(bodyId);
+    const arrow = document.getElementById(arrowId);
+
+    // close if open
+    if(body.dataset.open === "true"){
+      body.style.height = "0px";
+      body.dataset.open = "false";
+      arrow.classList.remove("rotate-180");
+    } 
+    // open if closed
+    else{
+      body.style.height = body.scrollHeight + "px";
+      body.dataset.open = "true";
+      arrow.classList.add("rotate-180");
+    }
+  }
+
+  // ✅ search filter for locality list
+  function filterLocality(){
+    const q = document.getElementById("localitySearch").value.toLowerCase().trim();
+    const items = document.querySelectorAll(".locality-item");
+
+    items.forEach(item=>{
+      const text = item.innerText.toLowerCase();
+      item.style.display = text.includes(q) ? "flex" : "none";
+    });
+
+    // ✅ IMPORTANT: open panel height update after search filtering
+    const body = document.getElementById("localityBody");
+    if(body.dataset.open === "true"){
+      body.style.height = body.scrollHeight + "px";
+    }
+  }
+
+  // ✅ Clear locality section
+  function clearSection(section){
+    if(section === "locality"){
+      document.getElementById("localitySearch").value = "";
+      document.querySelectorAll(".locality-check").forEach(cb => cb.checked = false);
+      filterLocality();
+    }
+  }
+
+  // ✅ DEFAULT OPEN (if you want open by default)
+  window.addEventListener("load", ()=>{
+    const body = document.getElementById("localityBody");
+    const arrow = document.getElementById("localityArrow");
+
+    body.dataset.open = "flase";
+    body.style.height = body.scrollHeight + "px";
+    arrow.classList.add("rotate-180");
+  });
+</script>
+
+
+<script>
+    const listViewBtn = document.getElementById("listViewBtn");
+      const gridViewBtn = document.getElementById("gridViewBtn");
+      const listView = document.getElementById("listView");
+      const gridView = document.getElementById("gridView");
+
+      listViewBtn.addEventListener("click", () => {
+        listView.classList.remove("hidden");
+        gridView.classList.add("hidden");
+
+        listViewBtn.classList.add("bg-orange-500", "text-white");
+        listViewBtn.classList.remove("bg-gray-200", "text-gray-700");
+
+        gridViewBtn.classList.remove("bg-orange-500", "text-white");
+        gridViewBtn.classList.add("bg-gray-200", "text-gray-700");
+      });
+
+      gridViewBtn.addEventListener("click", () => {
+        gridView.classList.remove("hidden");
+        listView.classList.add("hidden");
+
+        gridViewBtn.classList.add("bg-orange-500", "text-white");
+        gridViewBtn.classList.remove("bg-gray-200", "text-gray-700");
+
+        
+        listViewBtn.classList.remove("bg-orange-500", "text-white");
+        listViewBtn.classList.add("bg-gray-200", "text-gray-700");
+      });
+</script>
+
+<link rel="stylesheet" href="{% static 'projects/assets/css/pills.css' %}">
+<script src="{% static 'projects/assets/js/pills.js' %}"></script>
+
+
+{% endblock %}

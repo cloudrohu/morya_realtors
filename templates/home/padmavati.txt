@@ -1,0 +1,259 @@
+cd /mnt/file/agency/
+cd /mnt/file/agency/padmavatiproperty_com
+
+cd /mnt/file/agency/padmavatiproperty_com
+source env/bin/activate
+cd padmavatiproperty_com
+
+git clone https://github.com/cloudrohu/morya_realtors.git
+
+mv morya_realtors padmavatiproperty_com
+
+cd padmavatiproperty_com
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+
+cd /mnt/file/agency/padmavatiproperty_com
+source env/bin/activate
+cd padmavatiproperty_com
+
+python3 -m venv env
+
+source env/bin/activate
+
+pip install --upgrade pip
+
+pip install -r requirements.txt
+
+pip install gunicorn
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+cp .env.example .env
+
+nano .env
+
+
+DEBUG=False
+
+SECRET_KEY=CHANGE_THIS_SECRET_KEY
+
+ALLOWED_HOSTS=padmavatiproperty.com,www.padmavatiproperty.com
+
+DATABASE_URL=postgres://padmavatiproperty_com:TIWARI@123@localhost:5432/padmavatiproperty_com
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+sudo -u postgres psql
+
+
+CREATE DATABASE padmavatiproperty_com;
+
+CREATE USER padmavatiproperty_com WITH PASSWORD 'TIWARI@123';
+
+GRANT ALL PRIVILEGES ON DATABASE padmavatiproperty_com TO padmavatiproperty_com;
+
+\c padmavatiproperty_com
+
+GRANT ALL ON SCHEMA public TO padmavatiproperty_com;
+GRANT CREATE ON SCHEMA public TO padmavatiproperty_com;
+
+ALTER DEFAULT PRIVILEGES IN SCHEMA public
+GRANT ALL ON TABLES TO padmavatiproperty_com;
+\q
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+
+source env/bin/activate
+
+python manage.py migrate
+
+python manage.py createsuperuser
+
+python manage.py collectstatic --noinput
+
+deactivate
+
+
+----------------------------------------------------------------------------------------------------------------------------------------
+source env/bin/activate
+
+gunicorn config.wsgi:application
+CTRL + C
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+sudo nano /etc/systemd/system/padmavatiproperty_com.socket
+
+
+[Unit]
+Description=Gunicorn Socket
+
+[Socket]
+ListenStream=/run/padmavatiproperty_com.sock
+
+[Install]
+WantedBy=sockets.target
+
+
+----------------------------------------------------------------------------------------------------------------------------------------
+/mnt/file/agency/padmavatiproperty_com
+
+sudo nano /etc/systemd/system/padmavatiproperty_com.service
+
+
+[Unit]
+Description=Gunicorn Daemon
+Requires=padmavatiproperty_com.socket
+After=network.target
+
+[Service]
+
+User=cloud_findexors
+Group=www-data
+
+WorkingDirectory=/mnt/file/agency/padmavatiproperty_com
+
+Environment="DJANGO_SETTINGS_MODULE=config.settings.production"
+
+ExecStart=/mnt/file/agency/env/bin/gunicorn \
+          --workers 3 \
+          --access-logfile - \
+          --bind unix:/run/padmavatiproperty_com.sock \
+          config.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+
+sudo systemctl daemon-reload
+sudo systemctl start padmavatiproperty_com.socket
+sudo systemctl enable padmavatiproperty_com.socket
+sudo systemctl start padmavatiproperty_com.service
+sudo systemctl enable padmavatiproperty_com.service
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+sudo systemctl status padmavatiproperty_com.service
+sudo systemctl status padmavatiproperty_com.socket
+
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+sudo nano /etc/nginx/sites-available/padmavatiproperty_com
+
+server {
+
+    listen 80;
+
+    server_name
+        padmavatiproperty.com
+        www.padmavatiproperty.com;
+
+    client_max_body_size 200M;
+
+    location /static/ {
+        alias /mnt/file/agency/padmavatiproperty_com/staticfiles/;
+    }
+
+    location /media/ {
+        alias /mnt/media/uploads/;
+    }
+
+    location / {
+
+        include proxy_params;
+
+        proxy_pass http://unix:/run/padmavatiproperty_com.sock;
+
+    }
+
+}
+----------------------------------------------------------------------------------------------------------------------------------------
+
+sudo ln -s /etc/nginx/sites-available/padmavatiproperty_com \
+/etc/nginx/sites-enabled/
+
+
+sudo nginx -t
+sudo systemctl restart nginx
+sudo systemctl restart padmavatiproperty_com
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+
+sudo certbot --nginx \
+-d padmavatiproperty.com \
+-d www.padmavatiproperty.com
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+sudo journalctl -u padmavatiproperty_com -f
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+sudo tail -f /var/log/nginx/error.log
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+cd /mnt/file/agency/
+source env/bin/activate
+cd /mnt/file/agency/padmavatiproperty_com
+git pull
+
+sudo systemctl restart padmavatiproperty_com
+sudo systemctl restart nginx
+
+
+python manage.py migrate
+python manage.py createsuperuser
+
+
+sudo systemctl restart padmavatiproperty_com
+sudo systemctl restart nginx
+
+
+pip install -r requirements.txt
+
+python manage.py collectstatic --noinput
+
+
+deactivate
+
+sudo nano apps/properties/admin.py
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+MEDIA_URL = '/mnt/media/uploads/'
+MEDIA_ROOT =  '/mnt/media/uploads'
+
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+sudo chmod -R 775 /mnt/media/uploads
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------

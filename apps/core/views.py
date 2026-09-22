@@ -3,7 +3,7 @@ from django.db.models import Count
 
 from apps.core.models.website import Setting , About , ImpactMetric, Milestone
 
-from apps.properties.models import Developer
+from apps.properties.models import Developer,Project
 
 
 def get_settings():
@@ -55,7 +55,31 @@ def developers(request):
     )
 
 def localities(request):
-    return render(request, 'home/localities.html', {'settings_obj': get_settings()})
+
+    localities = (
+        Project.objects
+        .filter(
+            is_active=True,
+            locality__isnull=False,
+        )
+        .values(
+            "locality",
+            "locality__name",
+        )
+        .annotate(
+            project_count=Count("id")
+        )
+        .order_by("-project_count", "locality__name")
+    )
+
+    return render(
+        request,
+        "home/localities.html",
+        {
+            "settings_obj": get_settings(),
+            "localities": localities,
+        }
+    )
 
 def services(request):
     return render(request, 'home/services.html', {'settings_obj': get_settings()})

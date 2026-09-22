@@ -93,14 +93,7 @@ class PropertyType(MPTTModel):
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(max_length=50, unique=True, null=True, blank=True)
     
-    parent = TreeForeignKey(
-        'self', 
-        on_delete=models.CASCADE, 
-        null=True, 
-        blank=True, 
-        related_name='children',
-        verbose_name='Parent Type/Category'
-    )
+    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children',verbose_name='Parent Type/Category')
     
     is_top_level = models.BooleanField(default=False) 
     
@@ -173,8 +166,6 @@ class PropertyAmenities(models.Model):
     icon_tag.short_description = "Icon"
 
 
-
-
 class UnitType(MasterBaseModel):
     class Meta:
         verbose_name = "Unit Type"
@@ -236,11 +227,7 @@ class ParkingType(MasterBaseModel):
 
 
 class Amenity(MasterBaseModel):
-    icon = models.CharField(
-        max_length=100,
-        blank=True,
-        help_text="Font Awesome class (e.g. fa-solid fa-dumbbell)",
-    )
+    icon = models.CharField(max_length=100,blank=True,help_text="Font Awesome class (e.g. fa-solid fa-dumbbell)",)
 
     class Meta:
         verbose_name = "Amenity"

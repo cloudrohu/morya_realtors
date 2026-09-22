@@ -179,7 +179,6 @@ def clean_phone_last10(phone: str):
 
 
 
-
 class Developer(BaseModel):
 
     CALLING_STATUS_CHOICES = [
@@ -395,8 +394,6 @@ class Developer(BaseModel):
     def refresh_calling_status(self):
         refresh_calling_status(self)
 
-
-
 class Architects(BaseModel):
 
     CALLING_STATUS_CHOICES = [
@@ -573,8 +570,6 @@ class Architects(BaseModel):
     def refresh_calling_status(self):
         refresh_calling_status(self)
 
-
-
 class Engineer(BaseModel):
 
     CALLING_STATUS_CHOICES = [
@@ -750,7 +745,6 @@ class Engineer(BaseModel):
     def refresh_calling_status(self):
         refresh_calling_status(self)
 
-
 class Project(MPTTModel, BaseModel):
     
     CALLING_STATUS_CHOICES = [
@@ -784,13 +778,7 @@ class Project(MPTTModel, BaseModel):
     OCCUPANCY_CERTIFICATE_CHOICES = (('Yes', 'Yes'), ('No', 'No'))
     COMMENCEMENT_CERTIFICATE_CHOICES = (('Yes', 'Yes'), ('No', 'No'))
     
-    calling_status = models.CharField(
-        max_length=25,
-        choices=CALLING_STATUS_CHOICES,
-        default="New",
-        null=True,
-        blank=True,
-    )
+    calling_status = models.CharField(max_length=25,choices=CALLING_STATUS_CHOICES,default="New",null=True,blank=True,)
 
     # --- Project Core Fields ---
     occupancy_certificate = models.CharField(max_length=25, choices=OCCUPANCY_CERTIFICATE_CHOICES, null=True, blank=True)
@@ -995,7 +983,6 @@ class BookingOffer(BaseModel):
     def __str__(self):
         return self.title
 
-
 class WelcomeTo(BaseModel):
     Project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="welcomes")
     description = models.TextField(null=True, blank=True,max_length=5500)
@@ -1029,12 +1016,12 @@ class AboutUs(BaseModel):
     def __str__(self):
         return "About Us"
 
-
 class USP(BaseModel):
     Project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="usps")
     point = models.CharField(null=True, blank=True,max_length=150)
     def __str__(self):
         return self.point
+
 class Configuration(BaseModel):
     Project = models.ForeignKey("Project", on_delete=models.CASCADE, related_name="configurations")
     bhk_type = models.CharField(max_length=50)
@@ -1059,6 +1046,7 @@ class Configuration(BaseModel):
     class Meta:
         # Configuration ke instances ko Project aur BHK type ke hisaab se arrange karein
         ordering = ['bhk_type']
+
 class Connectivity(BaseModel):
     Project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="configs")
     title = models.CharField(max_length=50)
@@ -1073,12 +1061,16 @@ class Amenities(BaseModel):
     
     def __str__(self):
         return f"{self.Project.project_name} - {self.amenities.title}"
+
+
 class Gallery(BaseModel):
     Project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="gallery")
     image = models.ImageField(upload_to='gallery/')
 
     def __str__(self):
         return f"Image #{self.pk}"
+
+
 class Header(BaseModel):
     Project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="headers")    
     title = models.CharField(max_length=2000,null=True, blank=True)
@@ -1091,6 +1083,8 @@ class Header(BaseModel):
 
     def __str__(self):
         return self.keywords
+
+
 class RERA_Info(BaseModel):
     Project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="rera")
     qr_image = models.ImageField(null=True, blank=True,upload_to='overviewimage/')
@@ -1104,6 +1098,8 @@ class RERA_Info(BaseModel):
 
     def __str__(self):
         return self.registration_no
+
+
 class WhyInvest(BaseModel):
     Project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="why_invest")
     title = models.CharField(max_length=350,null=True, blank=True)
@@ -1112,12 +1108,16 @@ class WhyInvest(BaseModel):
 
     def __str__(self):
         return f"Why Invest - {self.pk}"
+
+
 class BankOffer(BaseModel):
     Project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="bank_offers")
     bank = models.ForeignKey(Bank, on_delete=models.CASCADE, related_name="bank_offers")
     
     def __str__(self):
         return f"{self.Project.project_name} - {self.bank.title}"
+
+
 class ProjectFAQ(BaseModel):
     project = models.ForeignKey(
         Project,
@@ -1133,6 +1133,8 @@ class ProjectFAQ(BaseModel):
 
     def __str__(self):
         return f"{self.project.project_name} - {self.question}"
+
+
 class Enquiry(BaseModel):
     project = models.ForeignKey(
         'Project',
