@@ -1057,7 +1057,7 @@ class Connectivity(BaseModel):
     
 class Amenities(BaseModel):
     Project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="amenities")
-    amenities = models.ForeignKey(Amenity, on_delete=models.CASCADE, related_name="amenities")
+    amenities = models.ForeignKey(ProjectAmenities, on_delete=models.CASCADE, related_name="amenities")
     
     def __str__(self):
         return f"{self.Project.project_name} - {self.amenities.title}"
