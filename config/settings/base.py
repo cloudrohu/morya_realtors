@@ -13,9 +13,6 @@ env = environ.Env(
 
 environ.Env.read_env(BASE_DIR / ".env")
 
-# ------------------------------------------------------------------------------
-# SECURITY
-# ------------------------------------------------------------------------------
 
 SECRET_KEY = env(
     "SECRET_KEY",
@@ -34,9 +31,6 @@ ALLOWED_HOSTS = env.list(
 
 AUTH_USER_MODEL = "accounts.User"
 
-# ------------------------------------------------------------------------------
-# APPLICATIONS
-# ------------------------------------------------------------------------------
 
 DJANGO_APPS = [
    # "grappelli",
@@ -56,8 +50,8 @@ THIRD_PARTY_APPS = [
     "crispy_bootstrap5",
     "import_export",
     "django_ckeditor_5",
-    "multiselectfield",      # ✅ Add
-    "embed_video",          # ✅ Add
+    "multiselectfield",
+    "embed_video",
 ]
 LOCAL_APPS = [
     "apps.accounts.apps.AccountsConfig",
@@ -81,7 +75,7 @@ LOCAL_APPS = [
     "apps.dashboard.apps.DashboardConfig",
    # "apps.business.apps.BusinessConfig",
    # "apps.business_utility.apps.BusinessUtilityConfig",
-   "apps.properties.apps.PropertiesConfig",   # ✅ Add this
+   "apps.properties.apps.PropertiesConfig",
    "apps.properties_utility.apps.PropertiesUtilityConfig",
    "apps.importer",
 ]
@@ -223,23 +217,350 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 CKEDITOR_5_CONFIGS = {
+
     "default": {
+
         "toolbar": [
             "heading",
             "|",
+
+            "fontFamily",
+            "fontSize",
+            "fontColor",
+            "fontBackgroundColor",
+
+            "|",
+
             "bold",
             "italic",
+            "underline",
+            "strikethrough",
+            "subscript",
+            "superscript",
+
+            "|",
+
             "link",
+            "insertImage",
+            "mediaEmbed",
+
+            "|",
+
             "bulletedList",
             "numberedList",
+            "todoList",
+
             "|",
+
+            "alignment",
+            "outdent",
+            "indent",
+
+            "|",
+
             "blockQuote",
-            "insertTable",
-            "imageUpload",
+            "code",
+            "codeBlock",
+
             "|",
+
+            "insertTable",
+            "horizontalLine",
+
+            "|",
+
+            "specialCharacters",
+
+            "|",
+
             "undo",
             "redo",
         ],
-    },
-}
 
+        "fontFamily": {
+            "options": [
+                "default",
+                "Arial, Helvetica, sans-serif",
+                "Georgia, serif",
+                "Times New Roman, Times, serif",
+                "Verdana, Geneva, sans-serif",
+                "Tahoma, Geneva, sans-serif",
+                "Trebuchet MS, sans-serif",
+                "Courier New, Courier, monospace",
+            ],
+            "supportAllValues": True,
+        },
+
+        "fontSize": {
+            "options": [
+                "tiny",
+                "small",
+                "default",
+                "big",
+                "huge",
+            ],
+            "supportAllValues": True,
+        },
+
+        "fontColor": {
+            "colors": [
+                {
+                    "color": "#000000",
+                    "label": "Black",
+                },
+                {
+                    "color": "#FFFFFF",
+                    "label": "White",
+                },
+                {
+                    "color": "#C89B2C",
+                    "label": "Gold",
+                },
+                {
+                    "color": "#B89252",
+                    "label": "Brown Gold",
+                },
+                {
+                    "color": "#D6B77A",
+                    "label": "Light Gold",
+                },
+                {
+                    "color": "#FF0000",
+                    "label": "Red",
+                },
+                {
+                    "color": "#00A651",
+                    "label": "Green",
+                },
+                {
+                    "color": "#0066FF",
+                    "label": "Blue",
+                },
+                {
+                    "color": "#800080",
+                    "label": "Purple",
+                },
+                {
+                    "color": "#808080",
+                    "label": "Gray",
+                },
+            ],
+        },
+
+        "fontBackgroundColor": {
+            "colors": [
+                {
+                    "color": "#FFFFFF",
+                    "label": "White",
+                },
+                {
+                    "color": "#000000",
+                    "label": "Black",
+                },
+                {
+                    "color": "#FFF3CD",
+                    "label": "Light Yellow",
+                },
+                {
+                    "color": "#D1E7DD",
+                    "label": "Light Green",
+                },
+                {
+                    "color": "#CFE2FF",
+                    "label": "Light Blue",
+                },
+                {
+                    "color": "#F8D7DA",
+                    "label": "Light Red",
+                },
+                {
+                    "color": "#E2E3E5",
+                    "label": "Light Gray",
+                },
+            ],
+        },
+
+        "alignment": {
+            "options": [
+                "left",
+                "center",
+                "right",
+                "justify",
+            ],
+        },
+
+        "image": {
+            "toolbar": [
+                "imageTextAlternative",
+                "imageStyle:inline",
+                "imageStyle:block",
+                "imageStyle:side",
+                "linkImage",
+            ],
+        },
+
+        "table": {
+            "contentToolbar": [
+                "tableColumn",
+                "tableRow",
+                "mergeTableCells",
+                "tableProperties",
+                "tableCellProperties",
+            ],
+        },
+
+        "link": {
+            "addTargetToExternalLinks": True,
+            "defaultProtocol": "https://",
+            "decorators": {
+                "openInNewTab": {
+                    "mode": "manual",
+                    "label": "Open in a new tab",
+                    "attributes": {
+                        "target": "_blank",
+                        "rel": "noopener noreferrer",
+                    },
+                },
+            },
+        },
+
+        "heading": {
+            "options": [
+                {
+                    "model": "paragraph",
+                    "title": "Paragraph",
+                    "class": "ck-heading_paragraph",
+                },
+                {
+                    "model": "heading1",
+                    "view": "h1",
+                    "title": "Heading 1",
+                    "class": "ck-heading_heading1",
+                },
+                {
+                    "model": "heading2",
+                    "view": "h2",
+                    "title": "Heading 2",
+                    "class": "ck-heading_heading2",
+                },
+                {
+                    "model": "heading3",
+                    "view": "h3",
+                    "title": "Heading 3",
+                    "class": "ck-heading_heading3",
+                },
+                {
+                    "model": "heading4",
+                    "view": "h4",
+                    "title": "Heading 4",
+                    "class": "ck-heading_heading4",
+                },
+                {
+                    "model": "heading5",
+                    "view": "h5",
+                    "title": "Heading 5",
+                    "class": "ck-heading_heading5",
+                },
+                {
+                    "model": "heading6",
+                    "view": "h6",
+                    "title": "Heading 6",
+                    "class": "ck-heading_heading6",
+                },
+            ],
+        },
+
+        "htmlSupport": {
+            "allow": [
+                {
+                    "name": "div",
+                    "classes": True,
+                    "styles": True,
+                    "attributes": True,
+                },
+                {
+                    "name": "span",
+                    "classes": True,
+                    "styles": True,
+                    "attributes": True,
+                },
+                {
+                    "name": "p",
+                    "classes": True,
+                    "styles": True,
+                    "attributes": True,
+                },
+                {
+                    "name": "h1",
+                    "classes": True,
+                    "styles": True,
+                    "attributes": True,
+                },
+                {
+                    "name": "h2",
+                    "classes": True,
+                    "styles": True,
+                    "attributes": True,
+                },
+                {
+                    "name": "h3",
+                    "classes": True,
+                    "styles": True,
+                    "attributes": True,
+                },
+                {
+                    "name": "h4",
+                    "classes": True,
+                    "styles": True,
+                    "attributes": True,
+                },
+                {
+                    "name": "h5",
+                    "classes": True,
+                    "styles": True,
+                    "attributes": True,
+                },
+                {
+                    "name": "h6",
+                    "classes": True,
+                    "styles": True,
+                    "attributes": True,
+                },
+                {
+                    "name": "a",
+                    "classes": True,
+                    "styles": True,
+                    "attributes": True,
+                },
+                {
+                    "name": "img",
+                    "classes": True,
+                    "styles": True,
+                    "attributes": True,
+                },
+                {
+                    "name": "table",
+                    "classes": True,
+                    "styles": True,
+                    "attributes": True,
+                },
+                {
+                    "name": "td",
+                    "classes": True,
+                    "styles": True,
+                    "attributes": True,
+                },
+                {
+                    "name": "th",
+                    "classes": True,
+                    "styles": True,
+                    "attributes": True,
+                },
+            ],
+        },
+
+        "removePlugins": [],
+
+    },
+
+}
