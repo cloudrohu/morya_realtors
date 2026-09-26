@@ -12,7 +12,7 @@ from mptt.models import MPTTModel
 from django.utils.text import slugify
 from django.core.exceptions import ValidationError
 from apps.utility.models.location import Location, LocationType,PostalCode
-from apps.properties_utility.models import PossessionIn,PropertyType,ProjectAmenities,Bank
+from apps.properties_utility.models import PossessionIn,PropertyType,ProjectAmenities,Bank,Amenity
 from multiselectfield import MultiSelectField
 from embed_video.fields import EmbedVideoField
 from apps.properties_utility.compress_mixin import ImageCompressionMixin
@@ -1057,7 +1057,7 @@ class Connectivity(BaseModel):
     
 class Amenities(BaseModel):
     Project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="amenities")
-    amenities = models.ForeignKey(ProjectAmenities, on_delete=models.CASCADE, related_name="amenities")
+    amenities = models.ForeignKey(Amenity, on_delete=models.CASCADE, related_name="amenities")
     
     def __str__(self):
         return f"{self.Project.project_name} - {self.amenities.title}"
