@@ -12,7 +12,6 @@ from .models import (
     BookingOffer,
     Overview,
     USP,
-    Amenities,
     Header,
     WelcomeTo,
     Connectivity,
