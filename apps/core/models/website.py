@@ -338,81 +338,26 @@ class Slider(BaseModel):
         return self.title1
 
 class About(BaseModel):
-
     setting = models.ForeignKey(
-        Setting,
-        on_delete=models.CASCADE,
-        related_name="about_sections",
+        Setting, on_delete=models.CASCADE, related_name="about_sections"
     )
 
-    title = models.CharField(
-        max_length=200,
-        blank=True,
-        null=True,
-    )
+    title = models.CharField(max_length=200, blank=True, null=True)
+    subtitle = models.CharField(max_length=300, blank=True, null=True)
 
-    subtitle = models.CharField(
-        max_length=300,
-        blank=True,
-        null=True,
-    )
+    content = CKEditor5Field(config_name="default", blank=True, null=True)
+    image = models.ImageField(upload_to="about/", blank=True, null=True)
 
-    content = CKEditor5Field(
-        blank=True,
-        null=True,
-    )
+    mission_title = models.CharField(max_length=200, blank=True, null=True)
+    mission_content = CKEditor5Field(config_name="default", blank=True, null=True)
 
-    image = models.ImageField(
-        upload_to="about/",
-        blank=True,
-        null=True,
-    )
+    vision_title = models.CharField(max_length=200, blank=True, null=True)
+    vision_content = CKEditor5Field(config_name="default", blank=True, null=True)
 
-    mission_title = models.CharField(
-        max_length=200,
-        blank=True,
-        null=True,
-    )
-
-    mission_content = CKEditor5Field(
-        blank=True,
-        null=True,
-    )
-
-    vision_title = models.CharField(
-        max_length=200,
-        blank=True,
-        null=True,
-    )
-
-    vision_content = CKEditor5Field(
-        blank=True,
-        null=True,
-    )
-
-    years_of_experience = models.CharField(
-        max_length=50,
-        blank=True,
-        null=True,
-    )
-
-    happy_families = models.CharField(
-        max_length=50,
-        blank=True,
-        null=True,
-    )
-
-    square_feet = models.CharField(
-        max_length=50,
-        blank=True,
-        null=True,
-    )
-
-    rera = models.CharField(
-        max_length=50,
-        blank=True,
-        null=True,
-    )
+    years_of_experience = models.CharField(max_length=50, blank=True, null=True)
+    happy_families = models.CharField(max_length=50, blank=True, null=True)
+    square_feet = models.CharField(max_length=50, blank=True, null=True)
+    rera = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
         verbose_name = "About"
@@ -421,6 +366,7 @@ class About(BaseModel):
 
     def __str__(self):
         return self.title or "About"
+
 
 class Milestone(BaseModel):
 
@@ -798,3 +744,4 @@ class Services_KeyPoints(BaseModel):
 
     def __str__(self):
         return self.Title
+

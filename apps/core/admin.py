@@ -1,5 +1,8 @@
 from django.contrib import admin
+from django.db import models
 from django.utils.html import format_html
+from django_ckeditor_5.widgets import CKEditor5Widget
+from django_ckeditor_5.fields import CKEditor5Field
 
 from .models.website import (
     Setting,
@@ -82,24 +85,26 @@ class SliderInline(BaseSettingInline):
 class AboutInline(BaseSettingInline):
     model = About
 
+    # 1. Force CKEditor5Widget on the field types used in this inline
+    formfield_overrides = {
+        CKEditor5Field: {'widget': CKEditor5Widget(config_name='default')},
+        models.TextField: {'widget': CKEditor5Widget(config_name='default')},
+    }
+
     fields = (
         "title",
         "subtitle",
         "content",
         "image",
         "image_preview",
-
         "mission_title",
         "mission_content",
-
         "vision_title",
         "vision_content",
-
         "years_of_experience",
         "happy_families",
         "square_feet",
         "rera",
-
         "is_active",
     )
 
@@ -119,6 +124,7 @@ class AboutInline(BaseSettingInline):
         return "No Image"
 
     image_preview.short_description = "Main Image Preview"
+
 
 class MilestoneInline(BaseSettingInline):
     model = Milestone
@@ -565,6 +571,13 @@ class SettingAdmin(admin.ModelAdmin):
         EnquiryInline,
         MilestoneInline,
     ]
+
+    class Media:
+        css = {
+            'all': ('django_ckeditor_5/dist/styles.css',)
+        }
+        js = ('django_ckeditor_5/dist/bundle.js',)
+
 
     # ========================================================
     # LOGO PREVIEW
