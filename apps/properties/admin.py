@@ -24,7 +24,6 @@ from .models import (
     USP,
     Configuration,
     Connectivity,
-    Amenities,
     Gallery,
     Header,
     RERA_Info,
@@ -399,10 +398,6 @@ class ConnectivityInline(BaseCRMInline):
     model = Connectivity
     extra = 1
 
-
-class AmenitiesInline(BaseCRMInline):
-    model = Amenities
-    extra = 1
 
 
 class GalleryInline(BaseCRMInline):
@@ -1325,7 +1320,6 @@ class ProjectAdmin(
 
         ConfigurationInline,
         ConnectivityInline,
-        AmenitiesInline,
         WhyInvestInline,
         BankOfferInline,
         FAQInline,

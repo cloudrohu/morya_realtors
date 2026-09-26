@@ -1055,21 +1055,12 @@ class Connectivity(BaseModel):
     def __str__(self):
         return f"{self.title}"
     
-class Amenities(BaseModel):
-    Project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="amenities")
-    amenities = models.ForeignKey(Amenity, on_delete=models.CASCADE, related_name="amenities")
-    
-    def __str__(self):
-        return f"{self.Project.project_name}"
-
-
 class Gallery(BaseModel):
     Project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="gallery")
     image = models.ImageField(upload_to='gallery/')
 
     def __str__(self):
         return f"Image #{self.pk}"
-
 
 class Header(BaseModel):
     Project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="headers")    
