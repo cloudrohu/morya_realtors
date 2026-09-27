@@ -191,134 +191,47 @@ class Developer(BaseModel):
         ("Deal Done", "Deal Done"),
     ]
 
-    title = models.CharField(
-        max_length=150,
-        unique=True,
-    )
+    title = models.CharField(max_length=150,unique=True,)
 
-    city = models.ForeignKey(
-        Location,
-        on_delete=models.PROTECT,
-        related_name="developers_city",
-        limit_choices_to={"location_type": LocationType.DISTRICT_CITY},
-        null=True,
-        blank=True,
-    )
+    city = models.ForeignKey(Location,on_delete=models.PROTECT,related_name="developers_city",limit_choices_to={"location_type": LocationType.DISTRICT_CITY},null=True,blank=True,)
 
-    locality = models.ForeignKey(
-        Location,
-        on_delete=models.PROTECT,
-        related_name="developer_locality",
-        limit_choices_to={"location_type": LocationType.LOCALITY_AREA},
-        null=True,
-        blank=True,
-    )
+    locality = models.ForeignKey(Location,on_delete=models.PROTECT,related_name="developer_locality",limit_choices_to={"location_type": LocationType.LOCALITY_AREA},null=True,blank=True,)
 
-    area = models.ForeignKey(
-        Location,
-        on_delete=models.PROTECT,
-        related_name="developer_area",
-        limit_choices_to={"location_type": LocationType.SUBLOCALITY_AREA},
-        null=True,
-        blank=True,
-    )
+    area = models.ForeignKey(Location,on_delete=models.PROTECT,related_name="developer_area",limit_choices_to={"location_type": LocationType.SUBLOCALITY_AREA},null=True,blank=True,)
 
-    postal_code = models.ForeignKey(
-        PostalCode,
-        on_delete=models.PROTECT,
-        related_name="developers",
-        null=True,
-        blank=True,
-    )
+    postal_code = models.ForeignKey(PostalCode,on_delete=models.PROTECT,related_name="developers",null=True,blank=True,)
 
-    address = models.TextField(
-        blank=True,
-        null=True,
-    )
+    address = models.TextField(blank=True,null=True,)
 
-    contact_person = models.CharField(
-        max_length=255,
-        blank=True,
-        null=True,
-    )
+    contact_person = models.CharField(max_length=255,blank=True,null=True,)
 
-    contact_no = models.CharField(
-        max_length=20,
-        blank=True,
-        null=True,
-    )
+    contact_no = models.CharField(max_length=20,blank=True,null=True,)
 
-    email = models.EmailField(
-        blank=True,
-        null=True,
-    )
+    email = models.EmailField(blank=True,null=True,)
 
-    google_map = models.URLField(
-        max_length=1000,
-        blank=True,
-        null=True,
-    )
+    google_map = models.URLField(max_length=1000,blank=True,null=True,)
 
-    web_site = models.URLField(
-        max_length=300,
-        blank=True,
-        null=True,
-    )
+    web_site = models.URLField(max_length=300,blank=True,null=True,)
 
-    keywords = models.CharField(
-        max_length=255,
-        blank=True,
-        null=True,
-    )
+    keywords = models.CharField(max_length=255,blank=True,null=True,)
 
-    about_developer = models.TextField(
-        blank=True,
-        null=True,
-    )
+    about_developer = models.TextField(blank=True,null=True,)
 
-    note = models.TextField(
-        blank=True,
-        null=True,
-    )
+    note = models.TextField(blank=True,null=True,)
 
-    logo = models.ImageField(
-        upload_to="developer/logo/",
-        blank=True,
-        null=True,
-    )
+    logo = models.ImageField(upload_to="developer/logo/",blank=True,null=True,)
 
     featured_builder = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
     is_featured = models.BooleanField(default=False)
 
-    calling_status = models.CharField(
-        max_length=25,
-        choices=CALLING_STATUS_CHOICES,
-        default="New",
-        blank=True,
-        null=True,
-    )
+    calling_status = models.CharField(max_length=25,choices=CALLING_STATUS_CHOICES,default="New",blank=True,null=True,)
 
-    assigned_to = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.SET_NULL,
-        related_name="developer_assigned",
-        blank=True,
-        null=True,
-    )
+    assigned_to = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.SET_NULL,related_name="developer_assigned",blank=True,null=True,)
 
-    slug = models.SlugField(
-        max_length=500,
-        unique=True,
-        blank=True,
-        null=True,
-    )
+    slug = models.SlugField(max_length=500,unique=True,blank=True,null=True,)
 
-    id = models.CharField(
-        primary_key=True,
-        max_length=20,
-        editable=False,
-    )
+    id = models.CharField(primary_key=True,max_length=20,editable=False,)
 
     class Meta:
         ordering = ["-created_at"]
@@ -818,11 +731,7 @@ class Project(MPTTModel, BaseModel):
     image = models.ImageField(upload_to="projects/", blank=True, null=True)
     google_map_iframe = models.TextField(blank=True, null=True)
     
-    id = models.CharField(
-        primary_key=True,
-        max_length=20,
-        editable=False,
-    )
+    id = models.CharField(primary_key=True,max_length=20,editable=False,)
     slug = models.SlugField(unique=True, null=True, blank=True, max_length=555)
 
     @property
@@ -1048,8 +957,8 @@ class Configuration(BaseModel):
         ordering = ['bhk_type']
 
 class Connectivity(BaseModel):
-    Project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="configs")
-    title = models.CharField(max_length=50)
+    Project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="connectivity")
+    title = models.CharField(max_length=350)
 
 
     def __str__(self):

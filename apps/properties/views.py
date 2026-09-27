@@ -410,3 +410,9 @@ def thank_you(request):
         "projects/thank_you.html"
     )
 
+def developer_info(request):
+    return render(
+        request,
+        "projects/developer_info.html"
+    )
+
