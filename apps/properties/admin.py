@@ -32,7 +32,7 @@ from .models import (
     ProjectFAQ,
     Enquiry,
     ProjectContactPerson,
-
+    Amenity,
     Comment,
     VoiceRecording,
     Visit,
@@ -125,14 +125,6 @@ class LogoPreviewMixin:
     logo_preview.short_description = "Logo"
 
 
-# =====================================================
-# BASE ADMIN
-# =====================================================
-
-# =====================================================
-# BASE CRM INLINE
-# =====================================================
-
 class BaseCRMInline(admin.TabularInline):
     extra = 1
 
@@ -151,10 +143,6 @@ class BaseCRMInline(admin.TabularInline):
 
         return tuple(exclude)
 
-
-# =====================================================
-# BASE CRM ADMIN
-# =====================================================
 
 class BaseCRMAdmin(ImportExportModelAdmin):
 
@@ -214,10 +202,6 @@ class BaseCRMAdmin(ImportExportModelAdmin):
         return "-"
 
     logo_preview.short_description = "Logo"
-
-# =====================================================
-# INLINE
-# =====================================================
 
 
 class CommentDeveloperInline(BaseCRMInline):
@@ -353,12 +337,6 @@ class MeetingProjectInline(BaseCRMInline):
     extra = 1
 
 
-
-
-# =====================================================
-# PROJECT INLINES
-# =====================================================
-
 class BookingOfferInline(BaseCRMInline):
     model = BookingOffer
     extra = 1
@@ -398,6 +376,10 @@ class ConnectivityInline(BaseCRMInline):
     model = Connectivity
     extra = 1
 
+class AmenityInline(BaseCRMInline):
+    model = Amenities
+    fk_name = "Project"
+    extra = 1
 
 
 class GalleryInline(BaseCRMInline):
@@ -449,9 +431,8 @@ class EnquiryInline(BaseCRMInline):
         "contacted_on",
     )
 
-# =====================================================
-# DEVELOPER ADMIN ImportExportModelAdmin
-# =====================================================
+
+
 @admin.register(Developer)
 class DeveloperAdmin(
     BaseAdmin,
@@ -728,9 +709,9 @@ class DeveloperAdmin(
             request,
             obj,
         )
-# =====================================================
-# ARCHITECT ADMIN ImportExportModelAdmin,
-# =====================================================
+
+
+
 @admin.register(Architects)
 class ArchitectAdmin(
     BaseAdmin,
@@ -1005,7 +986,7 @@ class ArchitectAdmin(
             obj,
         )
 
-#ImportExportModelAdmin
+
 
 @admin.register(Engineer)
 class EngineerAdmin(
@@ -1233,12 +1214,9 @@ class EngineerAdmin(
 
 
 @admin.register(Project)
-class ProjectAdmin(
-    BaseAdmin,
-    ImagePreviewMixin,
-    ImportExportModelAdmin,
-    DraggableMPTTAdmin,
-):
+class ProjectAdmin(BaseAdmin,ImagePreviewMixin,ImportExportModelAdmin,DraggableMPTTAdmin,):
+
+
     image_field = "image"
     mptt_indent_field = "project_name"
 
@@ -1321,6 +1299,7 @@ class ProjectAdmin(
         ConfigurationInline,
         ConnectivityInline,
         WhyInvestInline,
+        AmenityInline,
         BankOfferInline,
         FAQInline,
         USPInline,
@@ -1330,7 +1309,6 @@ class ProjectAdmin(
 
         ContactPersonInline,
         EnquiryInline,
-                # CRM
 
         CommentProjectInline,
         VoiceProjectInline,
@@ -1473,10 +1451,6 @@ class ProjectAdmin(
             obj,
         )
 
-# =====================================================
-# VOICE RECORDING
-# =====================================================
-
 @admin.register(VoiceRecording)
 class VoiceRecordingAdmin(admin.ModelAdmin):
 
@@ -1522,9 +1496,7 @@ class VoiceRecordingAdmin(admin.ModelAdmin):
     list_per_page = 30
 
 
-# =====================================================
-# VISIT
-# =====================================================
+
 
 @admin.register(Visit)
 class VisitAdmin(admin.ModelAdmin):
@@ -1577,12 +1549,10 @@ class VisitAdmin(admin.ModelAdmin):
 
     list_per_page = 30
 
-# ImportExportModelAdmin
+
+
 @admin.register(Followup)
-class FollowupAdmin(
-    BaseAdmin,
-    ImagePreviewMixin,
-    ):
+class FollowupAdmin(BaseAdmin,ImagePreviewMixin,):
 
     resource_class = FollowupResource
 
@@ -1630,9 +1600,7 @@ class FollowupAdmin(
     )
 
     list_per_page = 30
-# =====================================================
-# MEETING ImportExportModelAdmin
-# =====================================================
+
 
 @admin.register(Meeting)
 class MeetingAdmin(
@@ -1690,15 +1658,8 @@ class MeetingAdmin(
     )
 
     list_per_page = 30
-# =====================================================
-# BASE ADMIN
-# =====================================================
 
 
-
-# =====================================================
-# COMMENT ADMIN
-# =====================================================
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):

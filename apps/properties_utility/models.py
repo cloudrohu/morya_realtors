@@ -125,7 +125,8 @@ class PossessionIn(models.Model):
 
 class ProjectAmenities(models.Model):
     title = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='amenities/', blank=True, null=True)
+    icon = models.CharField(max_length=100,blank=True,null=True)
+
     
     
     def image_tag(self):

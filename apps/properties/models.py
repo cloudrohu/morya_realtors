@@ -956,6 +956,13 @@ class Configuration(BaseModel):
         # Configuration ke instances ko Project aur BHK type ke hisaab se arrange karein
         ordering = ['bhk_type']
 
+class Amenities(BaseModel):
+    Project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="amenities")
+    amenity = models.ForeignKey(ProjectAmenities, on_delete=models.PROTECT, related_name="project_amenities")
+
+    def __str__(self):
+        return str(self.amenity)
+    
 class Connectivity(BaseModel):
     Project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="connectivity")
     title = models.CharField(max_length=350)

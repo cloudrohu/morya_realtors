@@ -7,6 +7,22 @@
 
 <meta name="referrer" content="strict-origin-when-cross-origin" />
 
+<style> 
+    .amenities-section{padding:50px 0;background:#fff;color:#172033;font-family:inherit}
+    .amenities-container{width:min(1250px,94%);margin:auto}
+    .amenities-heading{text-align:center;margin-bottom:30px}
+    .amenities-heading>span{font-size:11px;letter-spacing:2px;font-weight:800;color:#b58a32}
+    .amenities-heading h2{font-size:clamp(24px,3vw,34px);font-weight:750;letter-spacing:-.7px;margin:8px 0;color:#172033}
+    .amenities-heading p{font-size:13px;color:#78818e;margin:0;line-height:1.6}
+    .amenities-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
+    .amenity-card{min-height:115px;padding:17px 10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;border:1px solid #e9ebef;border-radius:9px;background:#fff;transition:all .25s ease;text-align:center}
+    .amenity-card:hover{border-color:#b58a32;background:#fffcf5;transform:translateY(-3px);box-shadow:0 7px 20px #b58a3212}
+    .amenity-card i{width:43px;height:43px;display:grid;place-items:center;border-radius:50%;background:#faf5e9;color:#b58a32;font-size:19px;transition:.25s}
+    .amenity-card:hover i{background:#b58a32;color:#fff}
+    .amenity-card h3{font-size:13px;font-weight:600;color:#293447;margin:0;line-height:1.4}
+    @media(max-width:900px){.amenities-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+    @media(max-width:600px){.amenities-section{padding:35px 0}.amenities-heading{margin-bottom:22px}.amenities-heading p{font-size:12px}.amenities-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.amenity-card{min-height:100px;padding:13px 7px;gap:9px}.amenity-card i{width:37px;height:37px;font-size:16px}.amenity-card h3{font-size:12px}}
+</style>
 
 <div class="min-h-screen bg-[#f7f6f2]">
       
@@ -709,36 +725,6 @@
             </div>
         </section>
 
-        <section id="amenities" class="scroll-mt-24 py-6 sm:py-10">
-            <div class="rounded-2xl border border-[#e5e0d6] bg-white p-4 sm:p-8 lg:p-10">
-                <div>
-                    <p class="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#b89252] sm:text-xs">Project Amenities</p>
-                    <h2 class="mt-1.5 text-xl font-bold tracking-tight text-gray-900 sm:mt-2 sm:text-3xl">Amenities & Facilities</h2>
-                    <p class="mt-2 text-xs leading-5 text-gray-500 sm:mt-3 sm:text-sm">Everything you need for a comfortable and convenient lifestyle.</p>
-                </div>
-
-                {% if project.amenities.all %}
-                <div class="mt-6 grid grid-cols-2 gap-x-3 gap-y-4 sm:mt-8 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4">
-                    {% for amenity in project.amenities.all %}
-                    <div class="group flex items-center gap-3 border-b border-[#eee9df] pb-4">
-                        <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#f8f1e5] text-[#b89252] transition group-hover:bg-[#b89252] group-hover:text-white">
-                          
-                           <i class="{{amenity.amenities.icon}}"></i>
-                        </div>
-                        <div class="min-w-0">
-                            <p class="truncate text-xs font-semibold text-gray-800 sm:text-sm">{{ amenity.amenities.title }}</p>
-                            <p class="mt-0.5 text-[10px] text-gray-400 sm:text-xs">Available</p>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-                {% else %}
-                <div class="mt-6 rounded-xl border border-dashed border-[#dcd5c8] p-8 text-center sm:mt-8">
-                    <p class="text-xs text-gray-500 sm:text-sm">Amenities details will be updated soon.</p>
-                </div>
-                {% endif %}
-            </div>
-        </section>
 
        <section id="floorplan" class="scroll-mt-24 py-6 sm:py-10">
             <div class="rounded-2xl border border-[#e5e0d6] bg-white p-4 sm:p-8 lg:p-10">
@@ -778,85 +764,28 @@
        </section>
 
        
-<section class="amenities-section" id="amenities">
-  <div class="amenities-container">
-    <div class="amenities-heading">
-      <span>PROJECT AMENITIES</span>
-      <h2>Designed for a Better Lifestyle</h2>
-      <p>Thoughtfully curated amenities for a comfortable and luxurious living experience.</p>
-    </div>
+        <section class="amenities" id="amenities">
+        <div class="amenities-container">
+            <div class="amenities-heading">
+                <span>PROJECT AMENITIES</span>
+                <h2>Designed for a Better Lifestyle</h2>
+                <p>Thoughtfully curated amenities for a comfortable and luxurious living experience.</p>
+            </div>
 
-    <div class="amenities-grid">
-      <div class="amenity-card">
-        <i class="fa-solid fa-building"></i>
-        <h3>Grand Clubhouse</h3>
-      </div>
-      <div class="amenity-card">
-        <i class="fa-solid fa-water-ladder"></i>
-        <h3>Swimming Pool</h3>
-      </div>
-      <div class="amenity-card">
-        <i class="fa-solid fa-dumbbell"></i>
-        <h3>Modern Gym</h3>
-      </div>
-      <div class="amenity-card">
-        <i class="fa-solid fa-child-reaching"></i>
-        <h3>Kids Play Area</h3>
-      </div>
-      <div class="amenity-card">
-        <i class="fa-solid fa-leaf"></i>
-        <h3>Landscaped Garden</h3>
-      </div>
-      <div class="amenity-card">
-        <i class="fa-solid fa-gamepad"></i>
-        <h3>Indoor Games</h3>
-      </div>
-      <div class="amenity-card">
-        <i class="fa-solid fa-people-group"></i>
-        <h3>Multipurpose Hall</h3>
-      </div>
-      <div class="amenity-card">
-        <i class="fa-solid fa-person-running"></i>
-        <h3>Jogging Track</h3>
-      </div>
-      <div class="amenity-card">
-        <i class="fa-solid fa-chair"></i>
-        <h3>Senior Citizen Zone</h3>
-      </div>
-      <div class="amenity-card">
-        <i class="fa-solid fa-masks-theater"></i>
-        <h3>Amphitheatre</h3>
-      </div>
-      <div class="amenity-card">
-        <i class="fa-solid fa-spa"></i>
-        <h3>Yoga & Meditation</h3>
-      </div>
-      <div class="amenity-card">
-        <i class="fa-solid fa-shield-halved"></i>
-        <h3>24×7 Security</h3>
-      </div>
-    </div>
-  </div>
-</section>
+            <div class="amenities-grid">
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-<style>
-.amenities-section{padding:50px 0;background:#fff;color:#172033;font-family:inherit}
-.amenities-container{width:min(1250px,94%);margin:auto}
-.amenities-heading{text-align:center;margin-bottom:30px}
-.amenities-heading>span{font-size:11px;letter-spacing:2px;font-weight:800;color:#b58a32}
-.amenities-heading h2{font-size:clamp(24px,3vw,34px);font-weight:750;letter-spacing:-.7px;margin:8px 0;color:#172033}
-.amenities-heading p{font-size:13px;color:#78818e;margin:0;line-height:1.6}
-.amenities-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
-.amenity-card{min-height:115px;padding:17px 10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;border:1px solid #e9ebef;border-radius:9px;background:#fff;transition:all .25s ease;text-align:center}
-.amenity-card:hover{border-color:#b58a32;background:#fffcf5;transform:translateY(-3px);box-shadow:0 7px 20px #b58a3212}
-.amenity-card i{width:43px;height:43px;display:grid;place-items:center;border-radius:50%;background:#faf5e9;color:#b58a32;font-size:19px;transition:.25s}
-.amenity-card:hover i{background:#b58a32;color:#fff}
-.amenity-card h3{font-size:13px;font-weight:600;color:#293447;margin:0;line-height:1.4}
-@media(max-width:900px){.amenities-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:600px){.amenities-section{padding:35px 0}.amenities-heading{margin-bottom:22px}.amenities-heading p{font-size:12px}.amenities-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.amenity-card{min-height:100px;padding:13px 7px;gap:9px}.amenity-card i{width:37px;height:37px;font-size:16px}.amenity-card h3{font-size:12px}}
-</style>
+                {% for amen in project.amenities.all %}
+                <div class="amenity-card">
+                    <i class="{{amen.icon}}"></i>
+                    <h3>{{amen.title}}</h3>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+        </section>
+
 
         <section id="emi_calculator" class="scroll-mt-24 py-6 sm:py-10">
             <div class="rounded-2xl border border-[#e5e0d6] bg-white p-4 sm:p-8 lg:p-10">

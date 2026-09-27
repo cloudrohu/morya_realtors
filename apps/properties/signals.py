@@ -24,7 +24,6 @@ from .models import (
 
 def update_calling_status(obj):
 
-    # ---------------- Developer ----------------
 
     if obj.developer:
 
