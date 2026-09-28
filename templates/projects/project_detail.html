@@ -26,7 +26,6 @@
 
 <div class="min-h-screen bg-[#f7f6f2]">
       
-  <!-- Gallery Data Container -->
   <div id="galleryData" class="hidden">
       {% if project.image %}
       <div class="gallery-data-item" data-image="{{ project.image.url }}" data-title="{{ project.project_name }}" data-category="Cover Image"></div>
@@ -358,683 +357,289 @@
         </div>
     </nav>
 
-    <main class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-    
-        <section id="overview" class="scroll-mt-24">
-            {% for welcome in project.welcomes.all %}
-            <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+    <div style="display: grid; grid-template-columns: 7fr 3fr; gap: 24px;" class="p-6">
+        
+        <main class="left-form-container">
 
-                <div class="grid lg:grid-cols-[1.25fr_.75fr]">
+            <section id="overview" class="scroll-mt-24">
+                {% for welcome in project.welcomes.all %}
+                <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
 
-                    <div class="p-6 sm:p-10 lg:p-14">
+                    <div class="grid lg:grid-cols-[1.25fr_.75fr]">
 
-                        <div class="flex items-center gap-3">
-                            <span class="h-px w-10 bg-[#b89252]"></span>
-                            <span class="text-xs font-bold uppercase tracking-[0.25em] text-[#9a7139]">
-                                Project Overview
-                            </span>
-                        </div>
+                        <div class="p-6 sm:p-10 lg:p-14">
 
-                        <h2 class="mt-5 max-w-4xl text-3xl font-bold leading-tight tracking-tight text-gray-900 sm:text-4xl lg:text-5xl">
-                            {{ project.project_name }}
-                        </h2>
-
-                        {% if welcome.description %}
-                        <div class="mt-7 max-w-3xl text-[15px] leading-8 text-gray-600 sm:text-base">
-                            {{ welcome.description|safe }}
-                        </div>
-                        {% endif %}
-
-                        {% if welcome.read_more %}
-                        <div id="welcomeReadMore" class="hidden max-w-3xl pt-5 text-[15px] leading-8 text-gray-600 sm:text-base">
-                            {{ welcome.read_more|safe }}
-                        </div>
-
-                        <button type="button" id="readMoreBtn" class="mt-7 inline-flex items-center gap-2 rounded-xl border border-[#b89252] px-5 py-2.5 text-sm font-semibold text-[#9a7139] transition hover:bg-[#b89252] hover:text-white">
-                            <span>Read More</span>
-                            <svg class="h-4 w-4 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9 6 6 6-6"/>
-                            </svg>
-                        </button>
-                        {% endif %}
-
-                    </div>
-
-                    <div class="relative overflow-hidden bg-[#171717] p-6 sm:p-10 lg:p-12">
-
-                        <div class="absolute -right-20 -top-20 h-48 w-48 rounded-full border border-[#b89252]/20"></div>
-                        <div class="absolute -right-10 -top-10 h-28 w-28 rounded-full border border-[#b89252]/20"></div>
-
-                        <div class="relative z-10 flex h-full flex-col justify-between">
-
-                            <div>
-                                <span class="text-xs font-bold uppercase tracking-[0.25em] text-[#c9a86b]">
-                                    Property Snapshot
+                            <div class="flex items-center gap-3">
+                                <span class="h-px w-10 bg-[#b89252]"></span>
+                                <span class="text-xs font-bold uppercase tracking-[0.25em] text-[#9a7139]">
+                                    Project Overview
                                 </span>
-
-                                <h3 class="mt-4 text-2xl font-semibold leading-snug text-white">
-                                    Everything you need to know
-                                </h3>
-
-                                <div class="mt-5 h-px w-14 bg-[#b89252]"></div>
-
-                                <p class="mt-5 text-sm leading-7 text-gray-400">
-                                    Discover the location, lifestyle and key highlights of
-                                    {{ project.project_name }}.
-                                </p>
                             </div>
 
-                            <div class="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10">
+                            <h2 class="mt-5 max-w-4xl text-3xl font-bold leading-tight tracking-tight text-gray-900 sm:text-4xl lg:text-5xl">
+                                {{ project.project_name }}
+                            </h2>
 
-                                <div class="bg-[#171717] p-5">
-                                    <p class="text-[10px] font-semibold uppercase tracking-widest text-gray-500">
-                                        Status
-                                    </p>
-                                    <p class="mt-2 text-sm font-semibold text-white">
-                                        {{ project.construction_status|default:"—" }}
-                                    </p>
-                                </div>
-
-                                <div class="bg-[#171717] p-5">
-                                    <p class="text-[10px] font-semibold uppercase tracking-widest text-gray-500">
-                                        Location
-                                    </p>
-                                    <p class="mt-2 text-sm font-semibold text-white">
-                                        {% if project.locality %}{{ project.locality.name }}, {% endif %}{{ project.city.name }}
-                                    </p>
-                                </div>
-
+                            {% if welcome.description %}
+                            <div class="mt-7 max-w-3xl text-[15px] leading-8 text-gray-600 sm:text-base">
+                                {{ welcome.description|safe }}
                             </div>
+                            {% endif %}
+
+                            {% if welcome.read_more %}
+                            <div id="welcomeReadMore" class="hidden max-w-3xl pt-5 text-[15px] leading-8 text-gray-600 sm:text-base">
+                                {{ welcome.read_more|safe }}
+                            </div>
+
+                            <button type="button" id="readMoreBtn" class="mt-7 inline-flex items-center gap-2 rounded-xl border border-[#b89252] px-5 py-2.5 text-sm font-semibold text-[#9a7139] transition hover:bg-[#b89252] hover:text-white">
+                                <span>Read More</span>
+                                <svg class="h-4 w-4 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9 6 6 6-6"/>
+                                </svg>
+                            </button>
+                            {% endif %}
 
                         </div>
-                    </div>
 
-                </div>
-            </div>
+                        <div class="relative overflow-hidden bg-[#171717] p-6 sm:p-10 lg:p-12">
 
-            {% empty %}
-            <div class="rounded-3xl border border-gray-200 bg-white p-10 text-center">
-                <p class="text-sm text-gray-500">
-                    Project overview will be updated soon.
-                </p>
-            </div>
-            {% endfor %}
-        </section>
+                            <div class="absolute -right-20 -top-20 h-48 w-48 rounded-full border border-[#b89252]/20"></div>
+                            <div class="absolute -right-10 -top-10 h-28 w-28 rounded-full border border-[#b89252]/20"></div>
 
-        <section id="pricing" class=" py-12 sm:py-16 lg:py-20">
-          <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+                            <div class="relative z-10 flex h-full flex-col justify-between">
+                                <div class="mt-2 flex flex-col gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10">
 
-              <div class="bg-white border border-neutral-200 shadow-[0_4px_20px_rgba(0,0,0,0.05)] p-5 sm:p-8 lg:p-10 rounded-xl">
-
-                  <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-[#d09a4b]">
-                      {{settings_obj.site_name}} Pricing And Carpet Area
-                  </h2>
-
-                  <div class="mt-8 w-full">
-
-                      <!-- Left Column: flex-col & justify-between matches form height perfectly -->
-                      <div class="flex flex-col justify-between gap-6">
-                          
-                          <!-- Table Box -->
-                          <div class="overflow-x-auto rounded-lg border border-neutral-200 bg-white shadow-sm">
-                              <table class="w-full min-w-[680px] border-collapse text-left">
-                                  <thead>
-                                      <tr class="border-b border-neutral-200 bg-neutral-50/80">
-                                          <th class="px-4 py-3.5 text-xs font-semibold uppercase tracking-wider text-neutral-600 border-r border-neutral-200">
-                                              Type
-                                          </th>
-                                          <th class="px-4 py-3.5 text-xs font-semibold uppercase tracking-wider text-neutral-600 border-r border-neutral-200">
-                                              Carpet Area
-                                          </th>
-                                          <th class="px-4 py-3.5 text-xs font-semibold uppercase tracking-wider text-neutral-600 border-r border-neutral-200">
-                                              Price
-                                          </th>
-                                          <th class="px-4 py-3.5 text-right"></th>
-                                      </tr>
-                                  </thead>
-
-                                  <tbody class="divide-y divide-neutral-200">
-                                      {% for rs in project.configurations.all %}
-                                      <tr class="transition hover:bg-amber-50/30">
-                                          <td class="px-4 py-3.5 text-sm font-medium text-neutral-900 border-r border-neutral-200">
-                                              {{ rs.bhk_type }}
-                                          </td>
-
-                                          <td class="px-4 py-3.5 text-sm text-neutral-700 border-r border-neutral-200">
-                                              {{ rs.area_sqft }} Sq.Yd
-                                          </td>
-
-                                          <td class="px-4 py-3.5 text-sm font-medium text-neutral-900 border-r border-neutral-200">
-                                              ₹ {{ rs.formatted_price }} <span class="text-xs font-normal text-neutral-500">Onwards</span>
-                                          </td>
-
-                                          <td class="px-4 py-3.5 text-right">
-                                              <button type="button" 
-                                                  onclick="openPriceModal(
-                                                      '{{ rs.bhk_type|escapejs }}',
-                                                      '{{ rs.area_sqft|escapejs }} SqFt',
-                                                      '₹ {{ rs.formatted_price|escapejs }} Onwards')" 
-                                                  class="whitespace-nowrap rounded-md bg-[#c7964a] px-3.5 py-1.5 text-xs sm:text-sm font-medium text-white shadow-sm transition hover:bg-[#b78336]">
-                                                  Price Breakup
-                                              </button>
-                                          </td>
-                                      </tr>
-                                      {% empty %}
-                                      <tr>
-                                          <td colspan="4" class="px-4 py-8 text-center text-sm text-neutral-500">
-                                              Configurations updating soon.
-                                          </td>
-                                      </tr>
-                                      {% endfor %}
-                                  </tbody>
-                              </table>
-                          </div>
-
-                          <!-- Dynamic Bottom Feature Banner: Fills remaining space gracefully -->
-                          <div class="rounded-lg border border-dashed border-amber-200/90 bg-gradient-to-r from-amber-50/50 via-white to-neutral-50 p-4 sm:p-5">
-                              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 divide-y sm:divide-y-0 sm:divide-x divide-neutral-200">
-                                  
-                                  <div class="flex items-center gap-3">
-                                      <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#c7964a]/10 text-[#c7964a]">
-                                          <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                          </svg>
-                                      </div>
-                                      <div>
-                                          <p class="text-xs font-semibold text-neutral-800">Flexible Payment</p>
-                                          <p class="text-[11px] text-neutral-500">Customized milestone plans</p>
-                                      </div>
-                                  </div>
-
-                                  <div class="flex items-center gap-3 pt-3 sm:pt-0 sm:pl-4">
-                                      <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#c7964a]/10 text-[#c7964a]">
-                                          <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                                          </svg>
-                                      </div>
-                                      <div>
-                                          <p class="text-xs font-semibold text-neutral-800">RERA Approved</p>
-                                          <p class="text-[11px] text-neutral-500">100% Transparent pricing</p>
-                                      </div>
-                                  </div>
-
-                                  <div class="flex items-center gap-3 pt-3 sm:pt-0 sm:pl-4">
-                                      <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#c7964a]/10 text-[#c7964a]">
-                                          <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                              <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                                          </svg>
-                                      </div>
-                                      <div>
-                                          <p class="text-xs font-semibold text-neutral-800">Bank Assistance</p>
-                                          <p class="text-[11px] text-neutral-500">Pre-approved loan options</p>
-                                      </div>
-                                  </div>
-
-                              </div>
-                          </div>
-
-                      </div>
-
-                  </div>
-
-              </div>
-
-          </div>
-        </section>
-
-        <section id="location" class="scroll-mt-24 py-6 sm:py-10">
-            <div class="rounded-2xl border border-[#e5e0d6] bg-white p-4 sm:p-8 lg:p-10">
-                <div class="max-w-2xl">
-                    <p class="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#b89252] sm:text-xs">Project Location</p>
-                    <h2 class="mt-1.5 text-xl font-bold tracking-tight text-gray-900 sm:mt-2 sm:text-3xl">Location & Connectivity</h2>
-                    <p class="mt-2 text-xs leading-5 text-gray-500 sm:mt-3 sm:text-sm">Explore the project location and its connectivity to important destinations.</p>
-                </div>
-
-                <div class="mt-6 grid gap-5 lg:mt-8 lg:grid-cols-[1.05fr_.95fr] lg:gap-8">
-
-                    <style>
-                        .google-map-wrapper {
-                            width: 100%;
-                            height: 500px;
-                            overflow: hidden;
-                        }
-
-                        .google-map-wrapper iframe {
-                            display: block !important;
-                            width: 100% !important;
-                            height: 100% !important;
-                            min-height: 100% !important;
-                            max-height: none !important;
-                            border: 0 !important;
-                            margin: 0 !important;
-                            padding: 0 !important;
-                            vertical-align: top !important;
-                        }
-
-                        @media (max-width: 1023px) {
-                            .google-map-wrapper {
-                                height: 450px;
-                            }
-                        }
-
-                        @media (max-width: 639px) {
-                            .google-map-wrapper {
-                                height: 300px;
-                            }
-                        }
-                    </style>
-
-                    <div class="overflow-hidden rounded-xl border border-[#e5e0d6] bg-[#f8f6f1]">
-
-                        {% if project.google_map_iframe %}
-
-                            <div class="google-map-wrapper">
-                                {{ project.google_map_iframe|safe }}
-                            </div>
-
-                        {% else %}
-
-                            <div class="flex h-[300px] items-center justify-center text-sm text-gray-400 sm:h-[450px] lg:h-[500px]">
-                                Map not available
-                            </div>
-
-                        {% endif %}
-
-                    </div>
-
-                    <div>
-                        <div class="border-b border-[#e5e0d6] pb-5">
-                            <p class="text-[10px] font-semibold uppercase tracking-wider text-gray-400">Project Address</p>
-                            <div class="mt-2 flex gap-3">
-                                <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#f8f1e5] text-[#b89252]">
-                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 21s7-5.2 7-12a7 7 0 1 0-14 0c0 6.8 7 12 7 12Z"/>
-                                        <circle cx="12" cy="9" r="2.3" stroke-width="1.8"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <p class="text-sm font-semibold text-gray-900">
-                                        {{ project.locality.name }}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="pt-5">
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <p class="text-[10px] font-semibold uppercase tracking-wider text-gray-400">Nearby Connectivity</p>
-                                    <h3 class="mt-1 text-lg font-bold text-gray-900">Everything Within Reach</h3>
-                                </div>
-                                <span class="text-xs text-gray-400">{{ project.connectivity.count }} Places</span>
-                            </div>
-                            
-                            <div class="mt-4 max-h-[305px] overflow-y-auto divide-y divide-[#eee9df] pr-2 scrollbar-thin scrollbar-thumb-neutral-300 hover:scrollbar-thumb-[#9a7139]">
-                                {% for item in project.connectivity.all %}
-                                <div class="flex items-center justify-between gap-4 py-3">
-                                    <div class="min-w-0">
-                                        <p class="truncate text-sm font-semibold text-gray-800">{{ item.title }}</p>
+                                    <!-- Row 1: Status -->
+                                    <div class="bg-[#171717] px-5 py-4 flex items-center justify-between">
+                                        <p class="text-[10px] font-semibold uppercase tracking-widest text-gray-500">
+                                            Status
+                                        </p>
+                                        <p class="text-sm font-semibold text-white">
+                                            {{ project.construction_status|default:"—" }}
+                                        </p>
                                     </div>
+
+                                    <!-- Row 2: Location -->
+                                    <div class="bg-[#171717] px-5 py-4 flex items-center justify-between">
+                                        <p class="text-[10px] font-semibold uppercase tracking-widest text-gray-500">
+                                            Location
+                                        </p>
+                                        <p class="text-sm font-semibold text-white text-right">
+                                            {% if project.locality %}{{ project.locality.name }}, {% endif %}{{ project.city.name }}
+                                        </p>
+                                    </div>
+
+                                    <!-- Row 3: Configurations / Typology -->
+                                    <div class="bg-[#171717] px-5 py-4 flex items-center justify-between">
+                                        <p class="text-[10px] font-semibold uppercase tracking-widest text-gray-500">
+                                            Typology
+                                        </p>
+                                        <p class="text-sm font-semibold text-white">
+                                            {{ project.typology|default:"2 & 3 BHK" }}
+                                        </p>
+                                    </div>
+
+                                    <!-- Row 4: Possession Date -->
+                                    <div class="bg-[#171717] px-5 py-4 flex items-center justify-between">
+                                        <p class="text-[10px] font-semibold uppercase tracking-widest text-gray-500">
+                                            Possession
+                                        </p>
+                                        <p class="text-sm font-semibold text-white">
+                                            {{ project.possession_date|default:"Dec 2029" }}
+                                        </p>
+                                    </div>
+
+                                    <!-- Row 5: Land Area -->
+                                    <div class="bg-[#171717] px-5 py-4 flex items-center justify-between">
+                                        <p class="text-[10px] font-semibold uppercase tracking-widest text-gray-500">
+                                            Land Area
+                                        </p>
+                                        <p class="text-sm font-semibold text-white">
+                                            {{ project.land_area|default:"2.78 Acres" }}
+                                        </p>
+                                    </div>
+
+                                    <!-- Row 6: RERA Registration -->
+                                    <div class="bg-[#171717] px-5 py-4 flex items-center justify-between">
+                                        <p class="text-[10px] font-semibold uppercase tracking-widest text-gray-500">
+                                            RERA ID
+                                        </p>
+                                        <p class="text-sm font-semibold text-white">
+                                            {{ project.rera_number|default:"PR1180002600544" }}
+                                        </p>
+                                    </div>
+
                                 </div>
-                                {% empty %}
-                                <p class="py-6 text-center text-xs text-gray-400">Connectivity details will be updated soon.</p>
-                                {% endfor %}
+
                             </div>
-
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <section id="video" class="scroll-mt-24 py-6 sm:py-10">
-            <div class="rounded-2xl border border-[#e5e0d6] bg-white p-4 sm:p-8 lg:p-10">
-                <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-                    <div>
-                        <p class="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#b89252] sm:text-xs">Project Video</p>
-                        <h2 class="mt-1.5 text-xl font-bold tracking-tight text-gray-900 sm:mt-2 sm:text-3xl">Experience The Project</h2>
-                        <p class="mt-2 text-xs leading-5 text-gray-500 sm:text-sm">Take a closer look at the project, amenities and overall lifestyle.</p>
                     </div>
                 </div>
 
-                {% if project.youtube_embed_id %}
-                <div class="mt-5 overflow-hidden rounded-xl bg-black sm:mt-8">
-                    <div class="relative aspect-video w-full">
-                        <iframe
-                            src="https://www.youtube.com/embed/{{ project.youtube_embed_id }}"
-                            title="{{ project.project_name }} Project Video"
-                            class="absolute inset-0 h-full w-full"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen>
-                        </iframe>
-                    </div>
-                </div>
-                {% else %}
-                <div class="mt-5 flex aspect-video items-center justify-center rounded-xl border border-dashed border-[#dcd5c8] bg-[#faf9f6] sm:mt-8">
-                    <div class="text-center">
-                        <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#f8f1e5] text-[#b89252]">
-                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M8 5v14l11-7z"/>
-                            </svg>
-                        </div>
-                        <p class="mt-3 text-xs font-medium text-gray-500 sm:text-sm">Project video will be available soon.</p>
-                    </div>
-                </div>
-                {% endif %}
-            </div>
-        </section>
-
-
-       <section id="floorplan" class="scroll-mt-24 py-6 sm:py-10">
-            <div class="rounded-2xl border border-[#e5e0d6] bg-white p-4 sm:p-8 lg:p-10">
-                <div>
-                    <p class="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#b89252] sm:text-xs">Floor Plans</p>
-                    <h2 class="mt-1.5 text-xl font-bold tracking-tight text-gray-900 sm:mt-2 sm:text-3xl">Explore Floor Plans</h2>
-                    <p class="mt-2 text-xs leading-5 text-gray-500 sm:mt-3 sm:text-sm">View detailed floor plans and explore the available configurations.</p>
-                </div>
-
-                {% if project.configurations.all %}
-                <div class="mt-6 grid gap-4 sm:mt-8 sm:grid-cols-2 lg:grid-cols-3">
-                    {% for config in project.configurations.all %}
-                    {% if config.unit_plan %}
-                    <div class="group overflow-hidden rounded-xl border border-[#e5e0d6] bg-white">
-                        <button type="button" onclick="openUnitPlan('{{ config.unit_plan.url }}')" class="relative block aspect-[4/3] w-full overflow-hidden bg-[#f8f6f1]">
-                            <img src="{{ config.unit_plan.url }}" alt="{{ config.bhk_type }} Floor Plan" class="h-full w-full object-contain p-3 transition duration-500 group-hover:scale-[1.03]">
-                            <span class="absolute bottom-3 right-3 rounded-lg bg-black/70 px-3 py-1.5 text-[10px] font-semibold text-white backdrop-blur-sm sm:text-xs">View Plan</span>
-                        </button>
-
-                        <div class="flex items-center justify-between gap-3 border-t border-[#e5e0d6] px-4 py-3.5">
-                            <div>
-                                <p class="text-sm font-semibold text-gray-900">{{ config.bhk_type }}</p>
-                                <p class="mt-0.5 text-[10px] text-gray-400 sm:text-xs">{{ config.area_sqft }} Sq.Yd</p>
-                            </div>
-                            <p class="text-xs font-semibold text-[#9a7139]">₹ {{ config.formatted_price }}</p>
-                        </div>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
-                </div>
-                {% else %}
-                <div class="mt-6 rounded-xl border border-dashed border-[#dcd5c8] p-8 text-center sm:mt-8">
-                    <p class="text-xs text-gray-500 sm:text-sm">Floor plans will be updated soon.</p>
-                </div>
-                {% endif %}
-            </div>
-       </section>
-
-       
-        <section class="amenities" id="amenities">
-        <div class="amenities-container">
-            <div class="amenities-heading">
-                <span>PROJECT AMENITIES</span>
-                <h2>Designed for a Better Lifestyle</h2>
-                <p>Thoughtfully curated amenities for a comfortable and luxurious living experience.</p>
-            </div>
-
-            <div class="amenities-grid">
-
-
-                {% for amen in project.amenities.all %}
-                <div class="amenity-card">
-                    <i class="{{amen.icon}}"></i>
-                    <h3>{{amen.title}}</h3>
+                {% empty %}
+                <div class="rounded-3xl border border-gray-200 bg-white p-10 text-center">
+                    <p class="text-sm text-gray-500">
+                        Project overview will be updated soon.
+                    </p>
                 </div>
                 {% endfor %}
+            </section>
 
-            </div>
-        </div>
-        </section>
-
-
-        <section id="emi_calculator" class="scroll-mt-24 py-6 sm:py-10">
-            <div class="rounded-2xl border border-[#e5e0d6] bg-white p-4 sm:p-8 lg:p-10">
-                <div>
-                    <p class="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#b89252] sm:text-xs">EMI Calculator</p>
-                    <h2 class="mt-1.5 text-xl font-bold tracking-tight text-gray-900 sm:mt-2 sm:text-3xl">Calculate Your Home Loan EMI</h2>
-                    <p class="mt-2 text-xs leading-5 text-gray-500 sm:mt-3 sm:text-sm">Estimate your monthly EMI, total interest and total repayment amount.</p>
-                </div>
-
-                <div class="mt-6 grid gap-6 lg:mt-8 lg:grid-cols-[1fr_1fr] lg:gap-10">
+            <section id="pricing" class="scroll-mt-24 py-6 sm:py-10">
+                <div class="rounded-2xl border border-white/10 bg-[#171717] p-4 sm:p-8 lg:p-10 shadow-2xl backdrop-blur-sm">
                     
-                    <div class="space-y-5">
-                        <!-- Property Price Input -->
-                        <div>
-                            <div class="flex items-center justify-between">
-                                <label class="text-xs font-semibold text-gray-700 sm:text-sm">Property Price</label>
-                                <span id="propertyPriceValue" class="text-xs font-bold text-[#9a7139] sm:text-sm">₹ 1,38,00,000</span>
-                            </div>
-                            <input id="propertyPrice" type="range" min="1000000" max="50000000" step="100000" value="13800000" class="mt-3 h-1.5 w-full cursor-pointer accent-[#b89252]">
-                            <div class="mt-1 flex justify-between text-[10px] text-gray-400">
-                                <span>₹10 Lakh</span>
-                                <span>₹5 Crore</span>
-                            </div>
-                        </div>
-
-                        <!-- Down Payment Percentage Input -->
-                        <div>
-                            <div class="flex items-center justify-between">
-                                <label class="text-xs font-semibold text-gray-700 sm:text-sm">
-                                    Down Payment (<span id="downPaymentPercentValue">20</span>%)
-                                </label>
-                                <span id="downPaymentValue" class="text-xs font-bold text-[#9a7139] sm:text-sm">₹ 27,60,000</span>
-                            </div>
-                            <input id="downPaymentPercent" type="range" min="10" max="80" step="1" value="20" class="mt-3 h-1.5 w-full cursor-pointer accent-[#b89252]">
-                            <div class="mt-1 flex justify-between text-[10px] text-gray-400">
-                                <span>10%</span>
-                                <span>80%</span>
-                            </div>
-                        </div>
-
-                        <!-- Calculated Loan Amount Display -->
-                        <div class="rounded-lg bg-[#fcfbf9] p-3 border border-[#e5e0d6]">
-                            <div class="flex items-center justify-between">
-                                <span class="text-xs font-medium text-gray-600">Calculated Loan Amount</span>
-                                <span id="loanAmountValue" class="text-xs font-bold text-[#9a7139] sm:text-sm">₹ 1,10,40,000</span>
-                            </div>
-                        </div>
-
-                        <!-- Interest Rate Input -->
-                        <div>
-                            <div class="flex items-center justify-between">
-                                <label class="text-xs font-semibold text-gray-700 sm:text-sm">Interest Rate</label>
-                                <span id="interestValue" class="text-xs font-bold text-[#9a7139] sm:text-sm">8.5%</span>
-                            </div>
-                            <input id="interestRate" type="range" min="5" max="15" step="0.1" value="8.5" class="mt-3 h-1.5 w-full cursor-pointer accent-[#b89252]">
-                            <div class="mt-1 flex justify-between text-[10px] text-gray-400">
-                                <span>5%</span>
-                                <span>15%</span>
-                            </div>
-                        </div>
-
-                        <!-- Loan Tenure Input -->
-                        <div>
-                            <div class="flex items-center justify-between">
-                                <label class="text-xs font-semibold text-gray-700 sm:text-sm">Loan Tenure</label>
-                                <span id="tenureValue" class="text-xs font-bold text-[#9a7139] sm:text-sm">20 Years</span>
-                            </div>
-                            <input id="loanTenure" type="range" min="1" max="30" step="1" value="20" class="mt-3 h-1.5 w-full cursor-pointer accent-[#b89252]">
-                            <div class="mt-1 flex justify-between text-[10px] text-gray-400">
-                                <span>1 Year</span>
-                                <span>30 Years</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="rounded-xl bg-[#f8f6f1] p-4 sm:p-6">
-                        <div class="border-b border-[#e5e0d6] pb-5">
-                            <p class="text-[10px] font-semibold uppercase tracking-wider text-gray-400">Monthly EMI</p>
-                            <p id="emiAmount" class="mt-1 text-2xl font-bold text-[#9a7139] sm:text-3xl">₹ 43,391</p>
-                        </div>
-
-                        <div class="mt-5 grid grid-cols-2 gap-4">
-                            <div>
-                                <p class="text-[10px] uppercase tracking-wider text-gray-400">Principal Amount</p>
-                                <p id="principalAmount" class="mt-1 text-xs font-semibold text-gray-800 sm:text-sm">₹ 50,00,000</p>
-                            </div>
-
-                            <div>
-                                <p class="text-[10px] uppercase tracking-wider text-gray-400">Total Interest</p>
-                                <p id="totalInterest" class="mt-1 text-xs font-semibold text-gray-800 sm:text-sm">₹ 54,13,840</p>
-                            </div>
-
-                            <div class="col-span-2 border-t border-[#e5e0d6] pt-4">
-                                <p class="text-[10px] uppercase tracking-wider text-gray-400">Total Payment</p>
-                                <p id="totalPayment" class="mt-1 text-sm font-bold text-gray-900 sm:text-base">₹ 1,04,13,840</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="about_developer" class="scroll-mt-24 py-6 sm:py-10">
-            <div class="rounded-2xl border border-[#e5e0d6] bg-white p-4 sm:p-8 lg:p-10">
-                <div>
-                    <p class="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#b89252] sm:text-xs">About Developer</p>
-                    <h2 class="mt-1.5 text-xl font-bold tracking-tight text-gray-900 sm:mt-2 sm:text-3xl">Meet The Developer</h2>
-                    <p class="mt-2 text-xs leading-5 text-gray-500 sm:mt-3 sm:text-sm">Learn more about the developer behind {{ project.project_name }}.</p>
-                </div>
-
-                <div class="mt-6 grid gap-6 sm:mt-8 lg:grid-cols-[220px_1fr] lg:items-center lg:gap-10">
-                    <div class="flex justify-center lg:justify-start">
-                        <div class="flex h-32 w-32 items-center justify-center overflow-hidden rounded-2xl border border-[#e5e0d6] bg-[#f8f6f1] sm:h-40 sm:w-40">
-                            {% if project.developer.logo %}
-                            <img src="{{ project.developer.logo.url }}" alt="{{ project.developer }}" class="h-full rounded-3xl w-full object-contain p-4">
-                            {% else %}
-                            <span class="text-3xl font-bold text-[#b89252]">{{ project.developer|slice:":1" }}</span>
-                            {% endif %}
-                        </div>
-                    </div>
-
+                    <!-- Header -->
                     <div>
-                        <h3 class="text-lg font-bold text-gray-900 sm:text-2xl">{{ project.developer }}</h3>
+                        <p class="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#b89252] sm:text-xs">Pricing & Unit Plans</p>
+                        <h2 class="mt-1.5 text-xl font-bold tracking-tight text-white sm:mt-2 sm:text-3xl">Choose Your Configuration</h2>
+                        <p class="mt-2 text-xs text-gray-400 sm:mt-3 sm:text-sm">Explore available unit sizes, pricing and floor plans.</p>
+                    </div>
 
-                        {% if project.developer.about_developer %}
-                        <div class="mt-3 text-xs leading-6 text-gray-600 sm:text-sm sm:leading-7">
-                            {{ project.developer.about_developer|safe }}
-                        </div>
-                        {% else %}
-                        <p class="mt-3 text-xs leading-6 text-gray-500 sm:text-sm sm:leading-7">
-                            {{ project.developer }} is the developer behind {{ project.project_name }}.
-                        </p>
-                        {% endif %}
-
-                        <div class="mt-5 flex flex-wrap gap-3">
-                            {% if project.developer.website %}
-                            <a href="{{ project.developer.website }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center rounded-lg bg-[#b89252] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#9a7139]">
-                                Visit Website →
-                            </a>
-                            {% endif %}
-
-                           <a href="">
-                                <span class="inline-flex items-center rounded-lg border border-[#e5e0d6] px-4 py-2 text-xs font-medium text-gray-600">
-                                    Know More →
-                                </span>
-                            </a> 
+                    {% regroup project.configurations.all by bhk_type as bhk_groups %}
+                    {% if bhk_groups %}
+                    
+                    <!-- Dynamic BHK Tabs Header -->
+                    <div class="mt-5 overflow-x-auto border-b border-white/10 sm:mt-8">
+                        <div class="flex min-w-max gap-2">
+                            {% for group in bhk_groups %}
+                            <button type="button" data-tab="{{ forloop.counter }}" class="bhk-tab border-b-2 border-transparent px-4 py-3 text-xs font-semibold text-gray-400 transition-all duration-300 hover:text-white sm:px-6 sm:py-4 sm:text-sm {% if forloop.first %}!border-[#b89252] !text-[#9a7139]{% endif %}">
+                                {{ group.grouper }}
+                            </button>
+                            {% endfor %}
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
-        
-        <section id="faqs" class="scroll-mt-24 py-6 sm:py-10">
-            <div class="rounded-2xl border border-[#e5e0d6] bg-white p-4 sm:p-8 lg:p-10">
-                <div>
-                    <p class="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#b89252] sm:text-xs">FAQs</p>
-                    <h2 class="mt-1.5 text-xl font-bold tracking-tight text-gray-900 sm:mt-2 sm:text-3xl">Frequently Asked Questions</h2>
-                    <p class="mt-2 text-xs leading-5 text-gray-500 sm:mt-3 sm:text-sm">Find answers to the most common questions about {{ project.project_name }}.</p>
-                </div>
 
-                {% if project.faqs.all %}
-                <div class="mt-6 divide-y divide-[#e5e0d6] border-y border-[#e5e0d6] sm:mt-8">
-                    {% for faq in project.faqs.all %}
-                    <div class="faq-item">
-                        <button type="button" class="faq-question flex w-full items-center justify-between gap-4 py-4 text-left sm:py-5">
-                            <span class="text-xs font-semibold leading-5 text-gray-800 sm:text-sm">{{ faq.question }}</span>
-                            <span class="faq-icon flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#f8f1e5] text-[#9a7139] transition-transform duration-300">
-                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="m6 9 6 6 6-6"/>
-                                </svg>
-                            </span>
-                        </button>
+                    <!-- Tab Panels -->
+                    {% for group in bhk_groups %}
+                    <div data-panel="{{ forloop.counter }}" class="bhk-panel {% if not forloop.first %}hidden{% endif %} transition-opacity duration-300">
+                        
+                        <!-- Desktop Grid Table View -->
+                        <div class="mt-4 hidden overflow-hidden rounded-xl border border-white/10 sm:block">
+                            <!-- Table Header -->
+                            <div class="grid grid-cols-[1.2fr_1fr_1.2fr_1fr_1.2fr] bg-black/40 px-5 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400 border-b border-white/10">
+                                <span>Unit Type</span>
+                                <span>Carpet Area</span>
+                                <span>Price</span>
+                                <span>Parking</span>
+                                <span class="text-right sm:text-center">Floor Plan</span>
+                            </div>
 
-                        <div class="faq-answer grid grid-rows-[0fr] transition-all duration-300">
-                            <div class="overflow-hidden">
-                                <div class="pb-4 pr-10 text-xs leading-6 text-gray-500 sm:pb-5 sm:text-sm sm:leading-7">
-                                    {{ faq.answer|safe }}
+                            <!-- Table Rows -->
+                            {% for config in group.list %}
+                            <div class="grid grid-cols-[1.2fr_1fr_1.2fr_1fr_1.2fr] items-center border-t border-white/5 px-5 py-4 transition-colors duration-200 hover:bg-white/[0.03]">
+                                <div class="font-semibold text-white">{{ config.bhk_type }}</div>
+                                <div class="text-sm text-gray-300">{{ config.area_sqft }} Sq.Yd</div>
+                                <div class="text-sm font-semibold text-[#b89252]">₹ {{ config.formatted_price }}</div>
+                                <div>
+                                    {% if config.parking %}
+                                    <span class="inline-flex items-center gap-1.5 text-sm font-medium text-emerald-400">
+                                        <span class="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs">✓</span> Available
+                                    </span>
+                                    {% else %}
+                                    <span class="text-sm text-gray-500">Not Available</span>
+                                    {% endif %}
+                                </div>
+                                <div class="text-right sm:text-center">
+                                    {% if config.unit_plan %}
+                                    <!-- Image Preview Box -->
+                                    <div class="relative inline-block overflow-hidden rounded-xl border border-white/10 bg-black/40 p-1 group/blur cursor-pointer" onclick="openUnitPlan('{{ config.unit_plan.url }}')">
+                                        <div class="relative h-14 w-28 overflow-hidden rounded-lg bg-gray-800">
+                                            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover/blur:scale-110 opacity-70" style="background-image: url('{{ config.unit_plan.url }}');"></div>
+                                            <div class="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-[1px] transition-all duration-300 group-hover/blur:backdrop-blur-none group-hover/blur:bg-black/20">
+                                                <span class="text-[10px] font-bold uppercase tracking-wider text-amber-200/90 group-hover/blur:text-white transition-colors">
+                                                    View Plan
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                    <!-- Coming Soon Box -->
+                                    <div class="relative inline-block overflow-hidden rounded-xl border border-white/10 bg-black/40 p-1 opacity-70">
+                                        <div class="relative h-14 w-28 overflow-hidden rounded-lg bg-gray-900">
+                                            <div class="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-[2px]">
+                                                <span class="text-[10px] font-bold uppercase tracking-wider text-gray-400">
+                                                    Coming Soon
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
                                 </div>
                             </div>
+                            {% endfor %}
                         </div>
+
+                        <!-- Mobile Card View -->
+                        <div class="mt-4 space-y-3 sm:hidden">
+                            {% for config in group.list %}
+                            <div class="grid grid-cols-2 gap-x-3 gap-y-3 rounded-xl border border-white/10 bg-black/30 p-4 transition-all duration-200 active:bg-white/[0.04]">
+                                <div>
+                                    <p class="text-[9px] font-medium uppercase tracking-wider text-gray-400">Unit Type</p>
+                                    <p class="mt-0.5 text-xs font-semibold text-white">{{ config.bhk_type }}</p>
+                                </div>
+
+                                <div>
+                                    <p class="text-[9px] font-medium uppercase tracking-wider text-gray-400">Area</p>
+                                    <p class="mt-0.5 text-xs font-semibold text-gray-300">{{ config.area_sqft }} Sq.Yd</p>
+                                </div>
+
+                                <div>
+                                    <p class="text-[9px] font-medium uppercase tracking-wider text-gray-400">Price</p>
+                                    <p class="mt-0.5 text-xs font-semibold text-[#b89252]">₹ {{ config.formatted_price }}</p>
+                                </div>
+
+                                <div>
+                                    <p class="text-[9px] font-medium uppercase tracking-wider text-gray-400">Parking</p>
+                                    {% if config.parking %}
+                                    <p class="mt-0.5 text-xs font-medium text-emerald-400">✓ Available</p>
+                                    {% else %}
+                                    <p class="mt-0.5 text-xs text-gray-500">Not Available</p>
+                                    {% endif %}
+                                </div>
+
+                                <div class="col-span-2 border-t border-white/10 pt-3 mt-1 flex justify-between items-center">
+                                    <span class="text-xs font-semibold text-gray-300">Floor Plan</span>
+                                    {% if config.unit_plan %}
+                                    <div class="relative inline-block overflow-hidden rounded-lg border border-white/10 bg-black/40 p-1 group/blur cursor-pointer" onclick="openUnitPlan('{{ config.unit_plan.url }}')">
+                                        <div class="relative h-10 w-24 overflow-hidden rounded bg-gray-800">
+                                            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover/blur:scale-110 opacity-70" style="background-image: url('{{ config.unit_plan.url }}');"></div>
+                                            <div class="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-[1px]">
+                                                <span class="text-[9px] font-bold uppercase tracking-wider text-amber-200/90">
+                                                    View Plan
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                    <span class="text-xs text-gray-500">Coming Soon</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
                     </div>
                     {% endfor %}
+
+                    {% else %}
+                    <!-- Empty State -->
+                    <div class="mt-6 rounded-xl border border-dashed border-white/10 bg-black/20 p-8 text-center">
+                        <p class="text-xs text-gray-400 sm:text-sm">Pricing and unit plans will be updated soon.</p>
+                    </div>
+                    {% endif %}
+
                 </div>
-                {% else %}
-                <div class="mt-6 rounded-xl border border-dashed border-[#dcd5c8] p-8 text-center sm:mt-8">
-                    <p class="text-xs text-gray-500 sm:text-sm">Frequently asked questions will be updated soon.</p>
-                </div>
-                {% endif %}
-            </div>
-        </section>
+            </section>
 
-        <section class="py-6 sm:py-10">
-            <div class="rounded-2xl border border-[#e5e0d6] bg-white p-4 sm:p-8 lg:p-10">
-                <div>
-                    <p class="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#b89252] sm:text-xs">More Projects</p>
-                    <h2 class="mt-1.5 text-xl font-bold tracking-tight text-gray-900 sm:mt-2 sm:text-3xl">More Projects from {{ project.developer.title }}</h2>
-                    <p class="mt-2 text-xs leading-5 text-gray-500 sm:mt-3 sm:text-sm">Explore more projects developed by {{ project.developer }}.</p>
-                </div>
 
-                {% if more_projects %}
-                <div class="mt-6 grid gap-4 sm:mt-8 sm:grid-cols-2 lg:grid-cols-4">
-                    {% for item in more_projects %}
-                    <a href="{{ item.get_absolute_url }}" class="group overflow-hidden rounded-xl border border-[#e5e0d6] bg-white transition duration-300 hover:-translate-y-1 hover:shadow-lg">
-                        <div class="relative aspect-[4/3] overflow-hidden bg-[#f8f6f1]">
-                            {% if item.image %}
-                            <img src="{{ item.image.url }}" alt="{{ item.project_name }}" class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
-                            {% else %}
-                            <div class="flex h-full items-center justify-center text-xs text-gray-400">No Image</div>
-                            {% endif %}
+        </main>
 
-                            {% if item.construction_status %}
-                            <span class="absolute left-3 top-3 rounded-md bg-white/90 px-2.5 py-1 text-[9px] font-semibold text-[#9a7139] shadow-sm backdrop-blur-sm">
-                                {{ item.construction_status }}
-                            </span>
-                            {% endif %}
-                        </div>
+        <aside class="right-summary-sidebar">
 
-                        <div class="p-3.5 sm:p-4">
-                            <h3 class="truncate text-sm font-bold text-gray-900 group-hover:text-[#9a7139]">{{ item.project_name }}</h3>
+        </aside>
 
-                            <p class="mt-1 text-[10px] text-gray-500 sm:text-xs">
-                                {% if item.locality.name %}{{ item.locality.name }}{% endif %}
-                                {% if item.city.name %}, {{ item.city.name }}{% endif %}
-                            </p>
-
-                            <div class="mt-3 flex items-center justify-between border-t border-[#eee9df] pt-3">
-                                <span class="text-[10px] text-gray-400 sm:text-xs">
-                                    {{ item.bhk_type|default:"Multiple Configurations" }}
-                                </span>
-
-                                {% if item.pricing %}
-                                <span class="text-xs font-semibold text-[#9a7139]">{{ item.pricing }}</span>
-                                {% else %}
-                                <span class="text-xs font-semibold text-[#9a7139]">View Details →</span>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </a>
-                    {% endfor %}
-                </div>
-                {% else %}
-                <div class="mt-6 rounded-xl border border-dashed border-[#dcd5c8] p-8 text-center sm:mt-8">
-                    <p class="text-xs text-gray-500 sm:text-sm">No other projects available from this developer.</p>
-                </div>
-                {% endif %}
-            </div>
-        </section>
-
-    </main>
+    </div>
 
 </div>
 
@@ -1110,9 +715,8 @@
 
 
 <script>
-
     document.addEventListener("DOMContentLoaded", function () {
-
+        // --- HERO GALLERY & LIGHTBOX ---
         const slides = [...document.querySelectorAll(".hero-slide")];
         const images = [...document.querySelectorAll(".hero-lightbox-trigger")];
 
@@ -1130,9 +734,7 @@
         let lightboxIndex = 0;
         let autoPlay;
 
-
         function showSlide(index) {
-
             if (!slides.length) return;
 
             currentSlide = (index + slides.length) % slides.length;
@@ -1151,13 +753,9 @@
             });
         }
 
-
         if (slides.length > 1) {
-
             slides.forEach((_, index) => {
-
                 const dot = document.createElement("button");
-
                 dot.type = "button";
                 dot.className = "hero-dot h-1.5 rounded-full transition-all duration-300";
 
@@ -1167,7 +765,6 @@
                 });
 
                 dotsContainer?.appendChild(dot);
-
             });
 
             prevButton?.addEventListener("click", () => {
@@ -1183,9 +780,7 @@
             autoPlay = setInterval(() => {
                 showSlide(currentSlide + 1);
             }, 5000);
-
         }
-
 
         function restartAutoPlay() {
             clearInterval(autoPlay);
@@ -1194,9 +789,7 @@
             }, 5000);
         }
 
-
         function openLightbox(index) {
-
             if (!images.length) return;
 
             lightboxIndex = (index + images.length) % images.length;
@@ -1210,24 +803,18 @@
             document.body.classList.add("overflow-hidden");
         }
 
-
         function closeLightbox() {
-
             lightbox.classList.add("hidden");
             lightbox.classList.remove("flex");
 
             document.body.classList.remove("overflow-hidden");
         }
 
-
         images.forEach((image, index) => {
-
             image.addEventListener("click", () => {
                 openLightbox(index);
             });
-
         });
-
 
         lightboxClose?.addEventListener("click", closeLightbox);
 
@@ -1239,298 +826,89 @@
             openLightbox(lightboxIndex + 1);
         });
 
-
         lightbox?.addEventListener("click", (event) => {
-
             if (event.target === lightbox) {
                 closeLightbox();
             }
-
         });
 
-
         document.addEventListener("keydown", (event) => {
-
             if (lightbox.classList.contains("hidden")) return;
 
             if (event.key === "Escape") {
                 closeLightbox();
             }
-
             if (event.key === "ArrowLeft") {
                 openLightbox(lightboxIndex - 1);
             }
-
             if (event.key === "ArrowRight") {
                 openLightbox(lightboxIndex + 1);
             }
-
         });
-
 
         showSlide(0);
 
-    });
-
-
-    function shareProject() {
-
-        const shareData = {
-            title: "{{ project.project_name|escapejs }}",
-            text: "Check out {{ project.project_name|escapejs }}",
-            url: window.location.href
-        };
-
-        if (navigator.share) {
-
-            navigator.share(shareData).catch(() => {});
-
-        } else {
-
-            navigator.clipboard.writeText(window.location.href);
-
-            alert("Project link copied!");
-
-        }
-
-    }
-
-    const readMoreBtn = document.getElementById("readMoreBtn");
-    const welcomeReadMore = document.getElementById("welcomeReadMore");
+        // --- OVERVIEW READ MORE TOGGLE ---
+        const readMoreBtn = document.getElementById("readMoreBtn");
+        const welcomeReadMore = document.getElementById("welcomeReadMore");
 
         readMoreBtn?.addEventListener("click", function () {
             const hidden = welcomeReadMore.classList.toggle("hidden");
-            readMoreBtn.childNodes[0].textContent = hidden ? "Read More " : "Read Less ";
-
-            readMoreBtn.querySelector("svg").classList.toggle("rotate-180", !hidden);
-        });
-
-            document.querySelectorAll(".bhk-tab").forEach(tab => {
-        tab.addEventListener("click", () => {
-            const id = tab.dataset.tab;
-
-            document.querySelectorAll(".bhk-tab").forEach(item => {
-                item.classList.remove("!border-[#b89252]", "!text-[#9a7139]");
-            });
-
-            document.querySelectorAll(".bhk-panel").forEach(panel => {
-                panel.classList.add("hidden");
-            });
-
-            tab.classList.add("!border-[#b89252]", "!text-[#9a7139]");
-            document.querySelector(`[data-panel="${id}"]`).classList.remove("hidden");
+            const svg = readMoreBtn.querySelector("svg");
+            
+            // Purana sab text hata kar naya text dalo
+            readMoreBtn.textContent = hidden ? "Read More " : "Read Less ";
+            
+            // Arrow (SVG) ko wapas jod do
+            if (svg) {
+                svg.classList.toggle("rotate-180", !hidden);
+                readMoreBtn.appendChild(svg);
+            }
         });
     });
+        document.addEventListener("DOMContentLoaded", function () {
 
+        // --- 1. Dynamic BHK Tabs Switching ---
+        document.querySelectorAll(".bhk-tab").forEach(tab => {
+            tab.addEventListener("click", () => {
+                const id = tab.dataset.tab;
+
+                // Sabhi tabs se active gold border & text style hatana
+                document.querySelectorAll(".bhk-tab").forEach(item => {
+                    item.classList.remove("!border-[#b89252]", "!text-[#9a7139]");
+                });
+
+                // Sabhi panels ko hide karna
+                document.querySelectorAll(".bhk-panel").forEach(panel => {
+                    panel.classList.add("hidden");
+                });
+
+                // Clicked tab ko gold highlight dena
+                tab.classList.add("!border-[#b89252]", "!text-[#9a7139]");
+
+                // Clicked tab ka corresponding panel show karna
+                const activePanel = document.querySelector(`[data-panel="${id}"]`);
+                if (activePanel) {
+                    activePanel.classList.remove("hidden");
+                }
+            });
+        });
+
+    });
+
+    // --- 2. Open Unit / Floor Plan Lightbox Modal ---
     function openUnitPlan(url) {
         const lightbox = document.getElementById("imageLightbox");
         const image = document.getElementById("lightboxImage");
 
-        image.src = url;
-        image.alt = "Unit Plan";
-        lightbox.classList.remove("hidden");
-        lightbox.classList.add("flex");
-        document.body.classList.add("overflow-hidden");
-    }
-
-    const propertyPrice = document.getElementById("propertyPrice");
-    const downPaymentPercent = document.getElementById("downPaymentPercent");
-    const interestRate = document.getElementById("interestRate");
-    const loanTenure = document.getElementById("loanTenure");
-
-    const formatINR = value => "₹ " + Math.round(value).toLocaleString("en-IN");
-
-    function calculateEMI() {
-        const price = Number(propertyPrice.value);
-        const downPaymentPct = Number(downPaymentPercent.value);
-        
-        // Calculate down payment amount and loan principal
-        const downPaymentAmt = (price * downPaymentPct) / 100;
-        const principal = price - downPaymentAmt;
-
-        const annualRate = Number(interestRate.value);
-        const years = Number(loanTenure.value);
-        const months = years * 12;
-        const monthlyRate = annualRate / 12 / 100;
-
-        // Standard Amortization Formula
-        const emi = monthlyRate === 0
-            ? principal / months
-            : (principal * monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
-
-        const totalPayment = emi * months;
-        const totalInterest = totalPayment - principal;
-
-        // Update Input Displays
-        document.getElementById("propertyPriceValue").textContent = formatINR(price);
-        document.getElementById("downPaymentPercentValue").textContent = downPaymentPct;
-        document.getElementById("downPaymentValue").textContent = formatINR(downPaymentAmt);
-        document.getElementById("loanAmountValue").textContent = formatINR(principal);
-        document.getElementById("interestValue").textContent = annualRate.toFixed(1) + "%";
-        document.getElementById("tenureValue").textContent = years + (years === 1 ? " Year" : " Years");
-
-        // Update Output Cards
-        document.getElementById("emiAmount").textContent = formatINR(emi);
-        document.getElementById("principalAmount").textContent = formatINR(principal);
-        document.getElementById("totalInterest").textContent = formatINR(totalInterest);
-        document.getElementById("totalPayment").textContent = formatINR(totalPayment);
-    }
-
-    [propertyPrice, downPaymentPercent, interestRate, loanTenure].forEach(input => {
-        input.addEventListener("input", calculateEMI);
-    });
-
-    calculateEMI();
-
-    function setProjectNavPosition() {
-    const header = document.querySelector("header");
-    const nav = document.getElementById("projectNav");
-
-        if (!nav) return;
-
-        const headerHeight = header ? header.getBoundingClientRect().height : 0;
-        nav.style.top = `${headerHeight}px`;
-    }
-
-    setProjectNavPosition();
-    window.addEventListener("resize", setProjectNavPosition);
-    window.addEventListener("load", setProjectNavPosition);
-
-    document.querySelectorAll(".faq-question").forEach(button => {
-        button.addEventListener("click", () => {
-            const item = button.closest(".faq-item");
-            const answer = item.querySelector(".faq-answer");
-            const icon = item.querySelector(".faq-icon");
-            const isOpen = answer.classList.contains("faq-open");
-
-            document.querySelectorAll(".faq-answer").forEach(el => {
-                el.classList.remove("faq-open");
-                el.classList.replace("grid-rows-[1fr]", "grid-rows-[0fr]");
-            });
-
-            document.querySelectorAll(".faq-icon").forEach(el => {
-                el.classList.remove("rotate-180");
-            });
-
-            if (!isOpen) {
-                answer.classList.add("faq-open");
-                answer.classList.replace("grid-rows-[0fr]", "grid-rows-[1fr]");
-                icon.classList.add("rotate-180");
-            }
-        });
-    });
-
-    document.addEventListener("DOMContentLoaded", function () {
-
-        const nav = document.getElementById("projectNav");
-        const navLinks = document.querySelectorAll(".project-nav-link");
-
-        // Nav links ke corresponding sections
-        const sections = [];
-
-        navLinks.forEach(link => {
-            const id = link.getAttribute("href");
-
-            if (id && id.startsWith("#")) {
-                const section = document.querySelector(id);
-
-                if (section) {
-                    sections.push({
-                        section: section,
-                        link: link
-                    });
-                }
-            }
-        });
-
-        // Active class
-        function setActive(link) {
-
-            navLinks.forEach(navLink => {
-                navLink.classList.remove(
-                    "border-[#b89252]",
-                    "text-[#9a7139]",
-                    "font-semibold"
-                );
-
-                navLink.classList.add(
-                    "border-transparent",
-                    "text-gray-500",
-                    "font-medium"
-                );
-            });
-
-            if (link) {
-                link.classList.remove(
-                    "border-transparent",
-                    "text-gray-500",
-                    "font-medium"
-                );
-
-                link.classList.add(
-                    "border-[#b89252]",
-                    "text-[#9a7139]",
-                    "font-semibold"
-                );
-
-                // Active link ko horizontal scroll mein visible rakho
-                link.scrollIntoView({
-                    behavior: "smooth",
-                    block: "nearest",
-                    inline: "center"
-                });
-            }
+        if (lightbox && image) {
+            image.src = url;
+            image.alt = "Unit Floor Plan";
+            lightbox.classList.remove("hidden");
+            lightbox.classList.add("flex");
+            document.body.classList.add("overflow-hidden");
         }
-
-        // Scroll detection
-        const observer = new IntersectionObserver(
-            (entries) => {
-
-                entries.forEach(entry => {
-
-                    if (entry.isIntersecting) {
-
-                        const item = sections.find(
-                            item => item.section === entry.target
-                        );
-
-                        if (item) {
-                            setActive(item.link);
-                        }
-                    }
-
-                });
-
-            },
-            {
-                root: null,
-
-                // Sticky navbar ke according detection area
-                rootMargin: "-120px 0px -55% 0px",
-
-                threshold: 0
-            }
-        );
-
-        // Observe all sections
-        sections.forEach(item => {
-            observer.observe(item.section);
-        });
-
-
-        // Click par bhi immediately active
-        navLinks.forEach(link => {
-
-            link.addEventListener("click", function () {
-
-                setActive(this);
-
-            });
-
-        });
-
-    });
-
+    }
 </script>
 
 {% endblock %}

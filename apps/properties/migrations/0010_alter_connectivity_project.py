@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('properties', '0013_alter_amenities_amenity'),
+        ('properties', '0009_delete_amenities'),  # <-- YAHAN YE CHANGE KAREIN
     ]
 
     operations = [
