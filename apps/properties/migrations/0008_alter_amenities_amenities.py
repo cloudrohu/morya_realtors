@@ -20,9 +20,10 @@ class Migration(migrations.Migration):
             model_name='amenities',
             name='amenities',
             field=models.ForeignKey(
+                null=True,  # <--- ISKO ForeignKey KE ANDAR RAKHNA HAI
                 on_delete=django.db.models.deletion.CASCADE,
                 related_name='amenities',
-                to='properties_utility.amenity',
+                to='properties_utility.amenity',  # ya aapka jo model name ho
             ),
         ),
     ]
