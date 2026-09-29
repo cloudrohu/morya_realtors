@@ -116,8 +116,8 @@
 
 </section>
 
-<section class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-slate-50/60 font-sans">
-  
+<section class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto font-sans" id="featured-projects">
+
   <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6 border-b border-slate-200/80 pb-6">
     <div>
       <div class="flex items-center gap-2 text-[#a37a2c] font-bold text-xs uppercase tracking-widest mb-2">
@@ -132,107 +132,257 @@
       </p>
     </div>
 
+    <!-- Navigation -->
+    <div class="flex items-center gap-3">
+      <button type="button" id="project-prev"
+        class="w-10 h-10 rounded-full border border-[#7a5927] text-[#7a5927] hover:bg-[#7a5927] hover:text-white transition flex items-center justify-center"
+        aria-label="Previous projects">
+        <i data-lucide="chevron-left" class="w-5 h-5"></i>
+      </button>
+      <button type="button" id="project-next"
+        class="w-10 h-10 rounded-full border border-[#7a5927] text-[#7a5927] hover:bg-[#7a5927] hover:text-white transition flex items-center justify-center"
+        aria-label="Next projects">
+        <i data-lucide="chevron-right" class="w-5 h-5"></i>
+      </button>
+    </div>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-    
-    {% for rs in projects %}
-    <div class="bg-white rounded border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden w-full group">
-      
-      <div class="relative w-full h-64 bg-slate-100 overflow-hidden">
-        <span class="absolute top-0 right-0 bg-slate-900 text-white text-[10px] font-bold tracking-widest px-3 py-1 uppercase z-10">
-          {{rs.construction_status}}
-        </span>
+  <div class="overflow-hidden">
+    <div id="project-slider" class="flex gap-5 sm:gap-6 transition-transform duration-500 ease-in-out will-change-transform">
 
-        <img src="{{rs.image.url}}"  alt="{{rs.project_name}}"  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+      {% for rs in projects %}
+      <div class="project-slide flex-none w-full md:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-3rem)/3)]">
+        <div class="bg-white rounded border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden w-full h-full group">
 
-        <div class="absolute bottom-3 left-3 bg-white p-2.5 shadow-md border border-slate-100 flex flex-col items-center justify-center w-20 h-20">
-          <div class="text-emerald-700">
-            <i data-lucide="trees" class="w-6 h-6"></i>
-          </div>
-          <span class="text-[8px] font-extrabold tracking-tight text-slate-800 uppercase mt-1 text-center leading-tight">
-            {{rs.project_name}}
-          </span>
-        </div>
-      </div>
+          <!-- Image -->
+          <div class="relative w-full h-64 bg-slate-100 overflow-hidden">
+            <span class="absolute top-0 right-0 bg-slate-900 text-white text-[10px] font-bold tracking-widest px-3 py-1 uppercase z-10">
+              {{rs.construction_status}}
+            </span>
 
-      <div class="p-5 pb-5">
-        <h3 class="font-serif text-2xl text-[#8d6d39] font-normal tracking-wide">
-          {{rs.project_name}}
-        </h3>
-        <p class="text-slate-600 text-sm mt-0.5 font-normal">
-          {{rs.city.name}}, {{rs.locality.name}}
-        </p>
-        <div class="text-[#7a5927] text-lg font-bold mt-2.5 tracking-tight">
-         {{ rs.pricing }}* Onwards 
-        </div>
+            {% if rs.image %}
+            <img src="{{rs.image.url}}" alt="{{rs.project_name}}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+            {% endif %}
 
-        <div class="w-full h-px bg-slate-200 my-4"></div>
-
-        <div class="grid grid-cols-2 gap-y-4 gap-x-2 text-left">
-          <div class="flex items-start gap-2.5">
-            <div class="text-slate-400 pt-0.5"><i data-lucide="building" class="w-5 h-5 stroke-[1.5]"></i></div>
-            <div>
-              <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Project Type</span>
-              <span class="text-sm font-medium text-slate-800 mt-1 block"> {{rs.property_type.name}}</span>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-2.5">
-            <div class="text-slate-400 pt-0.5"><i data-lucide="layout-grid" class="w-5 h-5 stroke-[1.5]"></i></div>
-            <div>
-              <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Bedrooms</span>
-              <span class="text-sm font-bold text-slate-800 mt-1 block whitespace-nowrap">
-                  {{ rs.bhk_display }}
+            <div class="absolute bottom-3 left-3 bg-white p-2.5 shadow-md border border-slate-100 flex flex-col items-center justify-center w-20 h-20">
+              <div class="text-emerald-700">
+                <i data-lucide="trees" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[8px] font-extrabold tracking-tight text-slate-800 uppercase mt-1 text-center leading-tight">
+                {{rs.project_name}}
               </span>
             </div>
           </div>
 
-          <div class="flex items-start gap-2.5">
-            <div class="text-slate-400 pt-0.5"><i data-lucide="maximize" class="w-5 h-5 stroke-[1.5]"></i></div>
-            <div>
-              <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Development Size</span>
-              <span class="text-sm font-bold text-slate-800 mt-1 block">{{ rs.land_parcel }}</span>
+          <!-- Details -->
+          <div class="p-5 pb-5">
+            <h3 class="font-serif text-2xl text-[#8d6d39] font-normal tracking-wide">
+              {{rs.project_name}}
+            </h3>
+            <p class="text-slate-600 text-sm mt-0.5 font-normal">
+              {{rs.city.name}}, {{rs.locality.name}}
+            </p>
+            <div class="text-[#7a5927] text-lg font-bold mt-2.5 tracking-tight">
+              {{rs.pricing}}* Onwards
+            </div>
+
+            <div class="w-full h-px bg-slate-200 my-4"></div>
+
+            <div class="grid grid-cols-2 gap-y-4 gap-x-2 text-left">
+              <div class="flex items-start gap-2.5">
+                <div class="text-slate-400 pt-0.5">
+                  <i data-lucide="building" class="w-5 h-5 stroke-[1.5]"></i>
+                </div>
+                <div class="min-w-0">
+                  <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Project Type</span>
+                  <span class="text-sm font-medium text-slate-800 mt-1 block">
+                    {{rs.property_type.name}}
+                  </span>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-2.5">
+                <div class="text-slate-400 pt-0.5">
+                  <i data-lucide="layout-grid" class="w-5 h-5 stroke-[1.5]"></i>
+                </div>
+                <div class="min-w-0">
+                  <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Bedrooms</span>
+                  <span class="text-sm font-bold text-slate-800 mt-1 block">
+                    {{rs.bhk_display}}
+                  </span>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-2.5">
+                <div class="text-slate-400 pt-0.5">
+                  <i data-lucide="maximize" class="w-5 h-5 stroke-[1.5]"></i>
+                </div>
+                <div class="min-w-0">
+                  <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Development Size</span>
+                  <span class="text-sm font-bold text-slate-800 mt-1 block">
+                    {{rs.land_parcel}}
+                  </span>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-2.5">
+                <div class="text-slate-400 pt-0.5">
+                  <i data-lucide="grid" class="w-5 h-5 stroke-[1.5]"></i>
+                </div>
+                <div class="min-w-0">
+                  <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Total Floor</span>
+                  <span class="text-sm font-bold text-slate-800 mt-1 block">
+                    {{rs.floor}}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="flex items-start gap-2.5">
-            <div class="text-slate-400 pt-0.5"><i data-lucide="grid" class="w-5 h-5 stroke-[1.5]"></i></div>
-            <div>
-              <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-none">Total Floor</span>
-              <span class="text-sm font-bold text-slate-800 mt-1 block">{{rs.floor}}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="p-4 pt-0 mt-auto border-t border-slate-100 bg-white">
-        <div class="flex items-center gap-2 pt-3">
-
-            <a href="{{ rs.get_absolute_url }}"
-              class="flex-1 py-2.5 px-2 bg-[#7a5927] hover:bg-[#63481f] border border-[#7a5927] text-white text-xs font-semibold rounded flex items-center justify-center gap-1.5 transition">
+          <!-- Buttons -->
+          <div class="p-4 pt-0 mt-auto border-t border-slate-100 bg-white">
+            <div class="flex items-center gap-2 pt-3">
+              <a href="{{rs.get_absolute_url}}" class="flex-1 py-2.5 px-2 bg-[#7a5927] hover:bg-[#63481f] border border-[#7a5927] text-white text-xs font-semibold rounded flex items-center justify-center gap-1.5 transition">
                 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 <span>See Details</span>
-            </a>
+              </a>
 
-            <button class="flex-1 py-2.5 px-2 bg-[#faebd7] hover:bg-[#f3dcbe] border border-[#d8be98] text-[#7a5927] text-xs font-semibold rounded flex items-center justify-center gap-1.5 transition">
+              <button type="button" class="flex-1 py-2.5 px-2 bg-[#faebd7] hover:bg-[#f3dcbe] border border-[#d8be98] text-[#7a5927] text-xs font-semibold rounded flex items-center justify-center gap-1.5 transition">
                 <i data-lucide="send" class="w-3.5 h-3.5"></i>
                 <span>Enquire Now</span>
-            </button>
+              </button>
 
-            <a href="tel:+91{{settings_obj.phone}}"
-              class="w-10 h-10 bg-[#7a5927] hover:bg-[#63481f] text-white rounded flex items-center justify-center shrink-0 transition shadow-sm">
+              <a href="tel:+91{{settings_obj.phone}}"
+                 class="w-10 h-10 bg-[#7a5927] hover:bg-[#63481f] text-white rounded flex items-center justify-center shrink-0 transition shadow-sm">
                 <i data-lucide="phone" class="w-4 h-4"></i>
-            </a>
+              </a>
+            </div>
+          </div>
 
         </div>
-    </div>
+      </div>
+      {% empty %}
+      <div class="w-full text-center py-12 text-slate-500">
+        No projects available at the moment.
+      </div>
+      {% endfor %}
 
     </div>
-    {% endfor %}
-
   </div>
+
+  <div class="flex items-center justify-center gap-2 mt-8" id="project-pagination" aria-label="Project pagination"></div>
+
 </section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const slider = document.getElementById("project-slider");
+    const prev = document.getElementById("project-prev");
+    const next = document.getElementById("project-next");
+    const pagination = document.getElementById("project-pagination");
+
+    if (!slider || !prev || !next || !pagination) return;
+
+    const slides = Array.from(slider.querySelectorAll(".project-slide"));
+    if (!slides.length) {
+      prev.hidden = true;
+      next.hidden = true;
+      pagination.hidden = true;
+      return;
+    }
+
+    let currentPage = 0;
+    let visible = 1;
+    let pageCount = 1;
+    let resizeTimer;
+
+    function getVisible() {
+      if (window.innerWidth >= 1024) return 3;
+      if (window.innerWidth >= 768) return 2;
+      return 1;
+    }
+
+    function buildDots() {
+      pagination.innerHTML = "";
+
+      for (let i = 0; i < pageCount; i++) {
+        const dot = document.createElement("button");
+        dot.type = "button";
+        dot.setAttribute("aria-label", "Go to project page " + (i + 1));
+        dot.className = "h-2.5 rounded-full transition-all duration-300 " +
+          (i === currentPage
+            ? "w-8 bg-[#7a5927]"
+            : "w-2.5 bg-slate-300 hover:bg-[#b89252]");
+
+        dot.addEventListener("click", function () {
+          currentPage = i;
+          updateSlider();
+        });
+
+        pagination.appendChild(dot);
+      }
+    }
+
+    function updateSlider() {
+      const gap = parseFloat(getComputedStyle(slider).columnGap) || 0;
+      const slideWidth = slides[0].getBoundingClientRect().width;
+      const offset = currentPage * (slideWidth + gap);
+
+      slider.style.transform = `translateX(-${offset}px)`;
+
+      pagination.querySelectorAll("button").forEach((dot, i) => {
+        dot.className = "h-2.5 rounded-full transition-all duration-300 " +
+          (i === currentPage
+            ? "w-8 bg-[#7a5927]"
+            : "w-2.5 bg-slate-300 hover:bg-[#b89252]");
+        dot.setAttribute("aria-current", i === currentPage ? "page" : "false");
+      });
+
+      prev.disabled = currentPage === 0;
+      next.disabled = currentPage >= pageCount - 1;
+
+      prev.classList.toggle("opacity-40", prev.disabled);
+      next.classList.toggle("opacity-40", next.disabled);
+      prev.classList.toggle("cursor-not-allowed", prev.disabled);
+      next.classList.toggle("cursor-not-allowed", next.disabled);
+    }
+
+    function initialize() {
+      visible = getVisible();
+      pageCount = Math.max(1, Math.ceil(slides.length / visible));
+      currentPage = Math.min(currentPage, pageCount - 1);
+
+      buildDots();
+      updateSlider();
+
+      const showControls = pageCount > 1;
+      prev.hidden = !showControls;
+      next.hidden = !showControls;
+      pagination.hidden = !showControls;
+    }
+
+    prev.addEventListener("click", function () {
+      if (currentPage > 0) {
+        currentPage--;
+        updateSlider();
+      }
+    });
+
+    next.addEventListener("click", function () {
+      if (currentPage < pageCount - 1) {
+        currentPage++;
+        updateSlider();
+      }
+    });
+
+    window.addEventListener("resize", function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(initialize, 100);
+    });
+
+    initialize();
+  });
+</script>
 
 <section class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto font-sans bg-white">
   
@@ -531,8 +681,7 @@
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
       <!-- NEW LAUNCH -->
-      <a href="#"
-        class="group relative h-[380px] rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl border border-slate-200/80 transition-all duration-500 flex flex-col justify-between p-6">
+      <a href="#" class="group relative h-[380px] rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl border border-slate-200/80 transition-all duration-500 flex flex-col justify-between p-6">
 
           <img
               src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
@@ -659,51 +808,51 @@
 </section>
 
 
-<!-- COMPACT WHY CHOOSE US / TRUST SECTION -->
+<!-- ===================== COMPACT WHY CHOOSE US / TRUST SECTION ===================== -->
 {% if why_choose %}
-<section class="py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto font-sans">
-  
-  <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 rounded-2xl p-5 sm:p-7 border border-slate-800 shadow-xl text-white">
+  <section class="py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto font-sans">
     
-    <!-- Ultra-Tight Header -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/80 pb-4 mb-5">
-      <div>
-        <span class="text-[10px] font-extrabold uppercase tracking-widest text-[#d8be98] block">Trusted Advisory</span>
-        <h3 class="text-xl sm:text-2xl font-serif text-white tracking-tight mt-0.5">Why Buy With Us?</h3>
-      </div>
-      <span class="text-xs text-slate-400">Direct Developer Pricing • 100% Free Consultation</span>
-    </div>
-
-    <!-- 4-Pillar Grid -->
-
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+    <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 rounded-2xl p-5 sm:p-7 border border-slate-800 shadow-xl text-white">
       
-      <!-- Feature 1: Zero Brokerage -->
-        {% for rs in why_choose %}
-            <div class="bg-white/[0.03] hover:bg-white/[0.06] border border-white/5 hover:border-[#d8be98]/40 rounded-xl p-3.5 transition group">
+      <!-- Ultra-Tight Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/80 pb-4 mb-5">
+        <div>
+          <span class="text-[10px] font-extrabold uppercase tracking-widest text-[#d8be98] block">Trusted Advisory</span>
+          <h3 class="text-xl sm:text-2xl font-serif text-white tracking-tight mt-0.5">Why Buy With Us?</h3>
+        </div>
+        <span class="text-xs text-slate-400">Direct Developer Pricing • 100% Free Consultation</span>
+      </div>
 
-                <div class="w-8 h-8 rounded-lg bg-[#faebd7]/10 text-[#d8be98] flex items-center justify-center group-hover:scale-105 transition-transform">
-                    <i class="{{ rs.icons }} text-sm"></i>
-                </div>
+      <!-- 4-Pillar Grid -->
 
-                <h4 class="text-xs sm:text-sm font-bold text-white mt-2.5">
-                    {{ rs.title }}
-                </h4>
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        
+        <!-- Feature 1: Zero Brokerage -->
+          {% for rs in why_choose %}
+              <div class="bg-white/[0.03] hover:bg-white/[0.06] border border-white/5 hover:border-[#d8be98]/40 rounded-xl p-3.5 transition group">
 
-                {% if rs.subtitle %}
-                    <p class="text-[11px] text-slate-400 mt-0.5 leading-snug">
-                        {{ rs.subtitle }}
-                    </p>
-                {% endif %}
+                  <div class="w-8 h-8 rounded-lg bg-[#faebd7]/10 text-[#d8be98] flex items-center justify-center group-hover:scale-105 transition-transform">
+                      <i class="{{ rs.icons }} text-sm"></i>
+                  </div>
 
-            </div>
-        {% endfor %}
-     
+                  <h4 class="text-xs sm:text-sm font-bold text-white mt-2.5">
+                      {{ rs.title }}
+                  </h4>
+
+                  {% if rs.subtitle %}
+                      <p class="text-[11px] text-slate-400 mt-0.5 leading-snug">
+                          {{ rs.subtitle }}
+                      </p>
+                  {% endif %}
+
+              </div>
+          {% endfor %}
+      
+      </div>
+
     </div>
 
-  </div>
-
-</section>
+  </section>
 {% else %}
   <section class="relative overflow-hidden bg-slate-950 py-16 lg:py-20">
 
