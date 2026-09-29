@@ -885,6 +885,8 @@ class Project(MPTTModel, BaseModel):
 
         return f"₹ {fmt(price_min)} – {fmt(price_max)}"
 
+
+
 class BookingOffer(BaseModel):
     Project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="BookingOffer")
     title = models.CharField(max_length=255)

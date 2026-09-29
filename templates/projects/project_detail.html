@@ -1066,19 +1066,24 @@
                     </div>
 
                     <!-- Quick Site Visit Form -->
-                    <form id="sidebarForm" class="mt-5 space-y-3">
+                    <form id="sidebarForm" class="mt-5 space-y-3" method="POST" action="{% url "submit_enquiry" id=project.id %}">
+                        {% csrf_token %}
                         <h4 class="text-xs font-bold uppercase tracking-wider text-[#2c221e]">Schedule Free Site Visit</h4>
                         
                         <div>
-                            <input type="text" placeholder="Full Name *" required class="w-full rounded-xl border border-[#e5e0d6] bg-[#f8f6f1] px-3.5 py-2.5 text-xs text-[#2c221e] focus:border-[#b89252] focus:bg-white focus:outline-none">
+                            <input name="name" type="text" placeholder="Full Name *" required class="w-full rounded-xl border border-[#e5e0d6] bg-[#f8f6f1] px-3.5 py-2.5 text-xs text-[#2c221e] focus:border-[#b89252] focus:bg-white focus:outline-none">
                         </div>
 
                         <div>
-                            <input type="tel" placeholder="Phone Number *" required class="w-full rounded-xl border border-[#e5e0d6] bg-[#f8f6f1] px-3.5 py-2.5 text-xs text-[#2c221e] focus:border-[#b89252] focus:bg-white focus:outline-none">
+                            <input name="phone" type="tel" placeholder="Phone Number *" required class="w-full rounded-xl border border-[#e5e0d6] bg-[#f8f6f1] px-3.5 py-2.5 text-xs text-[#2c221e] focus:border-[#b89252] focus:bg-white focus:outline-none">
                         </div>
 
                         <div>
-                            <input type="email" placeholder="Email Address (Optional)" class="w-full rounded-xl border border-[#e5e0d6] bg-[#f8f6f1] px-3.5 py-2.5 text-xs text-[#2c221e] focus:border-[#b89252] focus:bg-white focus:outline-none">
+                            <input name="email" type="email" placeholder="Email Address" required class="w-full rounded-xl border border-[#e5e0d6] bg-[#f8f6f1] px-3.5 py-2.5 text-xs text-[#2c221e] focus:border-[#b89252] focus:bg-white focus:outline-none">
+                        </div>
+
+                        <div>
+                            <textarea name="message" required placeholder="Hi I'm Intrested In {{project.project_name}}" class="w-full rounded-xl border border-[#e5e0d6] bg-[#f8f6f1] px-3.5 py-2.5 text-xs text-[#2c221e] focus:border-[#b89252] focus:bg-white focus:outline-none"></textarea>
                         </div>
 
                         <button type="submit" class="w-full rounded-xl bg-[#b89252] py-3 text-xs font-bold uppercase tracking-wider text-white shadow-xs transition-all duration-300 hover:bg-[#8c6b32]">

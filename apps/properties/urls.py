@@ -10,7 +10,7 @@ urlpatterns = [
 
     path('search/',views.search_projects,name='search_projects'),
 
-    path('submit-enquiry/<int:id>/',views.submit_enquiry,name='submit_enquiry'),
+    path('submit-enquiry/<str:id>/',views.submit_enquiry,name='submit_enquiry'),
 
     path('thank-you/',views.thank_you,name='thank_you'),
 

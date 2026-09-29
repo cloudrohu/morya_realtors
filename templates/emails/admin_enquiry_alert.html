@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; color: #333; line-height: 1.6; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e5e0d6; border-radius: 8px; }
+        .header { background-color: #2c221e; color: #ffffff; padding: 15px; text-align: center; border-radius: 6px 6px 0 0; }
+        .table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .table th, .table td { padding: 12px; border: 1px solid #e5e0d6; text-align: left; }
+        .table th { background-color: #f8f6f1; color: #2c221e; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>New Property Lead!</h2>
+        </div>
+        <p>Hello Team,</p>
+        <p>You have received a new site visit/enquiry request. Here are the details:</p>
+        
+        <table class="table">
+            <tr><th>Project Interested</th><td><strong>{{ project_name }}</strong></td></tr>
+            <tr><th>Client Name</th><td>{{ name }}</td></tr>
+            <tr><th>Phone Number</th><td>{{ phone }}</td></tr>
+            <tr><th>Email Address</th><td>{{ email }}</td></tr>
+            <tr><th>Message</th><td>{{ message }}</td></tr>
+        </table>
+        
+        <p style="margin-top: 20px; font-size: 12px; color: #777;">This is an automated system alert from your website.</p>
+    </div>
+</body>
+</html>

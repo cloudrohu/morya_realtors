@@ -3,6 +3,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 from django.db.models import Q, Min, Max
 from django.contrib import messages
+from django.views.decorators.http import require_POST
+from django.core.mail import send_mail
+from django.conf import settings
+from django.core.mail import BadHeaderError
+from smtplib import SMTPException
 
 from .models import (
     Project,
@@ -373,41 +378,86 @@ def project_details(request, id, slug):
     return render(request,"projects/project_detail.html",context)
 
 
+@require_POST
 def submit_enquiry(request, id):
+    project = get_object_or_404(Project, id=id)
 
-    project = get_object_or_404(
-        Project,
-        id=id
+    name = request.POST.get("name", "").strip()
+    email = request.POST.get("email", "").strip()
+    phone = request.POST.get("phone", "").strip()
+    message = request.POST.get("message", "").strip()
+
+    if not name or not phone:
+        messages.error(
+            request,
+            "Name and phone number are required."
+        )
+        return redirect(
+            "project_details",
+            id=project.id,
+            slug=project.slug,
+        )
+
+    enquiry = Enquiry.objects.create(
+        project=project,
+        name=name,
+        email=email,
+        phone=phone,
+        message=message,
     )
 
-    if request.method == "POST":
+    subject = f"New Enquiry - {project.project_name}"
 
-        Enquiry.objects.create(
-            project=project,
-            name=request.POST.get("name"),
-            email=request.POST.get("email"),
-            phone=request.POST.get("phone"),
-            message=request.POST.get("message"),
+    email_message = f"""
+New Project Enquiry
+
+Project: {project.project_name}
+Project ID: {project.id}
+
+Customer Name: {name}
+Customer Email: {email}
+Phone Number: {phone}
+
+Message:
+{message}
+
+Enquiry ID: {enquiry.id}
+"""
+
+    try:
+        send_mail(
+            subject=subject,
+            message=email_message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[settings.EMAIL_HOST_USER],
+            fail_silently=False,
         )
 
         messages.success(
             request,
-            "Enquiry Submitted Successfully"
+            "Enquiry submitted successfully!"
         )
 
-        return redirect("thank_you")
+    except (SMTPException, BadHeaderError, OSError):
+        messages.warning(
+            request,
+            "Enquiry saved, but email notification could not be sent."
+        )
 
-    return redirect(
-        "project_details",
-        id=project.id,
-        slug=project.slug,
-    )
+    return redirect("thank_you")
 
 
 def thank_you(request):
+
+    settings_obj = get_settings()
+
+    context = { 
+        "settings_obj": settings_obj,
+    }
+
     return render(
         request,
-        "projects/thank_you.html"
+        "home/thank_you.html",context
     )
 
 def developer_info(request):
