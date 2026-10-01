@@ -693,18 +693,15 @@ class Project(MPTTModel, BaseModel):
     
     calling_status = models.CharField(max_length=25,choices=CALLING_STATUS_CHOICES,default="New",null=True,blank=True,)
 
-    # --- Project Core Fields ---
     occupancy_certificate = models.CharField(max_length=25, choices=OCCUPANCY_CERTIFICATE_CHOICES, null=True, blank=True)
     commencement_certificate = models.CharField(max_length=25, choices=COMMENCEMENT_CERTIFICATE_CHOICES, null=True, blank=True)
     
     construction_status = models.CharField(max_length=25, choices=CONSTRUCTION_STATUS_CHOICES)
     property_type = models.ForeignKey(PropertyType, on_delete=models.PROTECT, related_name="projects")
 
-    # MPTT Hierarchy
     parent = TreeForeignKey('self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)
     project_name = models.CharField(max_length=250)
     
-    # Foreign Keys
     developer = models.ForeignKey(Developer, on_delete=models.PROTECT, related_name="projects")
     architect = models.ForeignKey(Architects, on_delete=models.PROTECT, related_name="projects", blank=True, null=True)
     engineer = models.ForeignKey(Engineer, on_delete=models.PROTECT, related_name="projects", blank=True, null=True)

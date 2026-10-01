@@ -163,6 +163,7 @@ class LocationAdmin(ImportExportModelAdmin, DraggableMPTTAdmin):
         ("Basic Information", {
             "fields": (
                 "name",
+                "image",
                 "code",
                 "slug",
                 "description",
