@@ -15,25 +15,14 @@ class LocationType(models.TextChoices):
 
 
 class Location(MPTTModel, MasterBaseModel):
-    parent = TreeForeignKey(
-        "self",
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-        related_name="children",
-        verbose_name="Parent Location",
-    )
+    parent = TreeForeignKey("self",on_delete=models.CASCADE,null=True,blank=True,related_name="children",verbose_name="Parent Location",)
 
-    location_type = models.CharField(
-        max_length=30,
-        choices=LocationType.choices,
-        db_index=True,
-    )
+    location_type = models.CharField(max_length=30,choices=LocationType.choices,db_index=True,)
 
-    is_top_city = models.BooleanField(
-        default=False,
-        help_text="Mark important cities for quick selection."
-    )
+    image = models.ImageField(upload_to="localities/",null=True,blank=True,)
+
+    is_top_city = models.BooleanField(default=False,help_text="Mark important cities for quick selection.")
+
 
     class MPTTMeta:
         order_insertion_by = ["name"]
@@ -42,6 +31,8 @@ class Location(MPTTModel, MasterBaseModel):
         ordering = ["tree_id", "lft"]
         verbose_name = "Location"
         verbose_name_plural = "Locations"
+
+
 
     def clean(self):
 
@@ -80,6 +71,7 @@ class Location(MPTTModel, MasterBaseModel):
             node.name
             for node in self.get_ancestors(include_self=True)
         )
+
 
 
 class LocationAdminForm(forms.ModelForm):
