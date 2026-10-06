@@ -21,10 +21,6 @@ from .models.website import (
 )
 
 
-# ============================================================
-# COMMON INLINE
-# ============================================================
-
 class BaseSettingInline(admin.StackedInline):
     """
     Common inline configuration for all website sections.
@@ -36,10 +32,6 @@ class BaseSettingInline(admin.StackedInline):
     can_delete = True
     classes = ()
 
-
-# ============================================================
-# SLIDER INLINE
-# ============================================================
 
 class SliderInline(BaseSettingInline):
     model = Slider
@@ -63,7 +55,7 @@ class SliderInline(BaseSettingInline):
         "image_preview",
     )
 
-    extra = 1
+    extra = 0
 
     def image_preview(self, obj):
         if obj and obj.image:
@@ -77,10 +69,6 @@ class SliderInline(BaseSettingInline):
 
     image_preview.short_description = "Preview"
 
-
-# ============================================================
-# ABOUT INLINE
-# ============================================================
 
 class AboutInline(BaseSettingInline):
     model = About
@@ -112,7 +100,7 @@ class AboutInline(BaseSettingInline):
         "image_preview",
     )
 
-    extra = 1
+    extra = 0
 
     def image_preview(self, obj):
         if obj and obj.image:
@@ -136,11 +124,7 @@ class MilestoneInline(BaseSettingInline):
         "is_active",
     )
 
-    extra = 1
-
-# ============================================================
-# CONTACT PAGE INLINE
-# ============================================================
+    extra = 0
 
 class ContactPageInline(BaseSettingInline):
     model = Contact_Page
@@ -155,12 +139,8 @@ class ContactPageInline(BaseSettingInline):
         "is_active",
     )
 
-    extra = 1
+    extra = 0
 
-
-# ============================================================
-# OUR TEAM INLINE
-# ============================================================
 
 class OurTeamInline(BaseSettingInline):
     model = Our_Team
@@ -178,7 +158,7 @@ class OurTeamInline(BaseSettingInline):
         "image_preview",
     )
 
-    extra = 1
+    extra = 0
 
     def image_preview(self, obj):
         if obj and obj.image:
@@ -192,10 +172,6 @@ class OurTeamInline(BaseSettingInline):
 
     image_preview.short_description = "Preview"
 
-
-# ============================================================
-# TESTIMONIAL INLINE
-# ============================================================
 
 class TestimonialInline(BaseSettingInline):
     model = Testimonial
@@ -214,7 +190,7 @@ class TestimonialInline(BaseSettingInline):
         "image_preview",
     )
 
-    extra = 1
+    extra = 0
 
     def image_preview(self, obj):
         if obj and obj.image:
@@ -229,10 +205,6 @@ class TestimonialInline(BaseSettingInline):
     image_preview.short_description = "Preview"
 
 
-# ============================================================
-# WHY CHOOSE INLINE
-# ============================================================
-
 class WhyChooseInline(BaseSettingInline):
     model = Why_Choose
 
@@ -244,12 +216,8 @@ class WhyChooseInline(BaseSettingInline):
         "is_active",
     )
 
-    extra = 1
+    extra = 0
 
-
-# ============================================================
-# FAQ INLINE
-# ============================================================
 
 class FAQInline(BaseSettingInline):
     model = FAQ
@@ -260,12 +228,7 @@ class FAQInline(BaseSettingInline):
         "is_active",
     )
 
-    extra = 1
-
-
-# ============================================================
-# IMPACT METRIC INLINE
-# ============================================================
+    extra = 0
 
 class ImpactMetricInline(BaseSettingInline):
     model = ImpactMetric
@@ -278,12 +241,8 @@ class ImpactMetricInline(BaseSettingInline):
         "is_active",
     )
 
-    extra = 1
+    extra = 0
 
-
-# ============================================================
-# GALLERY INLINE
-# ============================================================
 
 class GalleryInline(BaseSettingInline):
     model = Gallery
@@ -303,7 +262,7 @@ class GalleryInline(BaseSettingInline):
         "image_preview",
     )
 
-    extra = 1
+    extra = 0
 
     def image_preview(self, obj):
         if obj and obj.image:
@@ -317,10 +276,6 @@ class GalleryInline(BaseSettingInline):
 
     image_preview.short_description = "Preview"
 
-
-# ============================================================
-# ENQUIRY INLINE
-# ============================================================
 
 class EnquiryInline(BaseSettingInline):
     model = Enquiry
@@ -338,12 +293,8 @@ class EnquiryInline(BaseSettingInline):
         "created_at",
     )
 
-    extra = 1
+    extra = 0
 
-
-# ============================================================
-# SETTING ADMIN
-# ============================================================
 
 @admin.register(Setting)
 class SettingAdmin(admin.ModelAdmin):
@@ -379,10 +330,6 @@ class SettingAdmin(admin.ModelAdmin):
 
     fieldsets = (
 
-        # ====================================================
-        # WEBSITE INFORMATION
-        # ====================================================
-
         (
             "Website Information",
             {
@@ -398,9 +345,6 @@ class SettingAdmin(admin.ModelAdmin):
             },
         ),
 
-        # ====================================================
-        # THEME COLORS
-        # ====================================================
 
         (
             "Theme Colors",
@@ -413,10 +357,17 @@ class SettingAdmin(admin.ModelAdmin):
                 )
             },
         ),
-
-        # ====================================================
-        # RERA
-        # ====================================================
+        
+        (
+            "Construction Status",
+            {
+                "fields": (
+                    "new_launch",
+                    "under_construction",
+                    "ready_to_move_in",
+                )
+            },
+        ),
 
         (
             "RERA Information",
@@ -428,9 +379,6 @@ class SettingAdmin(admin.ModelAdmin):
             },
         ),
 
-        # ====================================================
-        # CONTACT
-        # ====================================================
 
         (
             "Contact Information",
@@ -445,10 +393,6 @@ class SettingAdmin(admin.ModelAdmin):
             },
         ),
 
-        # ====================================================
-        # WORKING HOURS
-        # ====================================================
-
         (
             "Working Hours",
             {
@@ -459,9 +403,6 @@ class SettingAdmin(admin.ModelAdmin):
             },
         ),
 
-        # ====================================================
-        # GOOGLE / SMTP
-        # ====================================================
 
         (
             "Google & SMTP",
@@ -476,10 +417,6 @@ class SettingAdmin(admin.ModelAdmin):
             },
         ),
 
-        # ====================================================
-        # SOCIAL MEDIA
-        # ====================================================
-
         (
             "Social Media",
             {
@@ -492,10 +429,6 @@ class SettingAdmin(admin.ModelAdmin):
             },
         ),
 
-        # ====================================================
-        # SEO
-        # ====================================================
-
         (
             "SEO",
             {
@@ -507,10 +440,6 @@ class SettingAdmin(admin.ModelAdmin):
             },
         ),
 
-        # ====================================================
-        # FOOTER
-        # ====================================================
-
         (
             "Footer",
             {
@@ -520,10 +449,6 @@ class SettingAdmin(admin.ModelAdmin):
                 )
             },
         ),
-
-        # ====================================================
-        # LEGAL
-        # ====================================================
 
         (
             "Legal Pages",
@@ -536,10 +461,6 @@ class SettingAdmin(admin.ModelAdmin):
                 )
             },
         ),
-
-        # ====================================================
-        # STATUS
-        # ====================================================
 
         (
             "Status",
@@ -554,9 +475,6 @@ class SettingAdmin(admin.ModelAdmin):
         ),
     )
 
-    # ========================================================
-    # ALL WEBSITE SECTIONS INLINE
-    # ========================================================
 
     inlines = [
         SliderInline,
@@ -579,10 +497,6 @@ class SettingAdmin(admin.ModelAdmin):
         js = ('django_ckeditor_5/dist/bundle.js',)
 
 
-    # ========================================================
-    # LOGO PREVIEW
-    # ========================================================
-
     def logo_preview(self, obj):
         if obj and obj.logo:
             return format_html(
@@ -594,9 +508,6 @@ class SettingAdmin(admin.ModelAdmin):
         return "No Logo"
 
     logo_preview.short_description = "Logo"
-
-
-
 
 @admin.register(PropertyEnquiry)
 class PropertyEnquiryAdmin(admin.ModelAdmin):

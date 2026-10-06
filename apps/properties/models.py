@@ -307,6 +307,7 @@ class Developer(BaseModel):
     def refresh_calling_status(self):
         refresh_calling_status(self)
 
+
 class Architects(BaseModel):
 
     CALLING_STATUS_CHOICES = [
@@ -954,6 +955,7 @@ class Configuration(BaseModel):
     class Meta:
         # Configuration ke instances ko Project aur BHK type ke hisaab se arrange karein
         ordering = ['bhk_type']
+
 
 class Amenities(BaseModel):
     Project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="amenities")

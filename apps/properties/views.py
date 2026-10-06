@@ -143,136 +143,489 @@ def get_bhk_choices():
         for choice in Project.BHK_CHOICES
     ]
 
+def get_related_text_field(model):
+    """
+    Find the most likely text field used as the display/name field
+    on a related model.
 
-def search_suggestions(request):
+    Supports models using:
+    - name
+    - title
+    - label
+    """
 
-    q = request.GET.get("q", "").strip()
+    preferred_fields = [
+        "name",
+        "title",
+        "label",
+    ]
 
-    results = []
+    model_fields = {
+        field.name: field
+        for field in model._meta.get_fields()
+        if getattr(field, "concrete", False)
+    }
 
-    if q:
+    for field_name in preferred_fields:
+        field = model_fields.get(field_name)
 
-        # ================= PROJECTS =================
+        if field and hasattr(field, "get_internal_type"):
+            internal_type = field.get_internal_type()
 
-        projects = Project.objects.filter(
-            project_name__icontains=q
-        )[:5]
+            if internal_type in [
+                "CharField",
+                "TextField",
+            ]:
+                return field_name
 
-        for p in projects:
+    return None
 
-            results.append({
-                "name": p.project_name,
-                "type": "Project",
-            })
-
-        # ================= LOCATIONS =================
-
-        locations = Location.objects.filter(
-            name__icontains=q,
-            location_type__in=[
-                LocationType.LOCALITY_AREA,
-                LocationType.SUBLOCALITY_AREA,
-            ],
-        )[:5]
-
-        for location in locations:
-
-            results.append({
-                "name": location.name,
-                "type": "Locality",
-            })
-
-    return JsonResponse(
-        results,
-        safe=False
-    )
 
 
 def search_projects(request):
 
     settings_obj = get_settings()
 
-    location = request.GET.get("q", "").strip()
+    # =========================================================
+    # GET PARAMETERS
+    # =========================================================
+
+    location = request.GET.get("location", "").strip()
+    property_type = request.GET.get("property_type", "").strip()
     city = request.GET.get("city", "").strip()
-    amenities = request.GET.get("amenities")
-    status = request.GET.get("construction_status")
-    bhk = request.GET.get("bhk")
-    developer_slug = request.GET.get("developer") 
+    amenities = request.GET.get("amenities", "").strip()
+    status = request.GET.get("construction_status", "").strip()
+    bhk = request.GET.get("bhk", "").strip()
+    developer_slug = request.GET.get("developer", "").strip()
     locality_ids = request.GET.getlist("locality")
-    projects = Project.objects.filter(is_active=True)
 
 
-    # 🔍 Single Clean Search Block
+    # =========================================================
+    # BASE QUERY
+    # =========================================================
+
+    projects = (
+        Project.objects
+        .filter(is_active=True)
+        .select_related(
+            "city",
+            "locality",
+            "developer",
+            "property_type",
+        )
+        .prefetch_related("configurations")
+    )
+
+
+    # =========================================================
+    # LOCATION / PROJECT / DEVELOPER SEARCH
+    # =========================================================
+
     if location:
-        search_term = location.split(",")[0].strip()
 
-        projects = projects.filter(
-            Q(project_name__icontains=search_term) |
-            Q(locality__title__icontains=search_term) |
-            Q(city__name__icontains=search_term) |
-            Q(developer__title__icontains=search_term)
+        search_term = location.strip()
+
+        # -----------------------------------------------------
+        # Find matching locations
+        # -----------------------------------------------------
+
+        matching_locations = (
+            Location.objects
+            .filter(
+                name__icontains=search_term
+            )
         )
 
-    # 🌆 City
-    if city:
-        projects = projects.filter(city__name__iexact=city)
- 
+        location_ids = set()
 
-    # 📍 Locality (MPTT)
+        for loc in matching_locations:
+
+            # Current location
+            location_ids.add(loc.id)
+
+            # All child locations
+            location_ids.update(
+                loc.get_descendants(
+                    include_self=False
+                ).values_list(
+                    "id",
+                    flat=True
+                )
+            )
+
+
+        # -----------------------------------------------------
+        # Search projects
+        #
+        # Developer field uses Developer.title
+        # -----------------------------------------------------
+
+        projects = projects.filter(
+
+            Q(
+                project_name__icontains=search_term
+            )
+
+            |
+
+            Q(
+                developer__title__icontains=search_term
+            )
+
+            |
+
+            Q(
+                locality_id__in=location_ids
+            )
+
+            |
+
+            Q(
+                city_id__in=location_ids
+            )
+
+            |
+
+            Q(
+                address__icontains=search_term
+            )
+
+        ).distinct()
+
+
+    # =========================================================
+    # PROPERTY TYPE
+    # =========================================================
+    #
+    # IMPORTANT:
+    #
+    # Residential
+    #     └── Residential Apartment
+    #
+    # Commercial
+    #     └── Commercial Multiplex
+    #
+    # Therefore we search parent + descendants.
+    # =========================================================
+
+    if property_type:
+
+        PropertyTypeModel = (
+            Project
+            ._meta
+            .get_field("property_type")
+            .remote_field
+            .model
+        )
+
+
+        # -----------------------------------------------------
+        # BUY
+        # Residential + all residential children
+        # -----------------------------------------------------
+
+        if property_type == "Buy":
+
+            parent_type = (
+                PropertyTypeModel.objects
+                .filter(
+                    name__iexact="Residential"
+                )
+                .first()
+            )
+
+            if parent_type:
+
+                property_type_ids = (
+                    parent_type
+                    .get_descendants(
+                        include_self=True
+                    )
+                    .values_list(
+                        "id",
+                        flat=True
+                    )
+                )
+
+                projects = projects.filter(
+                    property_type_id__in=property_type_ids
+                )
+
+
+        # -----------------------------------------------------
+        # RENT
+        # Residential + all residential children
+        # -----------------------------------------------------
+
+        elif property_type == "Rent":
+
+            parent_type = (
+                PropertyTypeModel.objects
+                .filter(
+                    name__iexact="Residential"
+                )
+                .first()
+            )
+
+            if parent_type:
+
+                property_type_ids = (
+                    parent_type
+                    .get_descendants(
+                        include_self=True
+                    )
+                    .values_list(
+                        "id",
+                        flat=True
+                    )
+                )
+
+                projects = projects.filter(
+                    property_type_id__in=property_type_ids
+                )
+
+
+        # -----------------------------------------------------
+        # COMMERCIAL
+        # Commercial + all commercial children
+        # -----------------------------------------------------
+
+        elif property_type == "Commercial":
+
+            parent_type = (
+                PropertyTypeModel.objects
+                .filter(
+                    name__iexact="Commercial"
+                )
+                .first()
+            )
+
+            if parent_type:
+
+                property_type_ids = (
+                    parent_type
+                    .get_descendants(
+                        include_self=True
+                    )
+                    .values_list(
+                        "id",
+                        flat=True
+                    )
+                )
+
+                projects = projects.filter(
+                    property_type_id__in=property_type_ids
+                )
+
+
+        # -----------------------------------------------------
+        # PLOTS
+        # -----------------------------------------------------
+
+        elif property_type == "Plots":
+
+            plot_type = (
+                PropertyTypeModel.objects
+                .filter(
+                    name__iexact="Plot"
+                )
+                .first()
+            )
+
+            if plot_type:
+
+                property_type_ids = (
+                    plot_type
+                    .get_descendants(
+                        include_self=True
+                    )
+                    .values_list(
+                        "id",
+                        flat=True
+                    )
+                )
+
+                projects = projects.filter(
+                    property_type_id__in=property_type_ids
+                )
+
+
+    # =========================================================
+    # CITY FILTER
+    # =========================================================
+
+    if city:
+
+        projects = projects.filter(
+            city__name__iexact=city
+        )
+
+
+    # =========================================================
+    # LOCALITY FILTER
+    # =========================================================
+
     if locality_ids:
-        selected_localities = Locality.objects.filter(id__in=locality_ids)
-        all_localities = Locality.objects.none()
-        for loc in selected_localities:
-            all_localities |= loc.get_descendants(include_self=True)
-        projects = projects.filter(locality__in=all_localities).distinct()
+
+        selected_localities = (
+            Location.objects
+            .filter(
+                id__in=locality_ids,
+                location_type=LocationType.LOCALITY_AREA,
+            )
+        )
+
+        all_localities = Location.objects.none()
+
+        for locality in selected_localities:
+
+            all_localities |= (
+                locality
+                .get_descendants(
+                    include_self=True
+                )
+            )
+
+        projects = projects.filter(
+            locality__in=all_localities
+        ).distinct()
+
+
+    # =========================================================
+    # DEVELOPER FILTER
+    # =========================================================
 
     if developer_slug:
-        projects = projects.filter(developer__slug=developer_slug)
+
+        projects = projects.filter(
+            developer__slug=developer_slug
+        )
+
+
+    # =========================================================
+    # AMENITIES FILTER
+    # =========================================================
 
     if amenities:
-        amenity_list = [a.strip() for a in amenities.split(",") if a.strip()]
+
+        amenity_list = [
+            item.strip()
+            for item in amenities.split(",")
+            if item.strip()
+        ]
+
         if amenity_list:
+
             projects = projects.filter(
                 project_amenities__amenities__title__in=amenity_list
             ).distinct()
 
+
+    # =========================================================
+    # CONSTRUCTION STATUS
+    # =========================================================
+
     if status:
-        status_list = [s.strip() for s in status.split(",") if s.strip()]
+
+        status_list = [
+            item.strip()
+            for item in status.split(",")
+            if item.strip()
+        ]
+
         if status_list:
-            projects = projects.filter(construction_status__in=status_list).distinct()
+
+            projects = projects.filter(
+                construction_status__in=status_list
+            ).distinct()
+
+
+    # =========================================================
+    # BHK FILTER
+    # =========================================================
 
     selected_bhk_list = []
+
     if bhk:
-        selected_bhk_list = [b.strip() for b in bhk.split(",") if b.strip()]
+
+        selected_bhk_list = [
+            item.strip()
+            for item in bhk.split(",")
+            if item.strip()
+        ]
+
         if selected_bhk_list:
+
             bhk_query = Q()
-            for b in selected_bhk_list:
-                bhk_query |= Q(bhk_type__icontains=b) | Q(configurations__bhk_type__icontains=b)
-            projects = projects.filter(bhk_query).distinct()
 
-    # ⚡ Optimize + Pagination
-        projects = projects.select_related(
-            "city",
-            "locality",
-            "developer"
-        ).order_by("-create_at")
+            for selected in selected_bhk_list:
 
-    paginator = Paginator(projects, 9)
-    projects_page = paginator.get_page(request.GET.get("page"))
+                bhk_query |= (
+                    Q(
+                        bhk_type__icontains=selected
+                    )
 
+                    |
+
+                    Q(
+                        configurations__bhk_type__icontains=selected
+                    )
+                )
+
+            projects = projects.filter(
+                bhk_query
+            ).distinct()
+
+
+    # =========================================================
+    # ORDERING
+    # =========================================================
+
+    projects = projects.order_by(
+        "-created_at"
+    )
+
+
+    # =========================================================
+    # PAGINATION
+    # =========================================================
+
+    paginator = Paginator(
+        projects,
+        9
+    )
+
+    projects_page = paginator.get_page(
+        request.GET.get("page")
+    )
+
+
+    # =========================================================
+    # CONTEXT
+    # =========================================================
 
     context = {
+
         "projects": projects_page,
 
         "amenities": ProjectAmenities.objects.all(),
 
         "construction_status": (
             Project.objects
-            .exclude(construction_status__isnull=True)
-            .exclude(construction_status="")
-            .values_list("construction_status", flat=True)
+            .exclude(
+                construction_status__isnull=True
+            )
+            .exclude(
+                construction_status=""
+            )
+            .values_list(
+                "construction_status",
+                flat=True
+            )
             .distinct()
-            .order_by("construction_status")
+            .order_by(
+                "construction_status"
+            )
         ),
 
         "bhk_choices": get_bhk_choices(),
@@ -283,20 +636,224 @@ def search_projects(request):
 
         "selected_bhk": bhk,
 
-        "settings_obj": get_settings(),
-
         "selected_bhk_list": selected_bhk_list,
 
-        "available_localities": Location.objects.filter(
-            location_type=LocationType.LOCALITY_AREA
-        ).order_by("name"),
+        "selected_property_type": property_type,
+
+        "selected_location": location,
+
+        "selected_city": city,
+
+        "settings_obj": settings_obj,
+
+        "available_localities": (
+            Location.objects
+            .filter(
+                location_type=LocationType.LOCALITY_AREA
+            )
+            .order_by(
+                "name"
+            )
+        ),
 
         "selected_locality_ids": [
-            str(x) for x in locality_ids
+            str(x)
+            for x in locality_ids
         ],
     }
 
-    return render(request, "home/residential_list.html", context)
+
+    # =========================================================
+    # RENDER
+    # =========================================================
+
+    return render(
+        request,
+        "home/residential_list.html",
+        context
+    )
+
+    
+def search_suggestions(request):
+
+    q = request.GET.get(
+        "q",
+        ""
+    ).strip()
+
+
+    results = []
+
+
+    if not q:
+
+        return JsonResponse(
+            [],
+            safe=False
+        )
+
+
+    # =========================================================
+    # PROJECTS
+    # =========================================================
+
+    projects = (
+        Project.objects
+        .filter(
+            is_active=True,
+            project_name__icontains=q
+        )
+        .select_related(
+            "city",
+            "locality",
+            "developer",
+        )
+        .order_by(
+            "project_name"
+        )[:5]
+    )
+
+
+    for project in projects:
+
+        results.append({
+
+            "name":
+                project.project_name,
+
+            "type":
+                "Project",
+
+            "city":
+                (
+                    project.city.name
+                    if project.city
+                    else ""
+                ),
+
+            "locality":
+                (
+                    project.locality.name
+                    if project.locality
+                    else ""
+                ),
+
+            "developer":
+                (
+                    project.developer.title
+                    if project.developer
+                    else ""
+                ),
+        })
+
+
+    # =========================================================
+    # DEVELOPERS
+    # =========================================================
+
+    developer_projects = (
+        Project.objects
+        .filter(
+            is_active=True,
+            developer__title__icontains=q
+        )
+        .select_related(
+            "developer"
+        )
+        .order_by(
+            "developer__title"
+        )
+    )
+
+
+    developer_ids = set()
+
+
+    for project in developer_projects:
+
+        if not project.developer:
+            continue
+
+        developer_id = project.developer.id
+
+        if developer_id in developer_ids:
+            continue
+
+        developer_ids.add(
+            developer_id
+        )
+
+        results.append({
+
+            "name":
+                project.developer.title,
+
+            "type":
+                "Developer",
+
+            "city":
+                "",
+
+            "locality":
+                "",
+
+            "developer":
+                project.developer.title,
+        })
+
+        if len(developer_ids) >= 5:
+            break
+
+
+    # =========================================================
+    # LOCATIONS
+    # =========================================================
+
+    locations = (
+        Location.objects
+        .filter(
+            name__icontains=q,
+            location_type__in=[
+                LocationType.DISTRICT_CITY,
+                LocationType.LOCALITY_AREA,
+                LocationType.SUBLOCALITY_AREA,
+            ]
+        )
+        .order_by(
+            "name"
+        )[:8]
+    )
+
+
+    for location in locations:
+
+        results.append({
+
+            "name":
+                location.name,
+
+            "type":
+                "Location",
+
+            "city":
+                "",
+
+            "locality":
+                "",
+
+            "developer":
+                "",
+        })
+
+
+    results = results[:15]
+
+
+    return JsonResponse(
+        results,
+        safe=False
+    )
+
 
 
 def residential_projects(request):

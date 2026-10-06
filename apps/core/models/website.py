@@ -47,208 +47,70 @@ class Setting(BaseModel):
     )
 
     site_name = models.CharField(max_length=150)
-
-    logo = models.ImageField(
-        upload_to="settings/",
-        blank=True,
-        null=True,
-    )
-
-    favicon = models.ImageField(
-        upload_to="settings/",
-        blank=True,
-        null=True,
-    )
-
-    offer_img = models.ImageField(
-        upload_to="settings/",
-        blank=True,
-        null=True,
-    )
-
-    search_bg = models.ImageField(
-        upload_to="settings/",
-        blank=True,
-        null=True,
-    )
-
-    testmonial_bg = models.ImageField(
-        upload_to="settings/",
-        blank=True,
-        null=True,
-    )
+    logo = models.ImageField(upload_to="settings/",blank=True,null=True,)
+    favicon = models.ImageField(upload_to="settings/",blank=True,null=True,)
+    offer_img = models.ImageField(upload_to="settings/",blank=True,null=True,)
+    search_bg = models.ImageField(upload_to="settings/",blank=True,null=True,)
+    testmonial_bg = models.ImageField(upload_to="settings/",blank=True,null=True,)
 
     # Colors
-    header_footer_color = models.CharField(
-        max_length=150,
-        blank=True,
-    )
-
-    text_color = models.CharField(
-        max_length=150,
-        blank=True,
-    )
-
-    button_color = models.CharField(
-        max_length=150,
-        blank=True,
-    )
-
-    rera_color = models.CharField(
-        max_length=150,
-        blank=True,
-    )
+    header_footer_color = models.CharField(max_length=150,blank=True,)
+    text_color = models.CharField(max_length=150,blank=True,)
+    button_color = models.CharField(max_length=150,blank=True,)
+    rera_color = models.CharField(max_length=150,blank=True,)
 
     # RERA
-    rera_number = models.CharField(
-        max_length=150,
-        blank=True,
-    )
-
-    current_project_rera = models.CharField(
-        max_length=150,
-        blank=True,
-        null=True,
-    )
-
+    rera_number = models.CharField(max_length=150,blank=True,)
+    current_project_rera = models.CharField(max_length=150,blank=True,null=True,)
     # Google
-    googletagmanager = models.CharField(
-        max_length=150,
-        blank=True,
-    )
 
-    google_map = models.CharField(
-        max_length=1000,
-        blank=True,
-    )
+    googletagmanager = models.CharField(max_length=150,blank=True,)
+    google_map = models.CharField(max_length=1000,blank=True,)
+
+
+    # Construction Status
+    new_launch = models.ImageField(upload_to="settings/",blank=True,null=True,)
+    under_construction = models.ImageField(upload_to="settings/",blank=True,null=True,)
+    ready_to_move_in = models.ImageField(upload_to="settings/",blank=True,null=True,)
+
 
     # Contact
-    address = models.CharField(
-        max_length=500,
-        blank=True,
-    )
-
-    phone = models.CharField(
-        max_length=15,
-        blank=True,
-    )
-
-    whatsapp = models.CharField(
-        max_length=15,
-        blank=True,
-    )
-
-    email = models.EmailField(
-        max_length=100,
-        blank=True,
-    )
+    address = models.CharField(max_length=500,blank=True,)
+    phone = models.CharField(max_length=15,blank=True,)
+    whatsapp = models.CharField(max_length=15,blank=True,)
+    email = models.EmailField(max_length=100,blank=True,)
 
     # SMTP
-    smtpserver = models.CharField(
-        max_length=100,
-        blank=True,
-    )
-
-    smtpemail = models.EmailField(
-        max_length=100,
-        blank=True,
-    )
-
-    smtppassword = models.CharField(
-        max_length=100,
-        blank=True,
-    )
-
-    smtpport = models.CharField(
-        max_length=10,
-        blank=True,
-    )
+    smtpserver = models.CharField(max_length=100,blank=True,)
+    smtpemail = models.EmailField(max_length=100,blank=True,)
+    smtppassword = models.CharField(max_length=100,blank=True,)
+    smtpport = models.CharField(max_length=10,blank=True,)
 
     # Working hours
-    working_days = models.CharField(
-        max_length=100,
-        blank=True,
-        help_text="Example: Mon - Sun",
-    )
-
-    working_hours = models.CharField(
-        max_length=100,
-        blank=True,
-        help_text="Example: 10:00 AM - 6:00 PM",
-    )
+    working_days = models.CharField(max_length=100,blank=True,help_text="Example: Mon - Sun",)
+    working_hours = models.CharField(max_length=100,blank=True,help_text="Example: 10:00 AM - 6:00 PM",)
 
     # SEO
-    meta_title = models.CharField(
-        max_length=200,
-        blank=True,
-        null=True,
-    )
-
-    meta_description = models.TextField(
-        blank=True,
-        null=True,
-    )
-
-    meta_keywords = models.TextField(
-        blank=True,
-        null=True,
-    )
+    meta_title = models.CharField(max_length=200,blank=True,null=True,)
+    meta_description = models.TextField(blank=True,null=True,)
+    meta_keywords = models.TextField(blank=True,null=True,)
 
     # Footer
-    footer_text = models.CharField(
-        max_length=250,
-        blank=True,
-        null=True,
-    )
-
-    copy_right = models.CharField(
-        max_length=100,
-        blank=True,
-    )
+    footer_text = models.CharField(max_length=250,blank=True,null=True,)
+    copy_right = models.CharField(max_length=100,blank=True,)
 
     # Legal pages
-    privacy_policy = CKEditor5Field(
-        blank=True,
-    )
-
-    terms_conditions = CKEditor5Field(
-        blank=True,
-    )
-
-    disclaimer = CKEditor5Field(
-        blank=True,
-    )
-
-    cookies = CKEditor5Field(
-        blank=True,
-    )
+    privacy_policy = CKEditor5Field(blank=True,)
+    terms_conditions = CKEditor5Field(blank=True,)
+    disclaimer = CKEditor5Field(blank=True,)
+    cookies = CKEditor5Field(blank=True,)
 
     # Social Media
-    facebook = models.CharField(
-        max_length=255,
-        blank=True,
-    )
-
-    instagram = models.CharField(
-        max_length=255,
-        blank=True,
-    )
-
-    twitter = models.CharField(
-        max_length=255,
-        blank=True,
-    )
-
-    youtube = models.CharField(
-        max_length=255,
-        blank=True,
-    )
-
-    status = models.CharField(
-        max_length=10,
-        choices=STATUS,
-        default="True",
-    )
+    facebook = models.CharField(max_length=255,blank=True,)
+    instagram = models.CharField(max_length=255,blank=True,)
+    twitter = models.CharField(max_length=255,blank=True,)
+    youtube = models.CharField(max_length=255,blank=True,)
+    status = models.CharField(max_length=10,choices=STATUS,default="True",)
 
     class Meta:
         verbose_name = "Website Setting"

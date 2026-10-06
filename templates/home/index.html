@@ -1,5 +1,5 @@
 {% extends "home/base.html" %}
-
+{% load static %}
 {% block title %}
     {{settings_obj.site_name}}
 {% endblock %}
@@ -7,14 +7,11 @@
 {% block content %}
 
 
+
 <section class="relative min-h-[580px] flex items-center justify-center py-16 px-4 bg-slate-900 overflow-hidden">
 
     <div class="absolute inset-0 z-0">
-      <img 
-        src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80" 
-        alt="Modern Apartment" 
-        class="w-full h-full object-cover opacity-25"
-      />
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80" alt="Modern Apartment" class="w-full h-full object-cover opacity-25"/>
       <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/60 to-transparent"></div>
     </div>
 
@@ -30,44 +27,49 @@
         
         <div class="bg-white/95 backdrop-blur-xl rounded-3xl shadow-[0_20px_60px_-15px_rgba(15,23,42,0.12)] border border-slate-200/80 p-2 sm:p-3 transition-all duration-300">
             
+            <!-- Dynamic Tab Filter Switchers -->
             <div class="flex items-center gap-1.5 p-1 bg-slate-100/90 rounded-2xl w-fit mb-3 overflow-x-auto scrollbar-none" id="tab-container">
             
-                <button  type="button" class="tab-btn active-tab flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold tracking-wide transition-all duration-200 bg-white text-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.06)]" data-type="Buy">
+                <button type="button" class="tab-btn active-tab flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold tracking-wide transition-all duration-200 bg-white text-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.06)]" data-type="Buy">
                     <i data-lucide="home" class="w-4 h-4 text-blue-600"></i>
                     <span>Buy</span>
                 </button>
 
-                <button  type="button" class="tab-btn flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-medium tracking-wide text-slate-500 hover:text-slate-900 hover:bg-white/60 transition-all duration-200" data-type="Rent">
+                <button type="button" class="tab-btn flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-medium tracking-wide text-slate-500 hover:text-slate-900 hover:bg-white/60 transition-all duration-200" data-type="Rent">
                     <i data-lucide="key" class="w-4 h-4 text-slate-400"></i>
                     <span>Rent</span>
                 </button>
 
-                <button  type="button" class="tab-btn flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-medium tracking-wide text-slate-500 hover:text-slate-900 hover:bg-white/60 transition-all duration-200" data-type="Commercial">
+                <button type="button" class="tab-btn flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-medium tracking-wide text-slate-500 hover:text-slate-900 hover:bg-white/60 transition-all duration-200" data-type="Commercial">
                     <i data-lucide="building-2" class="w-4 h-4 text-slate-400"></i>
                     <span>Commercial</span>
                 </button>
 
-                <button  type="button" class="tab-btn flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-medium tracking-wide text-slate-500 hover:text-slate-900 hover:bg-white/60 transition-all duration-200" data-type="Plots">
+                <button type="button" class="tab-btn flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-medium tracking-wide text-slate-500 hover:text-slate-900 hover:bg-white/60 transition-all duration-200" data-type="Plots">
                     <i data-lucide="map" class="w-4 h-4 text-slate-400"></i>
                     <span>Plots</span>
                 </button>
             </div>
 
-            <form class="flex flex-col sm:flex-row items-center gap-2 bg-slate-50/80 p-2 rounded-2xl border border-slate-200/80 shadow-sm" onsubmit="event.preventDefault();">
+            <form action="{% url 'search_projects' %}" method="GET" class="flex flex-col sm:flex-row items-center gap-2 bg-slate-50/80 p-2 rounded-2xl border border-slate-200/80 shadow-sm">
             
-            <!-- Location Input (Takes all available space) -->
+            <!-- Hidden input to pass selected tab status to backend -->
+
+            <input type="hidden" name="property_type" id="selected-type" value="Buy">
+
+            <!-- Location Input Field -->
             <div class="w-full flex-1 flex items-center gap-3 px-4 py-3 bg-white rounded-xl border border-slate-200/70 focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-blue-500/10 transition duration-150">
                 <div class="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 shrink-0">
-                <i data-lucide="map-pin" class="w-4 h-4"></i>
+                  <i data-lucide="map-pin" class="w-4 h-4"></i>
                 </div>
                 <div class="flex-1 text-left">
-                <label class="block text-[11px] font-bold tracking-wider text-slate-400 uppercase">Location</label>
-                <input  type="text"  placeholder="Search city, locality, or landmark (e.g. Whitefield, Bandra)"  class="w-full bg-transparent text-slate-800 text-sm font-semibold placeholder:text-slate-400 focus:outline-none" required/>
+                  <label for="location-query" class="block text-[11px] font-bold tracking-wider text-slate-400 uppercase">Location</label>
+                  <input type="text" id="location-query" name="location" placeholder="Search city, locality, or project..." value="{{ selected_location|default:'' }}" autocomplete="off" required class="w-full bg-transparent text-slate-800 text-sm font-semibold placeholder:text-slate-400 focus:outline-none"/>
                 </div>
             </div>
 
-            <!-- Search Button -->
-            <button  type="submit"  class="w-full sm:w-auto px-8 py-3.5 sm:self-stretch bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm font-bold tracking-wide rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25 active:scale-[0.98] transition-all duration-150 shrink-0">
+            <!-- Search Submit Button -->
+            <button type="submit" class="w-full sm:w-auto px-8 py-3.5 sm:self-stretch bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm font-bold tracking-wide rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25 active:scale-[0.98] transition-all duration-150 shrink-0">
                 <i data-lucide="search" class="w-4 h-4 stroke-[2.5]"></i>
                 <span>Search</span>
             </button>
@@ -78,38 +80,225 @@
         </div>
 
         <script>
-        // Re-run icons if Lucide is loaded
-        if (window.lucide) {
-            lucide.createIcons();
-        }
+          // Lucide icons re-initialization
+          if (window.lucide) {
+              lucide.createIcons();
+          }
 
-        const tabButtons = document.querySelectorAll('.tab-btn');
+          const tabButtons = document.querySelectorAll('.tab-btn');
+          const selectedTypeInput = document.getElementById('selected-type');
 
-        tabButtons.forEach((tab) => {
-            tab.addEventListener('click', () => {
-            // Reset all tabs
-            tabButtons.forEach((btn) => {
-                btn.classList.remove('bg-white', 'text-blue-600', 'shadow-[0_2px_8px_rgba(0,0,0,0.06)]', 'font-semibold');
-                btn.classList.add('text-slate-500', 'font-medium');
-                
-                const icon = btn.querySelector('i');
-                if (icon) {
-                icon.classList.remove('text-blue-600');
-                icon.classList.add('text-slate-400');
-                }
-            });
+          tabButtons.forEach((tab) => {
+              tab.addEventListener('click', () => {
+              // Active category update in hidden input
+              const selectedCategory = tab.getAttribute('data-type');
+              if (selectedTypeInput) {
+                  selectedTypeInput.value = selectedCategory;
+              }
 
-            // Activate clicked tab
-            tab.classList.remove('text-slate-500', 'font-medium');
-            tab.classList.add('bg-white', 'text-blue-600', 'shadow-[0_2px_8px_rgba(0,0,0,0.06)]', 'font-semibold');
-            
-            const activeIcon = tab.querySelector('i');
-            if (activeIcon) {
-                activeIcon.classList.remove('text-slate-400');
-                activeIcon.classList.add('text-blue-600');
-            }
-            });
-        });
+              // Reset styles for all tabs
+              tabButtons.forEach((btn) => {
+                  btn.classList.remove('bg-white', 'text-blue-600', 'shadow-[0_2px_8px_rgba(0,0,0,0.06)]', 'font-semibold');
+                  btn.classList.add('text-slate-500', 'font-medium');
+                  
+                  const icon = btn.querySelector('i');
+                  if (icon) {
+                      icon.classList.remove('text-blue-600');
+                      icon.classList.add('text-slate-400');
+                  }
+              });
+
+              // Activate selected tab style
+              tab.classList.remove('text-slate-500', 'font-medium');
+              tab.classList.add('bg-white', 'text-blue-600', 'shadow-[0_2px_8px_rgba(0,0,0,0.06)]', 'font-semibold');
+              
+              const activeIcon = tab.querySelector('i');
+              if (activeIcon) {
+                  activeIcon.classList.remove('text-slate-400');
+                  activeIcon.classList.add('text-blue-600');
+              }
+              });
+          });
+        </script>
+
+        <script>
+          document.addEventListener("DOMContentLoaded", function () {
+
+              const input = document.getElementById("location-query");
+
+              if (!input) return;
+
+              const wrapper = input.closest(".flex-1");
+
+              wrapper.style.position = "relative";
+
+              const suggestionsBox = document.createElement("div");
+
+              suggestionsBox.id = "search-suggestions";
+
+              suggestionsBox.className = `
+                  absolute
+                  left-0
+                  right-0
+                  top-full
+                  mt-2
+                  bg-white
+                  rounded-xl
+                  border
+                  border-slate-200
+                  shadow-xl
+                  overflow-hidden
+                  z-50
+                  hidden
+              `;
+
+              wrapper.appendChild(suggestionsBox);
+
+              let searchTimeout = null;
+
+              input.addEventListener("input", function () {
+
+                  const query = this.value.trim();
+
+                  clearTimeout(searchTimeout);
+
+                  if (query.length < 2) {
+
+                      suggestionsBox.innerHTML = "";
+                      suggestionsBox.classList.add("hidden");
+
+                      return;
+                  }
+
+                  searchTimeout = setTimeout(() => {
+
+                      fetch(
+                          `{% url 'search_suggestions' %}?q=${encodeURIComponent(query)}`
+                      )
+                      .then(response => response.json())
+                      .then(results => {
+
+                          suggestionsBox.innerHTML = "";
+
+                          if (!results.length) {
+
+                              suggestionsBox.innerHTML = `
+                                  <div class="px-4 py-3 text-sm text-slate-400">
+                                      No results found
+                                  </div>
+                              `;
+
+                              suggestionsBox.classList.remove("hidden");
+
+                              return;
+                          }
+
+                          results.forEach(item => {
+
+                              const button = document.createElement("button");
+
+                              button.type = "button";
+
+                              button.className = `
+                                  w-full
+                                  px-4
+                                  py-3
+                                  text-left
+                                  hover:bg-slate-50
+                                  transition
+                                  flex
+                                  items-center
+                                  gap-3
+                              `;
+
+                              let icon = "map-pin";
+
+                              if (item.type === "Project") {
+                                  icon = "building-2";
+                              }
+
+                              button.innerHTML = `
+                                  <div class="w-9 h-9 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                                      <i data-lucide="${icon}" class="w-4 h-4"></i>
+                                  </div>
+
+                                  <div class="min-w-0">
+
+                                      <div class="text-sm font-semibold text-slate-800 truncate">
+                                          ${escapeHtml(item.name)}
+                                      </div>
+
+                                      <div class="text-xs text-slate-400">
+                                          ${escapeHtml(
+                                              item.type === "Project"
+                                                  ? `${item.locality || ""}${item.city ? ", " + item.city : ""}`
+                                                  : "Location"
+                                          )}
+                                      </div>
+
+                                  </div>
+                              `;
+
+                              button.addEventListener("click", function () {
+
+                                  input.value = item.name;
+
+                                  suggestionsBox.innerHTML = "";
+
+                                  suggestionsBox.classList.add("hidden");
+
+                              });
+
+                              suggestionsBox.appendChild(button);
+
+                          });
+
+                          if (window.lucide) {
+                              lucide.createIcons();
+                          }
+
+                          suggestionsBox.classList.remove("hidden");
+
+                      })
+                      .catch(error => {
+
+                          console.error(
+                              "Search suggestion error:",
+                              error
+                          );
+
+                      });
+
+                  }, 250);
+
+              });
+
+
+              // Close suggestions when clicking outside
+
+              document.addEventListener("click", function (event) {
+
+                  if (!wrapper.contains(event.target)) {
+
+                      suggestionsBox.classList.add("hidden");
+
+                  }
+
+              });
+
+
+              function escapeHtml(value) {
+
+                  return String(value || "")
+                      .replace(/&/g, "&amp;")
+                      .replace(/</g, "&lt;")
+                      .replace(/>/g, "&gt;")
+                      .replace(/"/g, "&quot;")
+                      .replace(/'/g, "&#039;");
+
+              }
+
+          });
         </script>
 
     </div>
@@ -675,134 +864,143 @@
 
     <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 text-slate-600 text-xs font-semibold">
       <i data-lucide="building" class="w-3.5 h-3.5 text-[#a37a2c]"></i>
-      <span>1,200+ Verified Projects Active</span>
+      <span>{{ status_counts.new_launch|add:status_counts.under_construction|add:status_counts.ready_to_move|default:"1,200+" }}+ Verified Projects Active</span>
     </div>
   </div>
+
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-      <!-- NEW LAUNCH -->
-      <a href="#" class="group relative h-[380px] rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl border border-slate-200/80 transition-all duration-500 flex flex-col justify-between p-6">
+    <!-- NEW LAUNCH -->
+    <a href="{% url 'search_projects' %}?construction_status=New Launch"  class="group relative h-[380px] rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl border border-slate-200/80 transition-all duration-500 flex flex-col justify-between p-6">
 
-          <img
-              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
-              alt="New Launch Projects"
-              class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-          />
+        <img src="{{settings_obj.new_launch.url}}" alt="New Launch Projects" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"/>
 
-          <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-slate-950/10"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-slate-950/10"></div>
 
-          <div class="relative z-10 flex items-center justify-between">
-              <span class="inline-flex items-center gap-1.5 bg-[#a37a2c]/90 backdrop-blur-md text-white text-[11px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">
-                  <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
-                  New Launch
-              </span>
+        <div class="relative z-10 flex items-center justify-between">
+            <span class="inline-flex items-center gap-1.5 bg-[#a37a2c]/90 backdrop-blur-md text-white text-[11px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">
+                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                New Launch
+            </span>
 
-              <span class="w-9 h-9 rounded-full bg-white/10 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-2 transition-all duration-300">
-                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-              </span>
-          </div>
+            <span class="w-9 h-9 rounded-full bg-white/10 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-2 transition-all duration-300">
+                <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+            </span>
+        </div>
 
-          <div class="relative z-10">
+        <div class="relative z-10">
+            <div class="flex items-baseline justify-between">
               <h3 class="text-3xl font-serif text-white font-normal">
                   New Launch
               </h3>
+              {% if status_counts.new_launch %}
+                <span class="text-xs text-amber-300 font-semibold bg-amber-900/40 px-2.5 py-1 rounded-full backdrop-blur-sm border border-amber-500/30">
+                  {{ status_counts.new_launch }} Projects
+                </span>
+              {% endif %}
+            </div>
 
-              <p class="text-slate-300 text-sm mt-2 leading-relaxed font-light max-w-sm">
-                  Explore the latest property launches with attractive prices,
-                  premium locations and exciting launch offers.
-              </p>
+            <p class="text-slate-300 text-sm mt-2 leading-relaxed font-light max-w-sm">
+                Explore the latest property launches with attractive prices,
+                premium locations and exciting launch offers.
+            </p>
 
-              <div class="mt-5 flex items-center gap-2 text-amber-300 text-xs font-bold uppercase tracking-wider">
-                  Explore Properties
-                  <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
-              </div>
-          </div>
+            <div class="mt-5 flex items-center gap-2 text-amber-300 text-xs font-bold uppercase tracking-wider">
+                Explore Properties
+                <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+            </div>
+        </div>
 
-      </a>
+    </a>
 
 
-      <!-- UNDER CONSTRUCTION -->
-      <a href="#"
-        class="group relative h-[380px] rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl border border-slate-200/80 transition-all duration-500 flex flex-col justify-between p-6">
+    <!-- UNDER CONSTRUCTION -->
+    <a href="{% url 'search_projects' %}?construction_status=Under Construction" class="group relative h-[380px] rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl border border-slate-200/80 transition-all duration-500 flex flex-col justify-between p-6">
 
-          <img
-              src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80"
-              alt="Under Construction Projects"
-              class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-          />
+        <img src="{{settings_obj.under_construction.url}}" alt="Under Construction Projects" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"/>
 
-          <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-slate-950/10"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-slate-950/10"></div>
 
-          <div class="relative z-10 flex items-center justify-between">
-              <span class="inline-flex items-center gap-1.5 bg-blue-600/90 backdrop-blur-md text-white text-[11px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">
-                  <i data-lucide="hard-hat" class="w-3.5 h-3.5"></i>
-                  Under Construction
-              </span>
+        <div class="relative z-10 flex items-center justify-between">
+            <span class="inline-flex items-center gap-1.5 bg-blue-600/90 backdrop-blur-md text-white text-[11px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">
+                <i data-lucide="hard-hat" class="w-3.5 h-3.5"></i>
+                Under Construction
+            </span>
 
-              <span class="w-9 h-9 rounded-full bg-white/10 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-2 transition-all duration-300">
-                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-              </span>
-          </div>
+            <span class="w-9 h-9 rounded-full bg-white/10 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-2 transition-all duration-300">
+                <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+            </span>
+        </div>
 
-          <div class="relative z-10">
+        <div class="relative z-10">
+            <div class="flex items-baseline justify-between">
               <h3 class="text-3xl font-serif text-white font-normal">
                   Under Construction
               </h3>
+              {% if status_counts.under_construction %}
+                <span class="text-xs text-blue-300 font-semibold bg-blue-900/40 px-2.5 py-1 rounded-full backdrop-blur-sm border border-blue-500/30">
+                  {{ status_counts.under_construction }} Projects
+                </span>
+              {% endif %}
+            </div>
 
-              <p class="text-slate-300 text-sm mt-2 leading-relaxed font-light max-w-sm">
-                  Discover ongoing projects with excellent investment
-                  opportunities and planned possession timelines.
-              </p>
+            <p class="text-slate-300 text-sm mt-2 leading-relaxed font-light max-w-sm">
+                Discover ongoing projects with excellent investment
+                opportunities and planned possession timelines.
+            </p>
 
-              <div class="mt-5 flex items-center gap-2 text-blue-300 text-xs font-bold uppercase tracking-wider">
-                  Explore Properties
-                  <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
-              </div>
-          </div>
+            <div class="mt-5 flex items-center gap-2 text-blue-300 text-xs font-bold uppercase tracking-wider">
+                Explore Properties
+                <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+            </div>
+        </div>
 
-      </a>
+    </a>
 
 
-      <!-- READY TO MOVE -->
-      <a href="#"
-        class="group relative h-[380px] rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl border border-slate-200/80 transition-all duration-500 flex flex-col justify-between p-6">
+    <!-- READY TO MOVE -->
+    <a href="{% url 'search_projects' %}?construction_status=Ready To Move"
+       class="group relative h-[380px] rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl border border-slate-200/80 transition-all duration-500 flex flex-col justify-between p-6">
 
-          <img
-              src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"
-              alt="Ready To Move Projects"
-              class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-          />
+        <img src="{{ settings_obj.ready_to_move_in.url }}" alt="Ready To Move Projects" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"/>
 
-          <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-slate-950/10"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-slate-950/10"></div>
 
-          <div class="relative z-10 flex items-center justify-between">
-              <span class="inline-flex items-center gap-1.5 bg-emerald-600/90 backdrop-blur-md text-white text-[11px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">
-                  <i data-lucide="key-round" class="w-3.5 h-3.5"></i>
-                  Ready To Move
-              </span>
+        <div class="relative z-10 flex items-center justify-between">
+            <span class="inline-flex items-center gap-1.5 bg-emerald-600/90 backdrop-blur-md text-white text-[11px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">
+                <i data-lucide="key-round" class="w-3.5 h-3.5"></i>
+                Ready To Move
+            </span>
 
-              <span class="w-9 h-9 rounded-full bg-white/10 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-2 transition-all duration-300">
-                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-              </span>
-          </div>
+            <span class="w-9 h-9 rounded-full bg-white/10 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-2 transition-all duration-300">
+                <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+            </span>
+        </div>
 
-          <div class="relative z-10">
+        <div class="relative z-10">
+            <div class="flex items-baseline justify-between">
               <h3 class="text-3xl font-serif text-white font-normal">
                   Ready To Move
               </h3>
+              {% if status_counts.ready_to_move %}
+                <span class="text-xs text-emerald-300 font-semibold bg-emerald-900/40 px-2.5 py-1 rounded-full backdrop-blur-sm border border-emerald-500/30">
+                  {{ status_counts.ready_to_move }} Projects
+                </span>
+              {% endif %}
+            </div>
 
-              <p class="text-slate-300 text-sm mt-2 leading-relaxed font-light max-w-sm">
-                  Move into your dream home without waiting. Browse completed
-                  projects available for immediate possession.
-              </p>
+            <p class="text-slate-300 text-sm mt-2 leading-relaxed font-light max-w-sm">
+                Move into your dream home without waiting. Browse completed
+                projects available for immediate possession.
+            </p>
 
-              <div class="mt-5 flex items-center gap-2 text-emerald-300 text-xs font-bold uppercase tracking-wider">
-                  Explore Properties
-                  <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
-              </div>
-          </div>
+            <div class="mt-5 flex items-center gap-2 text-emerald-300 text-xs font-bold uppercase tracking-wider">
+                Explore Properties
+                <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+            </div>
+        </div>
 
-      </a>
+    </a>
 
   </div>
 </section>
@@ -856,116 +1054,116 @@
 {% else %}
   <section class="relative overflow-hidden bg-slate-950 py-16 lg:py-20">
 
-  <div class="absolute inset-0 pointer-events-none">
-    <div class="absolute top-0 left-1/4 w-72 h-72 bg-[#d8be98]/5 rounded-full blur-3xl"></div>
-    <div class="absolute bottom-0 right-1/4 w-72 h-72 bg-[#d8be98]/5 rounded-full blur-3xl"></div>
-  </div>
-
-  <div class="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
-
-    <!-- Section Heading -->
-    <div class="text-center max-w-2xl mx-auto mb-10">
-
-        <span class="inline-flex items-center gap-2 text-[#d8be98] text-[11px] font-bold uppercase tracking-[0.2em]">
-            <span class="w-8 h-px bg-[#d8be98]"></span>
-            Why Choose Us
-            <span class="w-8 h-px bg-[#d8be98]"></span>
-        </span>
-
-        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif font-normal text-white mt-3">
-            Your Property Journey,
-            <span class="text-[#d8be98]">Made Simple</span>
-        </h2>
-
-        <p class="text-sm text-slate-400 mt-3 leading-relaxed">
-            Experience a transparent and hassle-free way to discover,
-            evaluate and purchase your dream property.
-        </p>
-
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute top-0 left-1/4 w-72 h-72 bg-[#d8be98]/5 rounded-full blur-3xl"></div>
+      <div class="absolute bottom-0 right-1/4 w-72 h-72 bg-[#d8be98]/5 rounded-full blur-3xl"></div>
     </div>
 
+    <div class="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
 
-    <!-- Features -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <!-- Section Heading -->
+      <div class="text-center max-w-2xl mx-auto mb-10">
 
-        <!-- Card 1 -->
-        <div class="group bg-white/[0.03] border border-white/10 hover:border-[#d8be98]/40 rounded-2xl p-6 transition-all duration-300 hover:bg-white/[0.06]">
+          <span class="inline-flex items-center gap-2 text-[#d8be98] text-[11px] font-bold uppercase tracking-[0.2em]">
+              <span class="w-8 h-px bg-[#d8be98]"></span>
+              Why Choose Us
+              <span class="w-8 h-px bg-[#d8be98]"></span>
+          </span>
 
-            <div class="w-11 h-11 rounded-xl bg-[#faebd7]/10 text-[#d8be98] flex items-center justify-center group-hover:scale-105 transition-transform">
-                <i data-lucide="badge-percent" class="w-5 h-5"></i>
-            </div>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif font-normal text-white mt-3">
+              Your Property Journey,
+              <span class="text-[#d8be98]">Made Simple</span>
+          </h2>
 
-            <h3 class="text-base font-bold text-white mt-5">
-                0% Brokerage
-            </h3>
+          <p class="text-sm text-slate-400 mt-3 leading-relaxed">
+              Experience a transparent and hassle-free way to discover,
+              evaluate and purchase your dream property.
+          </p>
 
-            <p class="text-xs text-slate-400 mt-2 leading-relaxed">
-                Buy directly at builder rates with zero hidden brokerage
-                and transparent pricing.
-            </p>
-
-        </div>
-
-
-        <!-- Card 2 -->
-        <div class="group bg-white/[0.03] border border-white/10 hover:border-[#d8be98]/40 rounded-2xl p-6 transition-all duration-300 hover:bg-white/[0.06]">
-
-            <div class="w-11 h-11 rounded-xl bg-[#faebd7]/10 text-[#d8be98] flex items-center justify-center group-hover:scale-105 transition-transform">
-                <i data-lucide="shield-check" class="w-5 h-5"></i>
-            </div>
-
-            <h3 class="text-base font-bold text-white mt-5">
-                Verified Properties
-            </h3>
-
-            <p class="text-xs text-slate-400 mt-2 leading-relaxed">
-                Explore carefully verified properties from trusted
-                developers and reliable projects.
-            </p>
-
-        </div>
+      </div>
 
 
-        <!-- Card 3 -->
-        <div class="group bg-white/[0.03] border border-white/10 hover:border-[#d8be98]/40 rounded-2xl p-6 transition-all duration-300 hover:bg-white/[0.06]">
+      <!-- Features -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
-            <div class="w-11 h-11 rounded-xl bg-[#faebd7]/10 text-[#d8be98] flex items-center justify-center group-hover:scale-105 transition-transform">
-                <i data-lucide="handshake" class="w-5 h-5"></i>
-            </div>
+          <!-- Card 1 -->
+          <div class="group bg-white/[0.03] border border-white/10 hover:border-[#d8be98]/40 rounded-2xl p-6 transition-all duration-300 hover:bg-white/[0.06]">
 
-            <h3 class="text-base font-bold text-white mt-5">
-                Expert Guidance
-            </h3>
+              <div class="w-11 h-11 rounded-xl bg-[#faebd7]/10 text-[#d8be98] flex items-center justify-center group-hover:scale-105 transition-transform">
+                  <i data-lucide="badge-percent" class="w-5 h-5"></i>
+              </div>
 
-            <p class="text-xs text-slate-400 mt-2 leading-relaxed">
-                Get professional assistance from property selection
-                to negotiation and final possession.
-            </p>
+              <h3 class="text-base font-bold text-white mt-5">
+                  0% Brokerage
+              </h3>
 
-        </div>
+              <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                  Buy directly at builder rates with zero hidden brokerage
+                  and transparent pricing.
+              </p>
+
+          </div>
 
 
-        <!-- Card 4 -->
-        <div class="group bg-white/[0.03] border border-white/10 hover:border-[#d8be98]/40 rounded-2xl p-6 transition-all duration-300 hover:bg-white/[0.06]">
+          <!-- Card 2 -->
+          <div class="group bg-white/[0.03] border border-white/10 hover:border-[#d8be98]/40 rounded-2xl p-6 transition-all duration-300 hover:bg-white/[0.06]">
 
-            <div class="w-11 h-11 rounded-xl bg-[#faebd7]/10 text-[#d8be98] flex items-center justify-center group-hover:scale-105 transition-transform">
-                <i data-lucide="headphones" class="w-5 h-5"></i>
-            </div>
+              <div class="w-11 h-11 rounded-xl bg-[#faebd7]/10 text-[#d8be98] flex items-center justify-center group-hover:scale-105 transition-transform">
+                  <i data-lucide="shield-check" class="w-5 h-5"></i>
+              </div>
 
-            <h3 class="text-base font-bold text-white mt-5">
-                Dedicated Support
-            </h3>
+              <h3 class="text-base font-bold text-white mt-5">
+                  Verified Properties
+              </h3>
 
-            <p class="text-xs text-slate-400 mt-2 leading-relaxed">
-                Our team stays with you throughout your complete
-                property buying journey.
-            </p>
+              <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                  Explore carefully verified properties from trusted
+                  developers and reliable projects.
+              </p>
 
-        </div>
+          </div>
+
+
+          <!-- Card 3 -->
+          <div class="group bg-white/[0.03] border border-white/10 hover:border-[#d8be98]/40 rounded-2xl p-6 transition-all duration-300 hover:bg-white/[0.06]">
+
+              <div class="w-11 h-11 rounded-xl bg-[#faebd7]/10 text-[#d8be98] flex items-center justify-center group-hover:scale-105 transition-transform">
+                  <i data-lucide="handshake" class="w-5 h-5"></i>
+              </div>
+
+              <h3 class="text-base font-bold text-white mt-5">
+                  Expert Guidance
+              </h3>
+
+              <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                  Get professional assistance from property selection
+                  to negotiation and final possession.
+              </p>
+
+          </div>
+
+
+          <!-- Card 4 -->
+          <div class="group bg-white/[0.03] border border-white/10 hover:border-[#d8be98]/40 rounded-2xl p-6 transition-all duration-300 hover:bg-white/[0.06]">
+
+              <div class="w-11 h-11 rounded-xl bg-[#faebd7]/10 text-[#d8be98] flex items-center justify-center group-hover:scale-105 transition-transform">
+                  <i data-lucide="headphones" class="w-5 h-5"></i>
+              </div>
+
+              <h3 class="text-base font-bold text-white mt-5">
+                  Dedicated Support
+              </h3>
+
+              <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                  Our team stays with you throughout your complete
+                  property buying journey.
+              </p>
+
+          </div>
+
+      </div>
 
     </div>
-
-  </div>
 
   </section>
 {% endif %}
