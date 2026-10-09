@@ -18,6 +18,8 @@ from .models.website import (
     Gallery,
     PropertyEnquiry,
     Milestone,
+    Services,
+    Services_KeyPoints,
 )
 
 
@@ -517,4 +519,25 @@ class PropertyEnquiryAdmin(admin.ModelAdmin):
     list_editable = ('status',)
     date_hierarchy = 'created_at'
     list_per_page = 25
-    
+
+
+class ServicesKeyPointsInline(admin.TabularInline):
+    """Allows editing key points directly within the main Service admin page."""
+
+    model = Services_KeyPoints
+    extra = 0
+    fields = ("Title", "Short_Description", "icon")
+
+
+@admin.register(Services)
+class ServicesAdmin(admin.ModelAdmin):
+    list_display = ("Title", "Short_Description", "icon")
+    search_fields = ("Title", "Short_Description")
+    inlines = [ServicesKeyPointsInline]
+
+
+@admin.register(Services_KeyPoints)
+class ServicesKeyPointsAdmin(admin.ModelAdmin):
+    list_display = ("Title", "Short_Description", "icon")
+    search_fields = ("Title", "Short_Description")
+

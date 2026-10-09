@@ -588,20 +588,20 @@ class PropertyEnquiry(BaseModel):
 
 class Services(BaseModel):
 
-    Title = models.CharField(max_length=200, verbose_name="Service Title")
-    Short_Description = models.CharField(max_length=300, verbose_name="Service Title")
-    Description = CKEditor5Field(blank=True, null=True, verbose_name="Service Description")
-    icon = models.CharField(max_length=50, verbose_name="Service Title")
+    Title = models.CharField(max_length=200, verbose_name="Service Title",blank=True, null=True )
+    Short_Description = models.CharField(max_length=300, verbose_name="Service Title",blank=True, null=True)
+    Description = CKEditor5Field(verbose_name="Service Description",blank=True, null=True)
+    icon = models.CharField(max_length=50, verbose_name="Service Title",blank=True, null=True)
 
 
     def __str__(self):
         return self.Title
 
 class Services_KeyPoints(BaseModel):
-
-    Title = models.CharField(max_length=200, verbose_name="Service Title")
-    Short_Description = models.CharField(max_length=300, verbose_name="Service Title")
-    icon = models.CharField(max_length=50, verbose_name="Service Title")
+    service = models.ForeignKey(Services, on_delete=models.CASCADE, related_name="key_points",verbose_name="Service")
+    Title = models.CharField(max_length=200, verbose_name="Service Title",blank=True, null=True)
+    Short_Description = models.CharField(max_length=300, verbose_name="Service Title",blank=True, null=True)
+    icon = models.CharField(max_length=50, verbose_name="Service Title",blank=True, null=True)
 
 
     def __str__(self):
