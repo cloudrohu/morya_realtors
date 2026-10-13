@@ -7,7 +7,6 @@
 {% block content %}
 
 
-
 <section class="relative min-h-[580px] flex items-center justify-center py-16 px-4 bg-slate-900 overflow-hidden">
 
     <div class="absolute inset-0 z-0">
@@ -1005,6 +1004,378 @@
   </div>
 </section>
 
+<section class="re-blog">
+    <div class="re-blog-container">
+
+        <!-- Heading -->
+        <div class="re-blog-heading">
+            <div>
+                <span>OUR BLOG</span>
+                <h2>Real Estate <b>Insights</b></h2>
+            </div>
+
+            <!-- Optional: Link to a full blog list view if you have one -->
+            <a href="{% url 'blog:blog_list' %}">
+                View All <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+
+
+        <!-- Featured -->
+        {% if featured_article %}
+        <div class="re-featured">
+
+            <div class="re-featured-img">
+                {% if featured_article.featured_image %}
+                    <img src="{{ featured_article.featured_image.url }}" alt="{{ featured_article.title }}">
+                {% else %}
+                    <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=900&q=80" alt="Real Estate">
+                {% endif %}
+                <label>Featured</label>
+            </div>
+
+            <div class="re-featured-content">
+
+                <small>
+                    {% if featured_article.category %}{{ featured_article.category.name|upper }}{% else %}PROPERTY INVESTMENT{% endif %} 
+                    · {{ featured_article.created_at|date:"M d, Y"|upper }}
+                </small>
+
+                <h3>
+                    {{ featured_article.title }}
+                </h3>
+
+                <p>
+                    {{ featured_article.excerpt }}
+                </p>
+
+                <a href="{{ featured_article.get_absolute_url }}" class="re-read">
+                    Read Article
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+            </div>
+
+        </div>
+        {% endif %}
+
+
+        <!-- Cards -->
+        <div class="re-blog-grid">
+
+            {% for article in grid_articles %}
+            <!-- Card -->
+            <article class="re-card">
+
+                <div class="re-card-img">
+                    {% if article.featured_image %}
+                        <img src="{{ article.featured_image.url }}" alt="{{ article.title }}">
+                    {% else %}
+                        <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=700&q=80" alt="Home">
+                    {% endif %}
+                    <span>{% if article.category %}{{ article.category.name|upper }}{% else %}ARTICLE{% endif %}</span>
+                </div>
+
+                <div class="re-card-body">
+
+                    <small>{{ article.created_at|date:"M d, Y"|upper }} · {{ article.read_time|upper }}</small>
+
+                    <h4>
+                        {{ article.title }}
+                    </h4>
+
+                    <a href="{{ article.get_absolute_url }}">
+                        Read More <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+
+                </div>
+
+            </article>
+            {% endfor %}
+
+        </div>
+
+    </div>
+</section>
+<style>
+
+    /* =========================
+       COMPACT BLOG
+    ========================= */
+
+    .re-blog {
+        padding: 65px 20px;
+        background: #f8f7f4;
+        font-family: "Inter", sans-serif;
+    }
+
+    .re-blog-container {
+        max-width: 1150px;
+        margin: auto;
+    }
+
+
+    /* Heading */
+
+    .re-blog-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        margin-bottom: 28px;
+    }
+
+    .re-blog-heading span {
+        display: block;
+        color: #a47b2c;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        margin-bottom: 5px;
+    }
+
+    .re-blog-heading h2 {
+        margin: 0;
+        color: #222;
+        font-size: 32px;
+        line-height: 1.1;
+        font-weight: 700;
+    }
+
+    .re-blog-heading h2 b {
+        color: #a47b2c;
+    }
+
+    .re-blog-heading > a {
+        color: #222;
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .re-blog-heading > a i {
+        color: #a47b2c;
+        margin-left: 5px;
+    }
+
+
+    /* Featured */
+
+    .re-featured {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        background: #fff;
+        margin-bottom: 35px;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(0,0,0,.05);
+    }
+
+    .re-featured-img {
+        position: relative;
+        height: 280px;
+        overflow: hidden;
+    }
+
+    .re-featured-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: .5s;
+    }
+
+    .re-featured:hover .re-featured-img img {
+        transform: scale(1.04);
+    }
+
+    .re-featured-img label {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background: #a47b2c;
+        color: #fff;
+        padding: 6px 11px;
+        font-size: 9px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+
+    .re-featured-content {
+        padding: 32px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .re-featured-content small,
+    .re-card-body small {
+        color: #999;
+        font-size: 9px;
+        letter-spacing: .7px;
+        font-weight: 600;
+    }
+
+    .re-featured-content h3 {
+        font-size: 25px;
+        line-height: 1.25;
+        color: #222;
+        margin: 12px 0;
+    }
+
+    .re-featured-content p {
+        color: #777;
+        font-size: 13px;
+        line-height: 1.6;
+        margin: 0 0 18px;
+    }
+
+    .re-read,
+    .re-card-body a {
+        color: #222;
+        text-decoration: none;
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    .re-read i,
+    .re-card-body a i {
+        color: #a47b2c;
+        margin-left: 4px;
+        transition: .3s;
+    }
+
+    .re-read:hover i,
+    .re-card-body a:hover i {
+        transform: translateX(4px);
+    }
+
+
+    /* Cards */
+
+    .re-blog-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    .re-card {
+        background: #fff;
+        overflow: hidden;
+        transition: .3s;
+    }
+
+    .re-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px rgba(0,0,0,.07);
+    }
+
+    .re-card-img {
+        position: relative;
+        height: 175px;
+        overflow: hidden;
+    }
+
+    .re-card-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: .5s;
+    }
+
+    .re-card:hover .re-card-img img {
+        transform: scale(1.05);
+    }
+
+    .re-card-img span {
+        position: absolute;
+        bottom: 12px;
+        left: 12px;
+        background: #fff;
+        color: #a47b2c;
+        padding: 5px 8px;
+        font-size: 8px;
+        font-weight: 700;
+        letter-spacing: .8px;
+    }
+
+    .re-card-body {
+        padding: 18px;
+    }
+
+    .re-card-body h4 {
+        color: #222;
+        font-size: 17px;
+        line-height: 1.35;
+        margin: 9px 0 14px;
+        transition: .3s;
+    }
+
+    .re-card:hover h4 {
+        color: #a47b2c;
+    }
+
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 900px) {
+
+        .re-featured {
+            grid-template-columns: 1fr;
+        }
+
+        .re-featured-img {
+            height: 260px;
+        }
+
+        .re-blog-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+    }
+
+
+    @media (max-width: 600px) {
+
+        .re-blog {
+            padding: 45px 15px;
+        }
+
+        .re-blog-heading {
+            align-items: start;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .re-blog-heading h2 {
+            font-size: 28px;
+        }
+
+        .re-featured-img {
+            height: 210px;
+        }
+
+        .re-featured-content {
+            padding: 22px;
+        }
+
+        .re-featured-content h3 {
+            font-size: 22px;
+        }
+
+        .re-blog-grid {
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .re-card-img {
+            height: 190px;
+        }
+
+    }
+
+</style>
 
 {% if why_choose %}
   <section class="py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto font-sans">

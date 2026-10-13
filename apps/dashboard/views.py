@@ -3,6 +3,8 @@ from django.db.models import Count,Q
 from apps.core.models import Setting , Why_Choose , FAQ
 from apps.properties.models import Project
 from apps.properties_utility.models import Bank
+from apps.blog.models import Article
+
 
 def dashboard(request):
     settings_obj = Setting.objects.first()
@@ -22,6 +24,14 @@ def dashboard(request):
     why_choose = Why_Choose.objects.filter(setting=settings_obj).order_by("order")
     faqs = FAQ.objects.filter(setting=settings_obj)
     banks = Bank.objects.all()
+
+    featured_article = Article.objects.filter(is_published=True).order_by('-created_at').first()
+
+    # Fetch the next 3 published articles for the grid cards (exclude the featured one)
+    grid_articles = Article.objects.filter(is_published=True).order_by('-created_at')
+    if featured_article:
+        grid_articles = grid_articles.exclude(id=featured_article.id)
+    grid_articles = grid_articles[:3]
 
     status_counts = Project.objects.filter(parent__isnull=True).aggregate(
         new_launch=Count("id", filter=Q(construction_status="New Launch")),
@@ -54,6 +64,8 @@ def dashboard(request):
             "top_localities": top_localities,
             "status_counts": status_counts,
             "projects": projects,
+            "featured_article": featured_article,
+            "grid_articles": grid_articles,
         }
     )
 

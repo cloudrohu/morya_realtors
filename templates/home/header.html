@@ -36,6 +36,10 @@
                 Services
             </a>
 
+             <a href="{% url 'blog:blog_list' %}"  class="luxury-link {% if request.resolver_match.url_name == 'blog:blog_list' %}active{% endif %}">
+                Blog
+            </a>
+
             <a href="{% url 'calculator' %}"  class="luxury-link {% if request.resolver_match.url_name == 'calculator' %}active{% endif %}">
                 Calculator
             </a>
@@ -103,13 +107,18 @@
                 Developers
             </a>
 
-            <a href="{% url "services" %}" class="luxury-mobile-link">
+             <a href="{% url "blog:blog_list" %}" class="luxury-mobile-link">
                 <span>06</span>
+                Blog
+            </a>
+
+            <a href="{% url "services" %}" class="luxury-mobile-link">
+                <span>07</span>
                 Services
             </a>
 
             <a href="{% url "calculator" %}" class="luxury-mobile-link">
-                <span>07</span>
+                <span>08</span>
                 Calculator
             </a>
 

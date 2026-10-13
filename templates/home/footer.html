@@ -1,170 +1,97 @@
+<footer class="re-footer">
 
-<!-- Footer -->
-<footer class="bg-[#0b1b36] text-white">
+    <div class="re-footer-container">
 
-    <div class="max-w-6xl mx-auto px-5 sm:px-6 py-14 sm:py-16">
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-14">
+        <!-- Main Footer -->
+        <div class="re-footer-main">
 
             <!-- Brand -->
-            <div>
-                <a href="/" class="inline-block mb-7">
-                    <div class="flex items-center gap-1 text-white">
-                        <span class="text-[28px] sm:text-[30px] font-light tracking-[0.18em]">
-                           {{settings_obj.site_name}}
-                        </span>
-                    </div>
+            <div class="re-footer-brand">
+
+                <a href="/" class="re-footer-logo">
+                    <strong>{{settings_obj.site_name}}</strong>
                 </a>
 
-                <p class="max-w-[285px] text-sm leading-[1.65] text-slate-300">
+                <p>
                     {{settings_obj.footer_text}}
                 </p>
 
-                <!-- Social -->
-                <div class="flex items-center gap-3 mt-6">
-
-                    <a href="{{settings_obj.instagram}}" aria-label="Instagram" class="w-9 h-9 rounded-full border border-[#d99a28] flex items-center justify-center text-white hover:bg-[#d99a28] hover:text-[#0b1b36] transition-all duration-300">
-                        <i class="fa-brands fa-instagram text-sm"></i>
-                    </a>
-
-                    <a href="{{settings_obj.facebook}}" aria-label="Facebook" class="w-9 h-9 rounded-full border border-[#d99a28] flex items-center justify-center text-white hover:bg-[#d99a28] hover:text-[#0b1b36] transition-all duration-300">
-                        <i class="fa-brands fa-facebook-f text-sm"></i>
-                    </a>
-
-                    <a href="{{settings_obj.whatsapp}}" aria-label="WhatsApp" class="w-9 h-9 rounded-full border border-[#d99a28] flex items-center justify-center text-white hover:bg-[#d99a28] hover:text-[#0b1b36] transition-all duration-300">
-                        <i class="fa-brands fa-whatsapp text-sm"></i>
-                    </a>
+                <div class="re-footer-social">
+                    <a href="{{settings_obj.facebook}}" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="{{settings_obj.instagram}}" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="{{settings_obj.twitter}}" target="_blank"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="{{settings_obj.youtube}}" target="_blank"><i class="fa-brands fa-youtube"></i></a>
                 </div>
+
             </div>
 
-            <!-- Explore -->
-            <div>
-                <h3 class="font-['Cormorant_Garamond'] text-sm font-semibold tracking-[0.22em] uppercase text-[#d99a28] mb-5">
-                    Explore
-                </h3>
 
-                <ul class="space-y-3 text-sm text-slate-200">
-                    <li>
-                        <a href="/properties/" class="hover:text-[#d99a28] transition-colors">
-                            All Properties
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url "localities" %}" class="hover:text-[#d99a28] transition-colors">
-                            Localities
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url "developers" %}" class="hover:text-[#d99a28] transition-colors">
-                            Developers
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url "services" %}" class="hover:text-[#d99a28] transition-colors">
-                            Services
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url "about" %}" class="hover:text-[#d99a28] transition-colors">
-                            About Us
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url "contact" %}" class="hover:text-[#d99a28] transition-colors">
-                            Contact
-                        </a>
-                    </li>
+            <!-- Quick Links -->
+            <div class="re-footer-col">
+
+                <h4>Quick Links</h4>
+
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="{% url "about" %}">About Us</a></li>
+                    <li><a href="{% url "residential_projects" %}">Our Projects</a></li>
+                    <li><a href="{% url "services" %}">Services</a></li>
+                    <li><a href="{% url "contact" %}">Contact Us</a></li>
                 </ul>
+
             </div>
 
-            <!-- Legal -->
-            <div>
-                <h3 class="font-['Cormorant_Garamond'] text-sm font-semibold tracking-[0.22em] uppercase text-[#d99a28] mb-5">
-                    Legal
-                </h3>
 
-                <ul class="space-y-3 text-sm text-slate-200">
-                    <li>
-                        <a href="/privacy-policy/" class="hover:text-[#d99a28] transition-colors">
-                            Privacy Policy
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/terms-of-service/" class="hover:text-[#d99a28] transition-colors">
-                            Terms of Service
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/disclaimer/" class="hover:text-[#d99a28] transition-colors">
-                            Disclaimer
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/rera-compliance/" class="hover:text-[#d99a28] transition-colors">
-                            RERA Compliance
-                        </a>
-                    </li>
+            <!-- Projects -->
+            <div class="re-footer-col">
+
+                <h4>Legal Sources</h4>
+
+                <ul>
+                    <li><a href="{% url "privacy_policy" %}">Privacy Policy</a></li>
+                    <li><a href="{% url "terms_of_service" %}">Terms & Conditions</a></li>
+                    <li><a href="{% url "disclaimer" %}">Disclaimer</a></li>
                 </ul>
+
             </div>
+
 
             <!-- Contact -->
-            <div>
-                <h3 class="font-['Cormorant_Garamond'] text-sm font-semibold tracking-[0.22em] uppercase text-[#d99a28] mb-5">
-                    Contact
-                </h3>
+            <div class="re-footer-col re-contact">
 
-                <div class="space-y-4 text-sm text-slate-200">
+                <h4>Get In Touch</h4>
 
-                    <!-- Address -->
-                    <div class="flex items-start gap-3">
-                        <i class="fa-solid fa-location-dot text-[#d99a28] mt-1 w-4"></i>
-                        <p class="leading-5">
-                            {{settings_obj.address}}
-                        </p>
-                    </div>
-
-                    <!-- Phone -->
-                    <div class="flex items-center gap-3">
-                        <i class="fa-solid fa-phone text-[#d99a28] w-4"></i>
-                        <a href="tel:{{settings_obj.phone}}" class="hover:text-[#d99a28] transition-colors">
-                            {{settings_obj.phone}}
-                        </a>
-                    </div>
-
-                    <!-- Email -->
-                    <div class="flex items-center gap-3">
-                        <i class="fa-regular fa-envelope text-[#d99a28] w-4"></i>
-                        <a href="mailto:{{settings_obj.email}}"
-                           class="hover:text-[#d99a28] transition-colors">
-                            {{settings_obj.email}}
-                        </a>
-                    </div>
-
-                    <!-- RERA -->
-                    <div class="flex items-center gap-3">
-                        <i class="fa-solid fa-shield-halved text-[#d99a28] w-4"></i>
-                        <span class="text-xs text-slate-400">
-                            RERA Reg. No: {{settings_obj.rera_number}}
-                        </span>
-                    </div>
-
+                <div class="re-contact-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>
+                       {{settings_obj.address}}
+                    </span>
                 </div>
+
+                <div class="re-contact-item">
+                    <i class="fa-solid fa-phone"></i>
+                    <a href="tel:+91{{settings_obj.phone}}">
+                        +91 {{settings_obj.phone}}
+                    </a>
+                </div>
+
+                <div class="re-contact-item">
+                    <i class="fa-solid fa-envelope"></i>
+                    <a href="mailto:{{settings_obj.email}}">
+                        {{settings_obj.email}}
+                    </a>
+                </div>
+
             </div>
 
         </div>
-    </div>
 
-    <!-- Bottom Bar -->
-    <div class="border-t border-white/10">
 
-        <div class="max-w-6xl mx-auto px-5 sm:px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+        <!-- Bottom Footer -->
+        <div class="re-footer-bottom">
 
-            <p class="text-xs text-slate-400">
-                © {{settings_obj.copy_right}} All rights reserved.
-            </p>
-
-            <p class="text-xs text-slate-400">
-                RERA Registered · Made with care in India
+            <p class="text-xl">
+                © <strong>{{settings_obj.copy_right}}</strong> All Rights Reserved.
             </p>
 
         </div>
@@ -172,3 +99,254 @@
     </div>
 
 </footer>
+
+
+<style>
+    .re-footer {
+        background: #171717;
+        color: #fff;
+        font-family: "Inter", sans-serif;
+    }
+
+    .re-footer-container {
+        max-width: 1150px;
+        margin: auto;
+        padding: 55px 20px 0;
+    }
+
+
+    /* Main Footer */
+
+    .re-footer-main {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 1fr 1.25fr;
+        gap: 45px;
+        padding-bottom: 45px;
+    }
+
+
+    /* Brand */
+
+    .re-footer-logo {
+        display: inline-flex;
+        flex-direction: column;
+        text-decoration: none;
+        line-height: .9;
+        margin-bottom: 18px;
+    }
+
+    .re-footer-logo span {
+        color: #a47b2c;
+        font-size: 10px;
+        letter-spacing: 3px;
+        font-weight: 600;
+    }
+
+    .re-footer-logo strong {
+        color: #fff;
+        font-size: 25px;
+        letter-spacing: 1px;
+    }
+
+    .re-footer-brand p {
+        max-width: 290px;
+        color: #999;
+        font-size: 12px;
+        line-height: 1.8;
+        margin: 0 0 20px;
+    }
+
+
+    /* Social */
+
+    .re-footer-social {
+        display: flex;
+        gap: 8px;
+    }
+
+    .re-footer-social a {
+        width: 32px;
+        height: 32px;
+        border: 1px solid #383838;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #aaa;
+        text-decoration: none;
+        font-size: 12px;
+        transition: .3s;
+    }
+
+    .re-footer-social a:hover {
+        background: #a47b2c;
+        border-color: #a47b2c;
+        color: #fff;
+    }
+
+
+    /* Columns */
+
+    .re-footer-col h4 {
+        position: relative;
+        color: #fff;
+        font-size: 13px;
+        margin: 0 0 20px;
+        font-weight: 600;
+    }
+
+    .re-footer-col h4::after {
+        content: "";
+        display: block;
+        width: 25px;
+        height: 2px;
+        background: #a47b2c;
+        margin-top: 8px;
+    }
+
+    .re-footer-col ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    .re-footer-col li {
+        margin-bottom: 11px;
+    }
+
+    .re-footer-col li a {
+        color: #999;
+        text-decoration: none;
+        font-size: 12px;
+        transition: .3s;
+    }
+
+    .re-footer-col li a:hover {
+        color: #c89b2c;
+        padding-left: 3px;
+    }
+
+
+    /* Contact */
+
+    .re-contact-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 15px;
+        color: #999;
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    .re-contact-item i {
+        color: #a47b2c;
+        font-size: 13px;
+        width: 15px;
+        margin-top: 3px;
+    }
+
+    .re-contact-item a {
+        color: #999;
+        text-decoration: none;
+        transition: .3s;
+    }
+
+    .re-contact-item a:hover {
+        color: #fff;
+    }
+
+
+    /* Bottom */
+
+    .re-footer-bottom {
+        border-top: 1px solid #2c2c2c;
+        min-height: 65px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .re-footer-bottom p {
+        color: #777;
+        font-size: 11px;
+        margin: 0;
+    }
+
+    .re-footer-legal {
+        display: flex;
+        gap: 20px;
+    }
+
+    .re-footer-legal a {
+        color: #777;
+        text-decoration: none;
+        font-size: 11px;
+        transition: .3s;
+    }
+
+    .re-footer-legal a:hover {
+        color: #c89b2c;
+    }
+
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 900px) {
+
+        .re-footer-main {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 35px;
+        }
+
+    }
+
+
+    @media (max-width: 600px) {
+
+        .re-footer-container {
+            padding: 45px 20px 0;
+        }
+
+        .re-footer-main {
+            grid-template-columns: 1fr 1fr;
+            gap: 30px 20px;
+        }
+
+        .re-footer-brand {
+            grid-column: 1 / -1;
+        }
+
+        .re-footer-brand p {
+            max-width: 100%;
+        }
+
+        .re-footer-bottom {
+            padding: 18px 0;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .re-footer-legal {
+            flex-wrap: wrap;
+            gap: 12px 18px;
+        }
+
+    }
+
+
+    @media (max-width: 420px) {
+
+        .re-footer-main {
+            grid-template-columns: 1fr;
+        }
+
+        .re-footer-brand {
+            grid-column: auto;
+        }
+
+    }
+
+</style>
