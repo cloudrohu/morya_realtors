@@ -33,12 +33,6 @@ def dashboard(request):
         grid_articles = grid_articles.exclude(id=featured_article.id)
     grid_articles = grid_articles[:3]
 
-    status_counts = Project.objects.filter(parent__isnull=True).aggregate(
-        new_launch=Count("id", filter=Q(construction_status="New Launch")),
-        under_construction=Count("id", filter=Q(construction_status="Under Construction")),
-        ready_to_move=Count("id", filter=Q(construction_status="Ready To Move")),
-    )
-
     top_localities = (
         Project.objects
         .filter(is_active=True, locality__isnull=False)
@@ -62,7 +56,6 @@ def dashboard(request):
             "faqs": faqs,
             "banks": banks,
             "top_localities": top_localities,
-            "status_counts": status_counts,
             "projects": projects,
             "featured_article": featured_article,
             "grid_articles": grid_articles,

@@ -68,10 +68,7 @@ class Setting(BaseModel):
     google_map = models.CharField(max_length=1000,blank=True,)
 
 
-    # Construction Status
-    new_launch = models.ImageField(upload_to="settings/",blank=True,null=True,)
-    under_construction = models.ImageField(upload_to="settings/",blank=True,null=True,)
-    ready_to_move_in = models.ImageField(upload_to="settings/",blank=True,null=True,)
+
 
 
     # Contact
@@ -129,6 +126,7 @@ class Setting(BaseModel):
         return "No Logo"
 
     logo_tag.short_description = "Logo"
+
 
 class Slider(BaseModel):
 

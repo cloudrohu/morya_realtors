@@ -360,17 +360,7 @@ class SettingAdmin(admin.ModelAdmin):
             },
         ),
         
-        (
-            "Construction Status",
-            {
-                "fields": (
-                    "new_launch",
-                    "under_construction",
-                    "ready_to_move_in",
-                )
-            },
-        ),
-
+     
         (
             "RERA Information",
             {
