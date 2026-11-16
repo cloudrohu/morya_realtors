@@ -678,9 +678,11 @@ class Project(MPTTModel, BaseModel):
     )
 
     CONSTRUCTION_STATUS_CHOICES = (
-        ('Under Construction', 'Under Construction'), ('New Launch', 'New Launch'),
-        ('Partially Ready To Move', 'Partially Ready To Move'), ('Ready To Move', 'Ready To Move'),
-        ('Deleverd', 'Deleverd'),
+        ('Under Construction', 'Under Construction'),
+        ('New Launch', 'New Launch'),
+        ('Partially Ready To Move', 'Partially Ready To Move'), 
+        ('Ready To Move', 'Ready To Move'),
+        ('Delivered', 'Delivered'),
     )
     
     MONTH_CHOICES = [

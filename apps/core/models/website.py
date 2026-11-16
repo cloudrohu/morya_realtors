@@ -53,6 +53,17 @@ class Setting(BaseModel):
     search_bg = models.ImageField(upload_to="settings/",blank=True,null=True,)
     testmonial_bg = models.ImageField(upload_to="settings/",blank=True,null=True,)
 
+    # Construction Status
+    under_construction = models.ImageField(upload_to="settings/",blank=True,null=True,)
+    ready_to_move = models.ImageField(upload_to="settings/",blank=True,null=True,)
+    new_launch = models.ImageField(upload_to="settings/",blank=True,null=True,)
+    upcoming_projects = models.ImageField(upload_to="settings/",blank=True,null=True,)
+    deleverd = models.ImageField(upload_to="settings/",blank=True,null=True,)
+    partially_ready_to_move = models.ImageField(upload_to="settings/",blank=True,null=True,)
+
+
+
+
     # Colors
     header_footer_color = models.CharField(max_length=150,blank=True,)
     text_color = models.CharField(max_length=150,blank=True,)
@@ -62,14 +73,10 @@ class Setting(BaseModel):
     # RERA
     rera_number = models.CharField(max_length=150,blank=True,)
     current_project_rera = models.CharField(max_length=150,blank=True,null=True,)
-    # Google
 
+    # Google
     googletagmanager = models.CharField(max_length=150,blank=True,)
     google_map = models.CharField(max_length=1000,blank=True,)
-
-
-
-
 
     # Contact
     address = models.CharField(max_length=500,blank=True,)

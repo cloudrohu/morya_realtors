@@ -359,6 +359,22 @@ class SettingAdmin(admin.ModelAdmin):
                 )
             },
         ),
+
+
+        (
+            "Construction Status",
+            {
+                "fields": (
+                    "under_construction",
+                    "upcoming_projects",
+                    "ready_to_move",
+                    "new_launch",
+                    "deleverd",
+                    "partially_ready_to_move",
+
+                )
+            },
+        ),
         
      
         (
@@ -500,6 +516,23 @@ class SettingAdmin(admin.ModelAdmin):
         return "No Logo"
 
     logo_preview.short_description = "Logo"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @admin.register(PropertyEnquiry)
 class PropertyEnquiryAdmin(admin.ModelAdmin):

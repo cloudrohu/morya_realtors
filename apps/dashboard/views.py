@@ -21,6 +21,57 @@ def dashboard(request):
         .select_related("locality", "developer")[:9]
     )
 
+    possession_statuses = [
+        {
+            "title": "Ready to Move",
+            "status": "Ready To Move",
+            "image": settings_obj.ready_to_move if settings_obj and settings_obj.ready_to_move else None,
+            "icon": "fas fa-key",
+            "number": "01",
+        },
+        {
+            "title": "Partially Ready to Move",
+            "status": "Partially Ready To Move",
+            "image": settings_obj.partially_ready_to_move if settings_obj and settings_obj.partially_ready_to_move else None,
+            "icon": "fas fa-building",
+            "number": "02",
+        },
+        {
+            "title": "Under Construction",
+            "status": "Under Construction",
+            "image": settings_obj.under_construction if settings_obj and settings_obj.under_construction else None,
+            "icon": "fas fa-hard-hat",
+            "number": "03",
+        },
+        {
+            "title": "New Launch",
+            "status": "New Launch",
+            "image": settings_obj.new_launch if settings_obj and settings_obj.new_launch else None,
+            "icon": "fas fa-rocket",
+            "number": "04",
+        },
+        {
+            "title": "Upcoming Projects",
+            "status": "Upcoming",
+            "image": settings_obj.upcoming_projects if settings_obj and settings_obj.upcoming_projects else None,
+            "icon": "fas fa-city",
+            "number": "05",
+        },
+        {
+            "title": "deleverd",
+            "status": "deleverd",
+            "image": settings_obj.deleverd if settings_obj and settings_obj.deleverd else None,
+            "icon": "fas fa-check-circle",
+            "number": "06",
+        },
+    ]
+
+    for item in possession_statuses:
+        item["project_count"] = Project.objects.filter(
+            parent__isnull=True,
+            construction_status=item["status"],
+        ).count()
+
     why_choose = Why_Choose.objects.filter(setting=settings_obj).order_by("order")
     faqs = FAQ.objects.filter(setting=settings_obj)
     banks = Bank.objects.all()
@@ -58,6 +109,7 @@ def dashboard(request):
             "top_localities": top_localities,
             "projects": projects,
             "featured_article": featured_article,
+            "possession_statuses": possession_statuses,
             "grid_articles": grid_articles,
         }
     )

@@ -143,6 +143,7 @@ def get_bhk_choices():
         for choice in Project.BHK_CHOICES
     ]
 
+
 def get_related_text_field(model):
     """
     Find the most likely text field used as the display/name field
