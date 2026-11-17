@@ -2,6 +2,7 @@ import math
 from django.db import models
 from django.conf import settings
 from django.urls import reverse
+from django_ckeditor_5.fields import CKEditor5Field
 from django.utils.text import slugify
 
 
@@ -50,85 +51,38 @@ class Category(models.Model):
 
 class Article(models.Model):
 
-    title = models.CharField(
-        max_length=255
-    )
+    title = models.CharField(max_length=255)
 
-    slug = models.SlugField(
-        max_length=255,
-        unique=True,
-        blank=True
-    )
+    slug = models.SlugField(max_length=255,unique=True,blank=True)
 
-    category = models.ForeignKey(
-        Category,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name="articles"
-    )
+    category = models.ForeignKey(Category,on_delete=models.SET_NULL,null=True,blank=True,related_name="articles")
 
-    author = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="blog_articles"
-    )
+    author = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name="blog_articles")
 
-    author_designation = models.CharField(
-        max_length=100,
-        default="Real Estate Experts",
-        blank=True
-    )
+    author_designation = models.CharField(max_length=100,default="Real Estate Experts",blank=True)
 
-    featured_image = models.ImageField(
-        upload_to="blog/images/",
-        null=True,
-        blank=True
-    )
+    featured_image = models.ImageField(upload_to="blog/images/",null=True,blank=True)
 
-    excerpt = models.TextField(
-        max_length=300,
-        help_text="Short summary displayed below the article title."
-    )
+    excerpt = models.TextField(max_length=300,help_text="Short summary displayed below the article title.")
 
-    content = models.TextField(
-        help_text="Complete article content."
-    )
-
-    tags = models.CharField(
-        max_length=500,
-        blank=True,
-        help_text="Comma separated tags. Example: Mumbai, Real Estate, Property"
-    )
-
-    is_published = models.BooleanField(
-        default=True
-    )
-
-    published_at = models.DateTimeField(
-        null=True,
-        blank=True
-    )
+    content = CKEditor5Field(config_name="extends",help_text="Complete article content.")
 
 
-    meta_title = models.CharField(
-        max_length=255,
-        blank=True
-    )
+    tags = models.CharField(max_length=500,blank=True,help_text="Comma separated tags. Example: Mumbai, Real Estate, Property")
 
-    meta_description = models.TextField(
-        max_length=300,
-        blank=True
-    )
+    is_published = models.BooleanField(default=True)
+
+    published_at = models.DateTimeField(null=True,blank=True)
 
 
-    created_at = models.DateTimeField(
-        auto_now_add=True
-    )
+    meta_title = models.CharField(max_length=255,blank=True)
 
-    updated_at = models.DateTimeField(
-        auto_now=True
-    )
+    meta_description = models.TextField(max_length=300,blank=True)
+
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ["-created_at"]

@@ -1,5 +1,5 @@
 {% extends "home/base.html" %}
-
+{% block title %}{% endblock title %}
 {% block content %}
 
 <section class="bg-slate-50 min-h-screen">
@@ -10,15 +10,13 @@
 
             <div class="flex items-center gap-2 text-sm">
 
-                <a href="/"
-                   class="text-slate-500 hover:text-[#b08d57] transition">
+                <a href="/" class="text-slate-500 hover:text-[#b08d57] transition">
                     Home
                 </a>
 
                 <i class="fa-solid fa-chevron-right text-[9px] text-slate-400"></i>
 
-                <a href="/blog/"
-                   class="text-slate-500 hover:text-[#b08d57] transition">
+                <a href="/blog/" class="text-slate-500 hover:text-[#b08d57] transition">
                     Blog
                 </a>
 
@@ -51,8 +49,7 @@
 
                         {% if article.category %}
 
-                            <a href="{% url 'blog:blog_list' %}?category={{ article.category.slug }}"
-                               class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#b08d57]/10 text-[#967544] text-xs font-bold uppercase tracking-wider">
+                            <a href="{% url 'blog:blog_list' %}?category={{ article.category.slug }}" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#b08d57]/10 text-[#967544] text-xs font-bold uppercase tracking-wider">
 
                                 {{ article.category.name }}
 
@@ -160,24 +157,21 @@
 
                     <div class="flex items-center gap-2">
 
-                        <a href="#"
-                           class="w-9 h-9 rounded-full border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-[#b08d57] hover:text-white hover:border-[#b08d57] transition">
+                        <a href="{{settings_obj.facebook}}" class="w-9 h-9 rounded-full border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-[#b08d57] hover:text-white hover:border-[#b08d57] transition">
 
                             <i class="fa-brands fa-facebook-f text-sm"></i>
 
                         </a>
 
 
-                        <a href="#"
-                           class="w-9 h-9 rounded-full border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-[#b08d57] hover:text-white hover:border-[#b08d57] transition">
+                        <a href="{{settings_obj.twitter}}" class="w-9 h-9 rounded-full border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-[#b08d57] hover:text-white hover:border-[#b08d57] transition">
 
                             <i class="fa-brands fa-x-twitter text-sm"></i>
 
                         </a>
 
 
-                        <a href="#"
-                           class="w-9 h-9 rounded-full border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-[#b08d57] hover:text-white hover:border-[#b08d57] transition">
+                        <a href="{{settings_obj.linkedin}}" class="w-9 h-9 rounded-full border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-[#b08d57] hover:text-white hover:border-[#b08d57] transition">
 
                             <i class="fa-brands fa-linkedin-in text-sm"></i>
 
@@ -332,43 +326,6 @@
                 <div class="lg:sticky lg:top-24 space-y-6">
 
 
-
-                    <div class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6">
-
-                        <h3 class="text-lg font-bold text-slate-900 mb-4">
-
-                            Search Articles
-
-                        </h3>
-
-
-                        <form method="GET"
-                              action="{% url 'blog:blog_list' %}"
-                              class="relative">
-
-                            <input
-                                type="text"
-                                name="q"
-                                value="{{ request.GET.q }}"
-                                placeholder="Search blog..."
-                                class="w-full h-12 rounded-xl bg-slate-50 border border-slate-200 pl-4 pr-12 text-sm outline-none focus:border-[#b08d57] transition"
-                            >
-
-
-                            <button
-                                type="submit"
-                                class="absolute right-2 top-2 w-8 h-8 rounded-lg bg-[#b08d57] text-white flex items-center justify-center">
-
-                                <i class="fa-solid fa-magnifying-glass text-xs"></i>
-
-                            </button>
-
-                        </form>
-
-                    </div>
-
-
-
                     <div class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6">
 
                         <h3 class="text-lg font-bold text-slate-900 mb-5">
@@ -453,57 +410,6 @@
                         </div>
 
                     </div>
-
-
-                    <div class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6">
-
-                        <h3 class="text-lg font-bold text-slate-900 mb-5">
-
-                            Categories
-
-                        </h3>
-
-
-                        <div class="space-y-2">
-
-
-                            {% for category in categories %}
-
-                                <a href="{% url 'blog:blog_list' %}?category={{ category.slug }}"
-                                   class="flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 transition">
-
-
-                                    <span class="text-sm text-slate-600">
-
-                                        {{ category.name }}
-
-                                    </span>
-
-
-                                    <span class="text-xs text-slate-400">
-
-                                        {{ category.article_count }}
-
-                                    </span>
-
-                                </a>
-
-
-                            {% empty %}
-
-                                <p class="text-sm text-slate-500 px-3">
-
-                                    No categories found.
-
-                                </p>
-
-                            {% endfor %}
-
-
-                        </div>
-
-                    </div>
-
 
                     <div class="relative overflow-hidden rounded-3xl bg-slate-900 p-6 sm:p-8">
 
